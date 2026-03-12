@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Space</title>
+  <style>
+    body {
+      background-image: url("images/space/bg_space.gif");
+      background-repeat: repeat;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .map-image {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <img 
+    src="images/space/planet_tall.gif" 
+    alt="animated star" 
+    width="1024" 
+    height="1536" 
+    usemap="#planet_tall_map"
+    class="map-image">
+
+  <map name="planet_tall_map">
+    <area shape="circle" coords="285,68,30" href="first_star.html" alt="a red giant">
+    <area shape="circle" coords="590,260,80" href="green_planet.html" alt="a green planet">
+  </map>
+
+</body>
+</html>

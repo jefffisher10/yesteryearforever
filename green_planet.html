@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>On Planet</title>
+  <style>
+    body {
+      background-image: url("images/space/bg_planet.gif");
+      background-repeat: repeat;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .map-image {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <img 
+    src="images/space/on_planet.gif" 
+    alt="animated alien" 
+    width="1024" 
+    height="1024" 
+    usemap="#on_planet_map"
+    class="map-image">
+
+  <map name="on_planet_map">
+    <area shape="circle" coords="625,123,25" href="first_star.html" alt="a red giant">
+  </map>
+
+</body>
+</html>

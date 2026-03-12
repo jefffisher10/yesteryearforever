@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remote Lamp Switch</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <div id="main">
+      <h1><a href="index.html">| yesteryear forever |</a></h1>
+      <p><blockquote>
+<b>Remote Lamp Switch</b><br><br>
+Projects that involve multiple hardware and software layers and sublayers are like catnip to me. And I love interacting with the physical world using electromechanical surrogates. So, this project developed very organically and easily.
+<br><br>
+I was looking for an excuse to use one of my new favorite devices, a NodeMCU. It's basically a mini arduino with built-in WiFi (ESP8266)! How awesome - and practical - is that?! So, it was going to connect to the internet for sure, and these micro servos (Sg90s) are a perfect way to interact with the world. I also needed an excuse to design something with my new 3D printer (Bambu Lab A1), so this project was also going to involve something 3D printed.
+<br><br>
+I had an idea...
+<br>
+<video class="minimal-video" controls loop muted playsinline>
+  <source src="images/glp_idea.mp4" type="video/mp4">
+  Your browser doesn't support videos.
+</video>
+
+Remote controlled IoT devices are neat, but I never could justify their cost for what "benefits" they claimed to provide around the house. Also, I could just <i>make</i> one. Bam! A perfect application that integrated all the capabilities of these devices AND satisfied my desire for multi-layered projects utilizing hardware, software, a web interface, 3D design and printing, and a practical application:
+<br><br>
+A remote controlled light switch.
+<br><br>
+Revolutionary, I know. But it's the journey, friends. Not the destination. ;)
+<br><br>
+The NodeMCU has a web server hosting a simple html website that "listens" for a button press. When the button is pressed, the servo moves. Simple! But I designed a mount that holds the NodeMCU and servo neatly inside my favorite green desk lamp, and since the servo is physically attached to to the lamp pull chain, the lamp turns on or off remotely with the touch of a button on any internet-connected device (i.e. my phone).
+<br><br>
+Necessary? Absolutely not.
+<br><br>
+Fun? Absolutely!
+<br><br>
+<div class="side-by-side">
+  <img src="images/glp_tinker_thumb.jpg" class="thumbnail" data-full="images/glp_tinker.jpg" loading="lazy">
+  <img src="images/glp_prototype_thumb.jpg" class="thumbnail" data-full="images/glp_prototype.jpg" loading="lazy">
+</div>
+<div class="side-by-side">
+  <img src="images/glp_code_thumb.jpg" class="thumbnail" data-full="images/glp_code.jpg" loading="lazy">
+  <img src="images/glp_print_thumb.jpg" class="thumbnail" data-full="images/glp_print.jpg" loading="lazy">
+</div>
+<div class="side-by-side">
+  <img src="images/glp_build_thumb.jpg" class="thumbnail" data-full="images/glp_build.jpg" loading="lazy">
+  <img src="images/glp_install_thumb.jpg" class="thumbnail" data-full="images/glp_install.jpg" loading="lazy">
+</div>
+
+<video class="minimal-video" controls loop muted playsinline>
+  <source src="images/glp_nec.mp4" type="video/mp4">
+  Your browser doesn't support videos.
+</video>
+<br><br>
+</blockquote>
+2024-10-26</p>
+    </div>
+    <div id="archive">
+      <button id="toggle-dark-mode" class="sidebar-button">| toggle dark mode |</button>
+	  <button onclick="goRandom()" class="sidebar-button">| random post |</button>
+      <h2>the past</h2>
+		<div id="archive-list"></div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+</body>
+</html>

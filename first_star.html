@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Orange Star</title>
+  <style>
+    body {
+      background-image: url("images/space/bg_space.gif");
+      background-repeat: repeat;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .star-map {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <img 
+    src="images/space/orange_star.gif" 
+    alt="animated orange star" 
+    width="1024" 
+    height="768" 
+    usemap="#first_star_map" 
+    class="star-map">
+
+  <map name="first_star_map">
+    <area shape="circle" coords="780,638,30" href="space_index.html" alt="go home">
+  </map>
+
+</body>
+</html>

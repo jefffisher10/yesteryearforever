@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tic-tac-toe BASH</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+</head>
+<body>
+  <div class="container">
+    <div id="main">
+      <h1><a href="index.html">| yesteryear forever |</a></h1>
+      <p><blockquote>
+<b>tic-tac-toe in BASH from scratch</b>
+<figure>
+  <img src="images/ttt_start_thumb.jpg" 
+       data-full="images/ttt_start.jpg"  
+       class="thumbnail align-right"
+       loading="lazy">
+</figure>
+This tic-tac-toe computer game is a sub-project of my <a href="cardboard_computer.html"><u>cardboard computer</u></a> project that originally started as an interactive robot with a digital face named 'facebot' which eventually morphed into more of an art project. But, the interaction piece survived. I imagined the facebot providing fun, random facts, displaying the current temperature, and even playing games, all while presenting a simple digital face on an LED matrix to show correlated emotions.
+<br><br>
+The random facts part was easy: I simply had a text file with a bunch of 1-2 sentence factoids that a python script would randomly parse and print on screen. The temperature portion was much more complicated since it integrated special sensors, hardware, and code to display the current temperature, but I had already implemented similar things in many other projects like a <a href="adena_rover.html"><u>rover</u></a>, a <a href="hopewell_1.html"><u>couple</u></a> <a href="hopewell_1-5.html"><u>rockets</u></a>, and a home <a href="fowls.html"><u>weather station</u></a>. So, that ended up being relatively easy to incorporate as well.
+<figure>
+  <img src="images/ttt_choice_thumb.jpg" 
+       data-full="images/ttt_choice.jpg"  
+       class="thumbnail align-left"
+       loading="lazy">
+</figure>
+What I <i>hadn't</i> built previously was any type of computer game. I wasn't ready to design anything from scratch, and I wanted it to be simple and universal. Naturally, tic-tac-toe was the first thing that came to mind.
+<br><br>
+I wrote it as a shell script since I was doing a lot of <a href="shred.html"><u>work with Linux</u></a> machines at the time. Incidentally, Bash is still my favorite thing to "code" in - <i>I know, it's scripting, not coding, nerds</i> <b>;P</b> - simply because it is what I'm most comfortable with, I'm sure. Plus, it just feels more raw, and I'm all about <a href="cardboard_computer.html"><u>technological brutalism</u></a>.
+<br><br>
+I tinkered with this thing for a while as I do most things. I start with an idea, create something simple, then iterate. Create and iterate, create and iterate... Who knows how many versions it went through? But it eventually got to a point that was functional and that was good enough for me.
+<figure>
+  <img src="images/ttt_wrong_thumb.jpg" 
+       data-full="images/ttt_wrong.jpg"  
+       class="thumbnail align-right"
+       loading="lazy">
+</figure>
+There's really no challenge other than overcoming luck. The computer chooses its move randomly so it is pretty easy to win. And if you do, a python script is called that displays a smiley on the LED matrix. Lose and a sad face is called. Tie? Indifferent... (I think I also put heart eyes and a "flat" face in there, too?)
+<br><br>
+<b>DISCLAIMER:</b> As I've <a href="virus_mutation_simulation.html"><u>said before</u></a>, to all the real programmers out there, a programmer I am not. The only programming I do is for fun as a hobby. I realize my code is sloppy, inefficient, and downright ugly. But hey, for my purposes, it works! And absolutely no AI was used to write any portion; AI wasn't even a thing! <i>Get off my lawn!</i> <b>;P</b>
+<div class="side-by-side">
+  <img src="images/ttt_win_thumb.jpg" data-full="images/ttt_win.jpg" class="thumbnail"  loading="lazy">
+  <img src="images/ttt_lose_thumb.jpg" data-full="images/ttt_lose.jpg" class="thumbnail"  loading="lazy">
+  <img src="images/ttt_tie_thumb.jpg" data-full="images/ttt_tie.jpg" class="thumbnail"  loading="lazy">
+</div>
+
+<hr>
+<h2><center><u>SOURCE CODE</u></center></h2>
+
+	<!-- replace language-cpp with language-python, language-html, language-css, etc. -->
+<pre><code class="language-bash">
+#!/bin/bash
+
+##############
+#   SETUP    #
+##############
+
+ROW=0	# character row
+COL=0	# character column
+X=0		# count
+BOL=0	# border column
+a="blank"
+b="blank"
+c="blank"
+d="blank"
+e="blank"
+f="blank"
+g="blank"
+h="blank"
+i="blank"
+
+##############
+#  FUNCTIONS #
+##############
+
+blank() {
+	X=0
+	while [ $X -le 6 ]; do
+		tput cup $ROW $COL
+		echo -e "       "
+		ROW=$((ROW+1))
+		X=$((X+1))
+		done
+}
+
+print_x() {
+	tput cup $ROW $COL; echo -e "\e[92m       "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e " *   * "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e "  * *  "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e "   *   "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e "  * *  "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e " *   * "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e "\e[0m       "; ROW=$((ROW+1))
+}
+
+print_o() {
+	tput cup $ROW $COL; echo -e "\e[95m       "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e "  ***  "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e " *   * "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e " *   * "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e " *   * "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e "  ***  "; ROW=$((ROW+1))
+	tput cup $ROW $COL; echo -e "\e[0m       "; ROW=$((ROW+1))
+}
+
+print_vertical_border() {
+	X=0
+	while [ $X -le 6 ]; do
+		tput cup $ROW $BOL
+		echo -e "\e[94m\e[104m#\e[0m"
+		ROW=$((ROW+1))
+		X=$((X+1))
+		done
+}
+
+print_horizontal_border() {
+	echo -e "\e[94m\e[104m#######################\e[0m"
+}
+
+win_check() {
+	# HUMAN WIN
+	if [[ ($a = "print_x" && $b = "print_x") && $c = "print_x" ]]; then
+		python /facebot/python/sad.py &
+		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($d = "print_x" && $e = "print_x") && $f = "print_x" ]]; then
+		python /facebot/python/sad.py &
+		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($g = "print_x" && $h = "print_x") && $i = "print_x" ]]; then
+		python /facebot/python/sad.py &
+		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($a = "print_x" && $d = "print_x") && $g = "print_x" ]]; then
+		python /facebot/python/sad.py &
+		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($b = "print_x" && $e = "print_x") && $h = "print_x" ]]; then
+		python /facebot/python/sad.py &
+		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($c = "print_x" && $f = "print_x") && $i = "print_x" ]]; then
+		python /facebot/python/sad.py &
+		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($a = "print_x" && $e = "print_x") && $i = "print_x" ]]; then
+		python /facebot/python/sad.py &
+		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($c = "print_x" && $e = "print_x") && $g = "print_x" ]]; then
+		python /facebot/python/sad.py &
+		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
+		sleep 2 
+	  	exit
+	# COMP WIN
+	elif [[ ($a = "print_o" && $b = "print_o") && $c = "print_o" ]]; then
+		python /facebot/python/happy.py &
+		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($d = "print_o" && $e = "print_o") && $f = "print_o" ]]; then
+		python /facebot/python/happy.py &
+		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($g = "print_o" && $h = "print_o") && $i = "print_o" ]]; then
+		python /facebot/python/happy.py &
+		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($a = "print_o" && $d = "print_o") && $g = "print_o" ]]; then
+		python /facebot/python/happy.py &
+		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($b = "print_o" && $e = "print_o") && $h = "print_o" ]]; then
+		python /facebot/python/happy.py &
+		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($c = "print_o" && $f = "print_o") && $i = "print_o" ]]; then
+		python /facebot/python/happy.py &
+		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($a = "print_o" && $e = "print_o") && $i = "print_o" ]]; then
+		python /facebot/python/happy.py &
+		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
+		sleep 2 
+	  	exit
+	elif [[ ($c = "print_o" && $e = "print_o") && $g = "print_o" ]]; then
+		python /facebot/python/happy.py &
+		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
+		sleep 2 
+	  	exit
+	fi
+}
+
+draw_check() {
+	if [[ $a != "blank" && $b != "blank" && $c != "blank" && $d != "blank" && $e != "blank" && $f != "blank" && $g != "blank" && $h != "blank" && $i != "blank" ]]; then
+		python /facebot/python/neutral.py &
+		echo -e "\e[96m\n\n  It's a draw :/\n\e[0m"
+		sleep 2
+		exit
+	fi
+}
+
+print_screen() {
+	tput clear
+
+	ROW=0; COL=0; $a
+	ROW=0; BOL=7; print_vertical_border
+	ROW=0; COL=8; $b
+	ROW=0; BOL=15; print_vertical_border
+	ROW=0; COL=16; $c
+
+	print_horizontal_border
+
+	ROW=8; COL=0; $d
+	ROW=8; BOL=7; print_vertical_border
+	ROW=8; COL=8; $e
+	ROW=8; BOL=15; print_vertical_border
+	ROW=8; COL=16; $f
+
+	print_horizontal_border
+
+	ROW=16; COL=0; $g
+	ROW=16; BOL=7; print_vertical_border
+	ROW=16; COL=8; $h
+	ROW=16; BOL=15; print_vertical_border
+	ROW=16; COL=16; $i
+	
+	echo -e "         a|b|c   \e[90m(Q to quit)\e[0m"
+	echo -e "         d|e|f"
+	echo -ne "         g|h|i   \e[1;37mMake a choice: \e[0m"
+}
+
+human_turn() {
+while [ 1 ]; do
+	
+	print_screen
+
+	read -n 1 COMP
+
+	if [ ${!COMP} != "blank" 2>/dev/null ]; then	# is choice already picked?
+		echo -e "\n\n\e[93m  Please choose again... \e[0m"
+		sleep 2
+	else
+		case $COMP in
+			A|a) a="print_x"; break ;;
+			B|b) b="print_x"; break ;;
+			C|c) c="print_x"; break ;;
+			D|d) d="print_x"; break ;;
+			E|e) e="print_x"; break ;;
+			F|f) f="print_x"; break ;;
+			G|g) g="print_x"; break ;;
+			H|h) h="print_x"; break ;;
+			I|i) i="print_x"; break ;;
+			Q|q) echo -e "\n Thanks for playing! :) \n"
+				 sleep 2 
+  				 exit ;;
+			*)   echo -e "\n\e[93m  Please enter a valid selection... \e[0m"
+				 sleep 2 ;;
+		esac
+	fi
+done
+}
+
+computer_turn() {
+while [ 1 ]; do
+	COMP=$(< /dev/urandom tr -dc _a-i | head -c${1:-1})
+
+	if [ ${!COMP} != "blank" ]; then	# is choice already picked?
+		echo > /dev/null
+	else
+		case $COMP in
+			A|a) a="print_o"; break ;;
+			B|b) b="print_o"; break ;;
+			C|c) c="print_o"; break ;;
+			D|d) d="print_o"; break ;;
+			E|e) e="print_o"; break ;;
+			F|f) f="print_o"; break ;;
+			G|g) g="print_o"; break ;;
+			H|h) h="print_o"; break ;;
+			I|i) i="print_o"; break ;;
+		esac
+	fi
+done
+}
+
+##############
+#    MAIN    #
+##############
+while [ 1 ]; do
+
+	print_screen
+	win_check
+	draw_check
+
+	human_turn
+
+	print_screen
+	win_check
+	draw_check
+	
+	computer_turn
+
+done
+
+</code></pre>
+
+<br><br>
+</blockquote>
+2020-01-07</p>
+    </div>
+    <div id="archive">
+      <button id="toggle-dark-mode" class="sidebar-button">| toggle dark mode |</button>
+	  <button onclick="goRandom()" class="sidebar-button">| random post |</button>
+      <h2>the past</h2>
+		<div id="archive-list"></div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+</body>
+</html>
