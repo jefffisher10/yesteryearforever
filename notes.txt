@@ -1,4 +1,5 @@
 *Always pull first! before editing...
+*Run [python update.py] after editing before [git add .]
 
 // Editing on Windows (using git bash//
 git pull
