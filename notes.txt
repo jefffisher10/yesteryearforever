@@ -1,15 +1,31 @@
-// GIT HOW-TO: Upload from pi to Github //
+*Always pull first! before editing...
 
-edit file(s)
+// Editing on Windows (using git bash//
+git pull
+(edit files)
+git add .
+git commit -m "Improve archive generator"
+git push
+
+// Editing on the Pi //
+cd /var/www/html
+git pull
+(edit files)
 git add .
 git commit -m "I updated these files"
 git push
 
+// Editing from your phone (SSH into Pi) //
+cd /var/www/html
+git pull
+(edit file with nano)
+git add .
+git commit -m "Quick fix"
+git push
 
-// GIT HOW-TO: Pull from Github to pi //
-
-edit file on Github
-Click Commit Changes...
+// Editing on Github to pi //
+(edit file on Github)
+Click [Commit Changes...]
 (add comment)
 on pi: cd /var/www/html
 git pull
