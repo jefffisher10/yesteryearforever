@@ -1,0 +1,15 @@
+// GIT HOW-TO: Upload from pi to Github //
+
+edit file(s)
+git add .
+git commit -m "I updated these files"
+git push
+
+
+// GIT HOW-TO: Pull from Github to pi //
+
+edit file on Github
+Click Commit Changes...
+(add comment)
+on pi: cd /var/www/html
+git pull
