@@ -47,6 +47,23 @@ EXCLUDED_IMAGE = {
     "first_star.html","green_planet.html","space_index.html"
 }
 
+
+EXCLUDED_SITEMAP = {
+    "template.html",
+    "first_star.html",
+    "green_planet.html",
+    "space_index.html",
+    "preamble.html",
+    "lectures.html",
+    "mylinks.html",
+    "README.md",
+    "deploy.sh",
+    "desiderata.html",
+    "archive.html",
+    "notes.txt"
+}
+
+
 # -----------------------
 # TITLE EXTRACTION
 # -----------------------
@@ -316,6 +333,9 @@ def generate_sitemap():
 
     for file in HTML_DIR.glob("*.html"):
 
+        if file.name in EXCLUDED_SITEMAP:
+            continue
+
         urls.append(f"""
 <url>
 <loc>{SITE_URL}/{file.name}</loc>
@@ -331,7 +351,7 @@ def generate_sitemap():
 </urlset>
 """
 
-    Path("sitemap.xml").write_text(sitemap,encoding="utf-8")
+    Path("sitemap.xml").write_text(sitemap)
 
     print("🗺 sitemap.xml generated")
 
