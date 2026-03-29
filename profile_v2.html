@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cross Section</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <style>
+    .profile-note { font-style: italic; margin: 0 0 1.5rem 0; }
+    .section-label {
+      display: inline-block;
+      border: 1px solid currentColor;
+      padding: 0.1rem 0.45rem;
+      margin: 1.6rem 0 0.6rem 0;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+    }
+    .crossline {
+      margin: 1.6rem 0;
+      border: 0;
+      border-top: 1px dashed currentColor;
+      opacity: 0.6;
+    }
+    .mini { font-size: 0.95rem; opacity: 0.9; }
+    .artifact-box {
+      border: 1px solid currentColor;
+      padding: 0.9rem 1rem;
+      margin: 1rem 0 1.25rem 0;
+    }
+    .glyph {
+      white-space: pre-wrap;
+      font-family: "Courier New", Courier, monospace;
+      line-height: 1.25;
+      margin: 0.8rem 0 1rem 0;
+    }
+    .layer-title { margin-bottom: 0.3rem; }
+    .layer-sub {
+      margin-top: 0;
+      margin-bottom: 0.9rem;
+      font-style: italic;
+      opacity: 0.85;
+    }
+    .image-strip {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+      margin: 1.25rem 0;
+    }
+    .image-strip figure { margin: 0; }
+    .image-strip img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid currentColor;
+    }
+    .image-strip figcaption {
+      font-size: 0.9rem;
+      margin-top: 0.35rem;
+      opacity: 0.85;
+    }
+    .link-grid { margin-top: 1rem; }
+    .link-grid a {
+      display: inline-block;
+      margin: 0 0.9rem 0.5rem 0;
+    }
+    .smallcaps {
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.88rem;
+    }
+    .project-entry {
+      border-top: 1px solid currentColor;
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+    .project-entry:first-of-type {
+      margin-top: 0.4rem;
+    }
+    .project-entry h3 {
+      margin-bottom: 0.35rem;
+    }
+    .project-meta {
+      font-size: 0.92rem;
+      opacity: 0.8;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+    .timeline-entry {
+      border-left: 1px solid currentColor;
+      padding-left: 1rem;
+      margin: 1rem 0 1.2rem 0.25rem;
+    }
+    .timeline-entry h3 {
+      margin-bottom: 0.25rem;
+    }
+    .quote-block {
+      border-left: 2px solid currentColor;
+      padding-left: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+    }
+    @media (min-width: 900px) {
+      .image-strip { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="main">
+      <h1><a href="index.html">| yesteryear forever |</a></h1>
+
+      <p class="smallcaps">Cross Section / Curiosity Map / Working Profile</p>
+
+      <p class="profile-note">
+        This is not exactly an about page.<br>
+        More like a cross section. A field guide. A partial diagram.<br>
+        A snapshot of the systems, questions, projects, and patterns underneath the visible surface.
+      </p>
+
+      <div class="artifact-box">
+<pre class="glyph">surface
+  │
+systems
+  │
+pattern
+  │
+reality
+  │
+experience
+  │
+artifacts
+  │
+?</pre>
+      </div>
+
+      <span class="section-label">LAYER 1</span>
+      <h2 class="layer-title">Surface</h2>
+      <p class="layer-sub">What I do in the visible world.</p>
+
+      <p>
+        Clinical engineering. Electronics. Troubleshooting. Repair. Writing. Music. Systems.
+        Documentation. Problem solving. Building things that work.
+      </p>
+
+      <p>
+        I grew up on a farm. I’ve worked in electronics engineering, startup operations, and medical equipment service.
+        I’ve helped build businesses, repair machines, write procedures, design processes, and keep complicated things running.
+      </p>
+
+      <p class="mini">
+        I am at home with tools, wires, dirt, diagrams, checklists, signal paths, quiet rooms, and long projects.
+      </p>
+
+      <hr class="crossline">
+
+      <span class="section-label">LAYER 2</span>
+      <h2 class="layer-title">Systems</h2>
+      <p class="layer-sub">How I tend to move through problems.</p>
+
+      <p>
+        Understand the system.<br>
+        Find the fault line.<br>
+        Repair what is broken.<br>
+        Rebuild what can be improved.<br>
+        Document the pattern.<br>
+        Repeat.
+      </p>
+
+      <p>
+        I learn by making. By fixing. By tracing causes. By watching how parts interact.
+        The fastest way for me to understand something has usually been to build it, test it, or take it apart.
+      </p>
+
+      <p>
+        This has shown up in electronics repair, self-hosted web infrastructure, robotics, weather instrumentation,
+        observatory building, studio construction, scripts, archive systems, and countless smaller projects done purely out of curiosity.
+      </p>
+
+      <hr class="crossline">
+
+      <span class="section-label">LAYER 3</span>
+      <h2 class="layer-title">Pattern</h2>
+      <p class="layer-sub">How I think about identity and continuity.</p>
+
+      <p>
+        I have long been fascinated by the idea that identity may be less about fixed substance and more about structure,
+        continuity, and arrangement — patterns persisting through change.
+      </p>
+
+      <p>
+        Maybe that is one reason I am drawn to systems, archives, journals, diagrams, modular design, and old machines:
+        they all preserve traces of pattern across time.
+      </p>
+
+      <p>
+        Lego as a child. Nature cross-sections on the wall. Handwritten journals for decades.
+        Typewriters. Schematics. Maps. Procedures. Websites built to last.
+      </p>
+
+      <hr class="crossline">
+
+      <span class="section-label">LAYER 4</span>
+      <h2 class="layer-title">Reality</h2>
+      <p class="layer-sub">The deeper questions underneath the projects.</p>
+
+      <p>
+        I am drawn to questions about what is actually there beneath appearance:
+        perception versus reality, mechanism versus mystery, identity versus change,
+        and how meaning survives inside a scientific picture of the world.
+      </p>
+
+      <p>
+        Science has never reduced wonder for me. It has sharpened it.
+        The hidden structure is usually stranger, larger, and more beautiful than the surface impression.
+      </p>
+
+      <p>
+        I have always loved the ocean, astronomy, deep time, nature, machinery, and the feeling that reality is bigger than our first explanation of it.
+      </p>
+
+      <hr class="crossline">
+
+      <span class="section-label">LAYER 5</span>
+      <h2 class="layer-title">Experience</h2>
+      <p class="layer-sub">What keeps this from becoming only abstraction.</p>
+
+      <p>
+        Rationality, humility, honesty, and truth matter deeply to me.
+        But feelings matter too. Maybe more than we often admit.
+      </p>
+
+      <p>
+        People may forget the exact words. They often remember how they felt.
+        That matters. It changes how I think about meaning, memory, religion, art, music, family, and everyday life.
+      </p>
+
+      <p>
+        Running has been one way I’ve lived this out: long, solitary miles for no audience, no race, no external reward —
+        just because doing it feels true. Handwritten journals are another. So is music.
+      </p>
+
+      <p>
+        I am interested in systems, but I don’t want to lose the human inside them.
+      </p>
+
+      <hr class="crossline">
+
+      <span class="section-label">SELECTED BUILDS</span>
+      <h2 class="layer-title">Artifacts</h2>
+      <p class="layer-sub">A few things I’ve built, explored, or brought into the world.</p>
+
+      <div class="project-entry">
+        <h3>Backyard astronomical observatory</h3>
+        <p class="project-meta">astronomy / construction / imaging / scale</p>
+        <p>
+          I designed and built a professional-grade observatory in my backyard and used it to image galaxies,
+          nebulae, comets, and supernovae. It was both a technical system and a philosophical instrument —
+          a way to make cosmic scale intimate and tangible.
+        </p>
+      </div>
+
+      <div class="project-entry">
+        <h3>Weather station + simple radio telescope</h3>
+        <p class="project-meta">environmental sensing / data logging / invisible signals</p>
+        <p>
+          I built a weather tracking system that recorded atmospheric pressure, temperature, and light levels
+          and uploaded them to the internet automatically. Later I folded a simple radio telescope into the setup,
+          extending the project from local weather into the broader idea of measuring what cannot be seen directly.
+        </p>
+      </div>
+
+      <div class="project-entry">
+        <h3>Recording studio from a gutted building</h3>
+        <p class="project-meta">music / acoustics / design / long-form creation</p>
+        <p>
+          I built a full recording studio from the ground up in a stripped-down building, then used it to write,
+          record, engineer, and produce my own music as well as music for others. It was architecture, electronics,
+          atmosphere, and storytelling all converging in one place.
+        </p>
+      </div>
+
+      <div class="project-entry">
+        <h3>Robots, rovers, rockets, and other homemade machines</h3>
+        <p class="project-meta">robotics / motion / experimentation / play</p>
+        <p>
+          I’ve built everything from junkbots made of discarded parts to remote-controlled rovers with cameras
+          and environmental sensors, along with rockets carrying electronic payloads. These projects were less about product
+          development and more about learning through direct experimentation.
+        </p>
+      </div>
+
+      <div class="project-entry">
+        <h3>Universal hard drive wiping system</h3>
+        <p class="project-meta">engineering / workflow design / scripting / real-world utility</p>
+        <p>
+          In the electronics industry, I designed and implemented a universal hard drive wiping solution involving
+          custom hardware stations, software, scripts, and process design. It solved a practical need at scale and,
+          to my knowledge, is still in use today.
+        </p>
+      </div>
+
+      <div class="project-entry">
+        <h3>Self-hosted brutalist website and archive system</h3>
+        <p class="project-meta">web infrastructure / writing / preservation / autonomy</p>
+        <p>
+          This site is one of the more personal builds: plain HTML, lightweight structure, automation scripts,
+          and an intentionally archival feel. It is less a portfolio than a time capsule, lab notebook, and durable
+          record of questions, projects, and half-finished dreams.
+        </p>
+      </div>
+
+      <div class="project-entry">
+        <h3>Printed telescope + custom-modified 3D printer</h3>
+        <p class="project-meta">fabrication / optics / iteration / making tools make tools</p>
+        <p>
+          After modifying a 3D printer for my own purposes, I used it to print a fully functional reflecting telescope
+          and many other objects. I’ve always loved projects where one tool becomes the means of creating the next.
+        </p>
+      </div>
+
+      <div class="project-entry">
+        <h3>Stop-motion music video</h3>
+        <p class="project-meta">patience / craft / visual storytelling / obsession</p>
+        <p>
+          I created a stop-motion music video that took years to complete. It was painstaking, impractical, and completely worth it —
+          the kind of project that only makes sense if process itself is part of the reward.
+        </p>
+      </div>
+
+      <hr class="crossline">
+
+      <span class="section-label">IMAGE FRAGMENTS</span>
+      <p class="layer-sub">Replace these with images already living somewhere in the archive.</p>
+
+      <div class="image-strip">
+        <figure>
+          <img src="images/placeholder_1.jpg" alt="Observatory, telescope, robot, or studio image placeholder" />
+          <figcaption>Suggested: observatory, telescope, or night-sky image from an existing post.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/placeholder_2.jpg" alt="Circuit, journal, studio, or nature image placeholder" />
+          <figcaption>Suggested: something that contrasts scale — circuitry, a journal page, ocean, or machinery.</figcaption>
+        </figure>
+      </div>
+
+      <hr class="crossline">
+
+      <span class="section-label">TIMELINE FRAGMENTS</span>
+      <h2 class="layer-title">A few anchor points</h2>
+      <p class="layer-sub">Not exhaustive. Just enough to show the shape of the path.</p>
+
+      <div class="timeline-entry">
+        <h3>Farm</h3>
+        <p>
+          Early life was full of tools, dirt, machines, gardens, repairs, and manual labor.
+          Work ethic and mechanical intuition started there.
+        </p>
+      </div>
+
+      <div class="timeline-entry">
+        <h3>Music</h3>
+        <p>
+          Played in bands, wrote and recorded albums, opened for national acts, ran sound, and spent years learning
+          that emotional truth and technical craft can live in the same room.
+        </p>
+      </div>
+
+      <div class="timeline-entry">
+        <h3>Electronics engineering</h3>
+        <p>
+          Spent fifteen years in electronics service and engineering, moving from solder technician to root-cause analysis,
+          diagnostics, process design, and system-level troubleshooting.
+        </p>
+      </div>
+
+      <div class="timeline-entry">
+        <h3>Small business / COLO</h3>
+        <p>
+          Stepped out of a global corporation into a local family business and helped build systems across marketing,
+          HR, IT, infrastructure, operations, and growth.
+        </p>
+      </div>
+
+      <div class="timeline-entry">
+        <h3>Clinical engineering</h3>
+        <p>
+          Now working in clinical engineering, where technical skill, people skill, and practical problem solving meet
+          in a context with direct human consequence.
+        </p>
+      </div>
+
+      <hr class="crossline">
+
+      <span class="section-label">RECURRING THEMES</span>
+      <h2 class="layer-title">What keeps showing up</h2>
+      <p class="layer-sub">The motifs underneath the variety.</p>
+
+      <div class="artifact-box">
+        <p><strong>Repair</strong> — not just fixing what is broken, but understanding why it broke</p>
+        <p><strong>Scale</strong> — from circuitry to oceans to galaxies</p>
+        <p><strong>Archive</strong> — journals, records, websites, preserved traces</p>
+        <p><strong>Signal</strong> — weather, radio, electronics, invisible causes</p>
+        <p><strong>Craft</strong> — process matters, texture matters, intention matters</p>
+        <p><strong>Emotion</strong> — feeling is not opposed to truth; it is part of the human encounter with it</p>
+      </div>
+
+      <div class="quote-block">
+        What is this, really?<br>
+        And how should a conscious pattern live inside it?
+      </div>
+
+      <div class="link-grid">
+        <a href="archive.html">archive</a>
+        <a href="links.html">links</a>
+        <a href="desiderata.html">desiderata</a>
+      </div>
+
+      <p class="mini">
+        Working page. Incomplete by design. Subject to revision.
+      </p>
+    </div>
+
+    <div id="archive">
+      <script>
+        // If your site populates the archive automatically with script.js, this can stay empty.
+        // Otherwise, paste your normal archive links here using the same structure as your other pages.
+      </script>
+    </div>
+  </div>
+</body>
+</html>
