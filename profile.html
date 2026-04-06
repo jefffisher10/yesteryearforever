@@ -1,635 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cross Section</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>| yesteryear forever |</title>
   <style>
-    .smallcaps {
+    :root {
+      --bg: #f5f2eb;
+      --text: #1a1a1a;
+      --muted: #666;
+      --rule: #ccc;
+      --accent: #2a2a2a;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;
+        --text: #e8e4db;
+        --muted: #999;
+        --rule: #444;
+        --accent: #e8e4db;
+      }
+    }
+    body.dark {
+      --bg: #1a1a1a;
+      --text: #e8e4db;
+      --muted: #999;
+      --rule: #444;
+      --accent: #e8e4db;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    a { color: var(--text); }
+    a:hover { opacity: 0.6; }
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    header a {
+      font-size: 0.85rem;
+      text-decoration: none;
       letter-spacing: 0.05em;
+      text-transform: lowercase;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: normal;
+      letter-spacing: 0.02em;
+      margin: 2.5rem 0 0.25rem;
+    }
+    h2 {
+      font-size: 1rem;
+      font-weight: normal;
       text-transform: uppercase;
-      font-size: 0.88rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin: 2.5rem 0 1rem;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.4rem;
     }
-
-    .profile-note {
-      font-style: italic;
-      margin: 0 0 1.5rem 0;
+    h3 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 1.5rem 0 0.25rem;
     }
-
-    .section-label {
-      display: inline-block;
-      border: 1px solid currentColor;
-      padding: 0.1rem 0.45rem;
-      margin: 1.8rem 0 0.7rem 0;
-      font-size: 0.9rem;
-      letter-spacing: 0.03em;
+    p {
+      margin-bottom: 1rem;
+      color: var(--text);
     }
-
-    .crossline {
-      margin: 1.6rem 0;
-      border: 0;
-      border-top: 1px dashed currentColor;
-      opacity: 0.65;
+    .meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
     }
-
-    .artifact-box {
-      border: 1px solid currentColor;
-      padding: 0.9rem 1rem;
-      margin: 1rem 0 1.3rem 0;
+    .intro {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      margin-bottom: 2rem;
     }
-
-    .glyph {
-      white-space: pre-wrap;
-      font-family: "Courier New", Courier, monospace;
-      line-height: 1.25;
-      margin: 0;
+    ul {
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
     }
-
-    .layer-title {
-      margin-bottom: 0.25rem;
-    }
-
-    .layer-sub {
-      margin-top: 0;
-      margin-bottom: 0.9rem;
-      font-style: italic;
-      opacity: 0.85;
-    }
-
-    .mini {
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    .project-entry {
-      border-top: 1px solid currentColor;
-      padding-top: 1rem;
-      margin-top: 1rem;
-    }
-
-    .project-entry h3 {
+    li {
       margin-bottom: 0.3rem;
     }
-
-    .project-meta {
-      font-size: 0.92rem;
-      opacity: 0.8;
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-style: italic;
+    .tag-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
     }
-
-    .timeline-entry {
-      border-left: 1px solid currentColor;
-      padding-left: 1rem;
-      margin: 1rem 0 1.2rem 0.25rem;
-    }
-
-    .timeline-entry h3 {
-      margin-bottom: 0.25rem;
-    }
-
-    .quote-block {
-      border-left: 2px solid currentColor;
-      padding-left: 1rem;
-      margin: 1rem 0;
-      font-style: italic;
-    }
-
-    .image-strip {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
-      margin: 1.25rem 0;
-    }
-
-    .image-strip figure {
+    .tag-list li {
+      font-size: 0.8rem;
+      color: var(--muted);
+      border: 1px solid var(--rule);
+      padding: 0.1rem 0.5rem;
       margin: 0;
     }
-
-    .image-strip img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border: 1px solid currentColor;
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 2.5rem 0;
     }
-
-    .image-strip figcaption {
-      font-size: 0.9rem;
-      margin-top: 0.35rem;
-      opacity: 0.85;
+    .role {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.25rem;
     }
-
-    .link-grid {
-      margin-top: 1rem;
+    .role-title {
+      font-weight: bold;
     }
-
-    .link-grid a {
-      display: inline-block;
-      margin: 0 0.9rem 0.5rem 0;
+    .role-dates {
+      font-size: 0.85rem;
+      color: var(--muted);
     }
-
-    @media (min-width: 900px) {
-      .image-strip {
-        grid-template-columns: 1fr 1fr;
-      }
+    blockquote {
+      border-left: 2px solid var(--rule);
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+      color: var(--muted);
+      font-style: italic;
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .toggle {
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-decoration: underline;
+      color: var(--muted);
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 0;
+    }
+    .toggle:hover { opacity: 0.6; }
+    .nav-links {
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      margin: 0 0.4rem;
+      color: var(--muted);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div id="main">
-      <h1><a href="index.html">| yesteryear forever |</a></h1>
 
-      <p class="smallcaps">Cross Section / Curiosity Map / Working Profile</p>
-
-      <p class="profile-note">
-        Not exactly an about page. Not exactly a résumé either.<br>
-        More like a cross section. A field guide. A partial diagram of a life.<br>
-        A record of the things underneath the visible surface: family, questions, projects, work, wonder, habits, and whatever pattern ties them together.
-      </p>
-
-      <div class="artifact-box">
-<pre class="glyph">surface
-  │
-family
-  │
-systems
-  │
-pattern
-  │
-reality
-  │
-experience
-  │
-artifacts
-  │
-timeline
-  │
-?</pre>
-      </div>
-
-      <span class="section-label">CENTER</span>
-      <h2 class="layer-title">Home</h2>
-      <p class="layer-sub">The part underneath the rest.</p>
-
-      <p>
-        Family is the center of my life.
-      </p>
-
-      <p>
-        My wife and daughters matter more to me than any machine, project, question, or system I have ever built.
-        The archive, the essays, the late-night tinkering, the long runs, the telescopes, the music, the journals —
-        all of it exists inside a larger life made of love, responsibility, memory, grief, celebration, and continuity.
-      </p>
-
-      <p>
-        I come from a large, close family. We get together often. We celebrate loudly and regularly.
-        Cousins, aunts, uncles, friends, daughters, siblings — the web is large, messy, durable, and alive.
-        My father's death changed that world, but not its importance.
-      </p>
-
-      <p>
-        If this site lasts for years, I want it to preserve more than technical artifacts or old posts.
-        I want it to preserve a person in context: what mattered to me, what I paid attention to, what I tried to build,
-        and the people I was lucky enough to love while doing it.
-      </p>
-
-      <hr class="crossline">
-
-      <span class="section-label">LAYER 1</span>
-      <h2 class="layer-title">Surface</h2>
-      <p class="layer-sub">The visible shape of the life.</p>
-
-      <p>
-        Electronics. Repair. Music. Tinkering. Writing. Nature. Astronomy. Systems. Problem solving.
-        Building things that work. Building things that reveal something. Building things for the simple joy of making them exist.
-        Writing belongs near the center of that list. It is one of the main ways I slow down enough to hear what I actually think.
-      </p>
-
-      <p>
-        I grew up on a farm and learned early that life is physical, practical, and full of things that break.
-        Trucks, tractors, welding, wiring, gardens, repairs, roofing, plumbing, framing, cutting, carrying, improvising.
-        That world taught me work ethic, mechanical intuition, adaptability, and a respect for the difference between theory and reality.
-      </p>
-
-      <p>
-        Later, music became another major language. So did writing.
-        I played in bands, wrote and recorded albums, opened for national acts,
-        ran sound, and built a recording studio from a gutted building. I also kept returning to essays, journals, and reflective writing
-        as a way to sort through scattered thoughts and make them more honest, precise, and coherent.
-        Around and beneath all of that was a constant attraction
-        to science, technology, nature, and the feeling that the world is far stranger and more beautiful than it first appears.
-      </p>
-
-      <p class="mini">
-        I identify most strongly with electronics, tinkering, curiosity, and making — more than with any one title.
-      </p>
-
-      <hr class="crossline">
-
-      <span class="section-label">LAYER 2</span>
-      <h2 class="layer-title">Systems</h2>
-      <p class="layer-sub">How I tend to move through problems and projects.</p>
-
-      <p>
-        Understand the system.<br>
-        Trace the signal.<br>
-        Find the fault line.<br>
-        Repair what is broken.<br>
-        Improve what can be improved.<br>
-        Document the pattern.<br>
-        Repeat.
-      </p>
-
-      <p>
-        I tend to learn by building, fixing, modifying, taking apart, testing, and observing.
-        The quickest way for me to understand something has almost always been to get my hands on it.
-        That might mean reading a schematic, writing a script, soldering a board, adjusting a process, laying out a workspace,
-        or building an instrument from scratch just to see what it can teach me.
-      </p>
-
-      <p>
-        This systems instinct shows up in everything from electronics repair and diagnostic work,
-        to self-hosted web infrastructure, robotics, weather instrumentation, process design, archival systems,
-        and personal routines like journaling and long-distance running.
-      </p>
-
-      <p>
-        Even when a project looks artistic on the surface, there is usually a systems layer beneath it:
-        acoustics inside the recording studio, timing inside the stop-motion video, atmosphere and layout inside the website,
-        structure and process inside writing, repetition and adaptation inside endurance.
-      </p>
-
-      <hr class="crossline">
-
-      <span class="section-label">LAYER 3</span>
-      <h2 class="layer-title">Pattern</h2>
-      <p class="layer-sub">How I think about identity, continuity, and structure.</p>
-
-      <p>
-        One of the deepest ideas in my life has been the thought that identity may be less about fixed substance
-        and more about continuity, arrangement, and pattern.
-        Not things as static objects, but things as structures persisting through change.
-      </p>
-
-      <p>
-        That idea helps explain a lot of what I am drawn to:
-        systems, emergence, old machines, handwritten journals, diagrams, maps, modular design, archives, astronomy,
-        questions about consciousness, and the long fascination with what remains the same when everything else changes.
-      </p>
-
-      <p>
-        Looking back, the early signs were obvious: Lego for construction, nature cross-sections on the wall,
-        fascination with inner layers and hidden mechanisms, a love of diagrams and anything that revealed what was going on beneath the visible surface.
-      </p>
-
-      <p>
-        It probably also explains why I care so much about records: journals kept for decades, typewriters refurbished and used deliberately,
-        websites designed to preserve thought and memory, projects documented not just because they happened,
-        but because I want some trace of the pattern to remain.
-      </p>
-
-      <hr class="crossline">
-
-      <span class="section-label">LAYER 4</span>
-      <h2 class="layer-title">Reality</h2>
-      <p class="layer-sub">The bigger questions underneath the projects.</p>
-
-      <p>
-        I am drawn to the tension between perception and reality: what the world feels like from the inside,
-        and what science reveals when you look deeper.
-        Matter and identity. Mechanism and wonder. Consciousness and pattern.
-        What is real. What is felt. What survives explanation. What becomes more mysterious once explained correctly.
-      </p>
-
-      <p>
-        Astronomy has always been one path into that feeling.
-        So has the ocean. So has nature. So has electronics.
-        Vastness. Hidden layers. Signal buried inside noise. The sense that there is always more underneath.
-      </p>
-
-      <p>
-        I wrote a long essay years ago trying to synthesize some of this:
-        identity as pattern, the inadequacy of ordinary perception, the continuity of matter and life,
-        and what it might mean to live honestly inside a scientific view of reality.
-        Since then, some nuances have shifted, especially around emotion, meaning, and faith,
-        but the core questions remain.
-      </p>
-
-      <p>
-        Science has never taken wonder away from me.
-        It has usually intensified it.
-        The real thing is almost always stranger than the simplified version.
-      </p>
-
-      <hr class="crossline">
-
-      <span class="section-label">LAYER 5</span>
-      <h2 class="layer-title">Experience</h2>
-      <p class="layer-sub">What keeps this from becoming only abstraction.</p>
-
-      <p>
-        Honesty, humility, rationality, truthfulness, and integrity matter deeply to me.
-        But feeling matters too.
-        Maybe more than a strict rationalist version of myself once wanted to admit.
-      </p>
-
-      <p>
-        One of the truths I have come to trust is that emotions are not a lesser reality just because they are subjective.
-        They may be the most immediate and human reality we have.
-        People may forget the exact words, but they often remember how they felt in your presence.
-        That matters to me in music, family, friendship, work, writing, and even how I think about religion now.
-      </p>
-
-      <p>
-        I have lived with anxiety, long bouts of depression, and what is almost certainly ADHD.
-        Those things are not the whole story, but they are part of the terrain.
-        Over time I have built ways of coping: journaling, exercise, projects, solitude, routine, making, reflection,
-        and the discipline of continuing anyway.
-      </p>
-
-      <p>
-        Running has been one of the clearest examples of that.
-        I have run dozens of marathons alone, not as public races and not for medals,
-        but for the inward truth of the thing — the quiet endurance, the private continuity, the unglamorous accumulation of miles.
-      </p>
-
-      <p>
-        Writing has been one of the clearest forms of that.
-        Left to itself, my mind can be scattered and fast. Writing gives it shape.
-        It helps me slow down enough to articulate what I feel, what I mean, and what I am actually trying to say.
-      </p>
-
-      <p>
-        Music has been another.
-        Handwriting another.
-        Typewriters another.
-        These are all ways of slowing down enough to feel my own life while I am living it.
-      </p>
-
-      <hr class="crossline">
-
-      <span class="section-label">SELECTED BUILDS</span>
-      <h2 class="layer-title">Artifacts</h2>
-      <p class="layer-sub">A few things I have built, explored, written, or brought into the world.</p>
-
-      <div class="project-entry">
-        <h3>Backyard astronomical observatory</h3>
-        <p class="project-meta">astronomy / construction / imaging / scale</p>
-        <p>
-          I designed and built a professional-grade observatory in my backyard and used it to image galaxies, nebulae,
-          comets, and supernovae. It was a technical structure, but also a philosophical one —
-          a way to make cosmic scale intimate and literal, to stand in the backyard and reach into deep time.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Weather station + simple radio telescope</h3>
-        <p class="project-meta">environmental sensing / data logging / invisible signals</p>
-        <p>
-          I built a weather tracking system that recorded atmospheric pressure, temperature, and light levels
-          and uploaded them to the internet automatically. Later I folded a simple radio telescope into the setup,
-          extending the project from local atmosphere to the broader idea of detecting what cannot be seen directly.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Recording studio from a gutted building</h3>
-        <p class="project-meta">music / acoustics / design / long-form creation</p>
-        <p>
-          I built a full recording studio from the ground up in a stripped-down building and used it to write,
-          record, engineer, and produce original music — my own and others'. It was a build that merged construction,
-          sound, atmosphere, electronics, patience, and emotional intent into one place.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Albums, bands, and live performance</h3>
-        <p class="project-meta">songwriting / guitar / radio / venues / emotional architecture</p>
-        <p>
-          I played in bands for years, wrote and recorded albums, played major venues in Ohio with national acts,
-          and was interviewed on local radio. Music taught me something no machine ever could:
-          that technical craft and emotional truth can coexist, and that sometimes making people feel something
-          matters more than winning an argument.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Robots, rovers, rockets, and homemade machines</h3>
-        <p class="project-meta">robotics / motion / experimentation / play</p>
-        <p>
-          I have built everything from autonomous junkbots made from discarded parts to remote-controlled rovers with cameras
-          and environmental sensors, along with rockets carrying electronic payloads. These were not commercial products.
-          They were acts of curiosity — ways to learn by making motion, signal, and mechanism tangible.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Printed telescope + custom-modified 3D printer</h3>
-        <p class="project-meta">fabrication / optics / iteration / tools making tools</p>
-        <p>
-          After modifying a 3D printer for my own purposes, I used it to print a fully functional reflecting telescope
-          and many other objects. I have always loved projects where one tool becomes the means of creating the next:
-          recursive making, capability building capability.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Universal hard drive wiping system</h3>
-        <p class="project-meta">electronics / workflow design / scripting / real-world utility</p>
-        <p>
-          During my years in electronics service, I designed and implemented a universal hard drive wiping solution involving
-          custom hardware stations, software, scripts, and process design. It solved a practical problem at scale and,
-          to my knowledge, is still in use today.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Electronics repair, diagnostics, and engineering work</h3>
-        <p class="project-meta">schematics / troubleshooting / root cause / signal tracing</p>
-        <p>
-          Over roughly fifteen years in the electronics industry, I moved from solder technician to repair technician,
-          lead, and then engineering-related roles involving diagnostics, X-ray inspection, BGA work, flying probes,
-          oscilloscopes, chip programmers, server repair, process design, training, documentation, and root-cause analysis.
-          That whole era shaped how I think.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Self-hosted website and archive system</h3>
-        <p class="project-meta">plain HTML / writing / preservation / autonomy</p>
-        <p>
-          This site is one of the more personal builds. Plain HTML. Lightweight structure. Python automation.
-          An intentionally archival feel. Less portfolio than time capsule, lab notebook, curiosity map, and durable record
-          of half-finished dreams, essays, experiments, and old signals I wanted to preserve.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Stop-motion music video</h3>
-        <p class="project-meta">patience / craft / visual storytelling / obsession</p>
-        <p>
-          I created a stop-motion music video that took years to complete. It was painstaking, impractical, and exactly the kind
-          of thing I love — the sort of project where the process is part meditation, part obsession, part craftsmanship,
-          and the finished artifact contains the time that was poured into it.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Writing, essays, journals, and typewriters</h3>
-        <p class="project-meta">reflection / posterity / analog texture / continuity</p>
-        <p>
-          I have kept daily handwritten journals for decades. I refurbish and use antique typewriters.
-          I write essays trying to synthesize questions about reality, identity, consciousness, and meaning.
-          Writing helps me make my own mind legible to myself. It is one of the tools I use to turn noise into shape.
-          I do not always feel as skilled at it as I want to be, and I rarely have as much time for it as I wish,
-          but I keep returning to it anyway. These may be quieter artifacts than a telescope or a robot,
-          but they may be the most important ones.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Business-building and adaptable systems work</h3>
-        <p class="project-meta">operations / infrastructure / problem solving / many hats</p>
-        <p>
-          In a family-owned seafood business, I helped build online systems, inventory processes, HR infrastructure,
-          branding, IT support, operational scaffolding, and countless practical details required to help a small company grow.
-          It was a different kind of build than electronics, but still very much a systems project.
-        </p>
-      </div>
-
-      <div class="project-entry">
-        <h3>Clinical engineering</h3>
-        <p class="project-meta">recent chapter / maintenance / human consequence</p>
-        <p>
-          More recently, I moved into clinical engineering, where I repair and maintain medical equipment.
-          It is a newer chapter, so it does not define me as deeply as music, electronics, tinkering, or the broader builder instinct,
-          but it does bring together technical work, troubleshooting, and direct human consequence in a meaningful way.
-        </p>
-      </div>
-
-      <hr class="crossline">
-
-      <span class="section-label">IMAGE FRAGMENTS</span>
-      <p class="layer-sub">Still ready for real images from the archive when you want to wire them in.</p>
-
-      <div class="image-strip">
-        <figure>
-          <img src="images/placeholder_1.jpg" alt="Observatory, telescope, music, or project image placeholder" />
-          <figcaption>Suggested: observatory, telescope, or night-sky image from an existing post.</figcaption>
-        </figure>
-        <figure>
-          <img src="images/placeholder_2.jpg" alt="Circuit, journal, studio, or nature image placeholder" />
-          <figcaption>Suggested: something that contrasts scale — circuitry, a journal page, ocean, or machinery.</figcaption>
-        </figure>
-      </div>
-
-      <hr class="crossline">
-
-      <span class="section-label">TIMELINE</span>
-      <h2 class="layer-title">Fragments</h2>
-      <p class="layer-sub">Not exhaustive. Just enough to show the shape of the path.</p>
-
-      <div class="timeline-entry">
-        <h3>Farm</h3>
-        <p>
-          Childhood and adolescence shaped by labor, machinery, gardens, repairs, improvisation, and learning by doing.
-          The work ethic started there. So did the comfort with tools and the instinct to fix what is broken.
-        </p>
-      </div>
-
-      <div class="timeline-entry">
-        <h3>Music</h3>
-        <p>
-          Bands, albums, guitars, radio, venues, sound systems, songwriting, atmosphere, and the discovery that feeling and craft
-          do not have to be enemies.
-        </p>
-      </div>
-
-      <div class="timeline-entry">
-        <h3>Electronics</h3>
-        <p>
-          Fifteen years in electronics repair and engineering-adjacent work:
-          soldering, schematics, diagnostics, process design, server repair, root-cause analysis, and the long education
-          of learning how signal travels through real systems.
-        </p>
-      </div>
-
-      <div class="timeline-entry">
-        <h3>Small business / COLO</h3>
-        <p>
-          A move from global corporate structure into local family-business reality:
-          websites, IT, inventory, HR, operations, branding, support, and whatever else needed done.
-          Many hats. Same builder impulse.
-        </p>
-      </div>
-
-      <div class="timeline-entry">
-        <h3>Observatory / robots / weather / printing / side projects</h3>
-        <p>
-          The parallel life that kept running the whole time:
-          telescopes, studios, robots, music videos, rockets, software simulations, instruments, journals, websites,
-          and many projects done simply because curiosity demanded a form.
-        </p>
-      </div>
-
-      <div class="timeline-entry">
-        <h3>Now</h3>
-        <p>
-          Still building. Still writing. Still journaling. Still running. Still trying to understand what is real,
-          what matters, and how to leave behind an honest record of having been here.
-        </p>
-      </div>
-
-      <hr class="crossline">
-
-      <span class="section-label">RECURRING THEMES</span>
-      <h2 class="layer-title">What keeps showing up</h2>
-      <p class="layer-sub">The motifs underneath the variety.</p>
-
-      <div class="artifact-box">
-        <p><strong>Repair</strong> — not just fixing what is broken, but understanding why it broke</p>
-        <p><strong>Scale</strong> — from circuitry to weather to oceans to galaxies</p>
-        <p><strong>Archive</strong> — journals, records, websites, preserved traces, posterity</p>
-        <p><strong>Signal</strong> — weather, radio, electronics, music, invisible causes</p>
-        <p><strong>Craft</strong> — process matters, texture matters, intention matters</p>
-        <p><strong>Emotion</strong> — feeling is not opposed to truth; it is part of the human encounter with it</p>
-        <p><strong>Nature</strong> — ocean, sky, weather, gardens, deep time, habitat, scale</p>
-        <p><strong>Meaning</strong> — what a conscious pattern should do with the time it has</p>
-      </div>
-
-      <div class="quote-block">
-        What is this, really?<br>
-        And how should a conscious pattern live inside it?
-      </div>
-
-      <p>
-        Built things.<br>
-        Asked questions.<br>
-        Kept records.<br>
-        Loved my family.<br>
-        Tried to pay attention.
-      </p>
-
-      <div class="link-grid">
-        <a href="archive.html">archive</a>
-        <a href="links.html">links</a>
-        <a href="desiderata.html">desiderata</a>
-      </div>
-
-      <p class="mini">
-        Working page. Incomplete by design. Subject to revision.
-      </p>
-    </div>
-
-    <div id="archive">
-      <script>
-        // Leave empty if your existing script.js populates the archive automatically.
-      </script>
-    </div>
+<header>
+  <a href="https://yesteryearforever.xyz/index.html">| yesteryear forever |</a>
+  <div class="nav-links">
+    <a href="https://yesteryearforever.xyz/archive.html">archive</a> ·
+    <a href="https://yesteryearforever.xyz/links.html">links</a> ·
+    <a href="https://yesteryearforever.xyz/desiderata.html">desiderata</a>
   </div>
+</header>
+
+<h1>Jeffrey Fisher Jr.</h1>
+<p class="meta">Columbus, Ohio · Born August 13, 1981 · <a href="mailto:">yesteryearforever.xyz</a></p>
+
+<div class="intro">
+  <p>This isn't exactly a résumé. It's not exactly an about page either. It's more like a cross-section — a partial diagram of what's underneath the surface. I've had a strange and winding career path that doesn't fit neatly into any one box, which I've come to think of as a feature rather than a bug. I describe myself in one word: versatile.</p>
+  <p>The common thread through all of it — the farm, the bands, the electronics lab, the seafood startup, the hospital equipment, the backyard rockets — is that I like to understand how things work, fix what's broken, and build things that didn't exist before. I also try to write about it, though I never feel like I'm quite good enough at that part.</p>
+</div>
+
+<hr>
+
+<h2>Work</h2>
+
+<h3>
+  <div class="role">
+    <span class="role-title">Biomedical Equipment Technician (Biomed)</span>
+    <span class="role-dates">2023 – present</span>
+  </div>
+</h3>
+<p class="meta">The Ohio State University · Clinical Engineering · Columbus, OH</p>
+<p>Repair and maintain medical equipment across a large university hospital system — vitals machines, patient monitors, infusion pumps, high-level sanitation devices, and more. This role brings together everything I've picked up over the years: electronics diagnostics, people skills, problem solving under pressure, and the understanding that the stakes are real. It's the job where all the threads finally converge, and I'm proud to be doing it at an institution I've admired my whole life.</p>
+
+<h3>
+  <div class="role">
+    <span class="role-title">Operations, IT, and Brand · Co-founder</span>
+    <span class="role-dates">2016 – 2022</span>
+  </div>
+</h3>
+<p class="meta">Coastal Local Seafood (COLO) · Columbus, OH</p>
+<p>Left a Fortune 500 career to help build a small, local seafood business from the ground up. Started by building the ecommerce platform and managing online presence, then quickly took on everything else: HR, inventory systems, POS management, brand identity, employee training, LLC formation, insurance, sales projections, and whatever needed doing on any given day — including scrubbing floors. Helped grow a startup into a multimillion dollar company. The most valuable thing I took away wasn't technical. It was learning how to communicate with a wide range of people in a wide range of situations.</p>
+
+<h3>
+  <div class="role">
+    <span class="role-title">Electronics Engineer Technician / Engineering Team</span>
+    <span class="role-dates">2001 – 2016</span>
+  </div>
+</h3>
+<p class="meta">PDSi · Tech Data · Avnet · TD Synnex · Columbus, OH</p>
+<p>Fifteen years at a mid-sized electronics repair company that was acquired and absorbed a few times over by Fortune 500 corporations. Started as a solder technician learning to read schematics and troubleshoot motherboards. Worked my way up through repair tech, lead, and eventually the engineering team. Along the way I became proficient with 3D X-ray machines, BGA rework, flying probes, chip programmers, oscilloscopes, and most of the instruments you'd find in a serious electronics lab.</p>
+<p>Worked on high-end servers for Google, Facebook, and HP. Headed projects in POS repair, large display refurbishment, and remote software refits. Managed internal test equipment inventory for the entire location. Designed test area layouts and the tests themselves. Developed a universal hard drive wiping solution from scratch — custom hardware stations, software, and scripts — that is, to my knowledge, still in use today. Eventually joined a small elite team doing root-cause analysis on NetApp machines, which required the kind of attention to detail I genuinely enjoy. Certified in HP networking products and as a NetApp Accredited Hardware Support Engineer.</p>
+
+<h3>
+  <div class="role">
+    <span class="role-title">Musician · Songwriter · Engineer</span>
+    <span class="role-dates">1999 – 2007</span>
+  </div>
+</h3>
+<p class="meta">ONE7ONE · Columbus, OH</p>
+<p>Played rhythm guitar and sang in an energetic Columbus rock band through the early 2000s. We recorded a studio album, played major Ohio venues (Newport Music Hall, Alrosa Villa, Polaris Amphitheater), shared the stage with national acts like Breaking Benjamin and Fuel, and got some local radio airplay. Our manager also managed Rob Thomas, who was one of my bigger early musical influences. After the band wound down, I recorded a solo album of original material — folk, Americana, a little of everything — at the recording studio I helped build. I played all the instruments and engineered most of it myself.</p>
+
+<hr>
+
+<h2>Education &amp; Credentials</h2>
+
+<p><strong>B.S., Electronic Engineering Technology</strong> — DeVry University, Columbus, OH</p>
+<p><strong>NetApp Accredited Hardware Support Engineer</strong></p>
+<p><strong>HP Networking Certification</strong></p>
+<p><strong>Amateur Radio Technician License</strong></p>
+<p><strong>ASA Sailing Certification</strong></p>
+
+<hr>
+
+<h2>Selected Personal Projects</h2>
+
+<p class="meta">A sampling. There are many more half-finished ones in the basement.</p>
+
+<h3>The Fisher Observatory</h3>
+<p>Designed and built a professional-grade astronomical observatory in my backyard with my dad. Domed roof, motorized mount, the works. Used it to image galaxies, nebulae, comets, and supernovae. It's still back there. It's one of the things I'm most proud of, and not really because of the telescope.</p>
+
+<h3>Robots, Rovers, and Rockets</h3>
+<p>Built several autonomous and remote-controlled robots from scratch — everything from a junkbot made out of discarded antique parts to the Adena rover (named after the ancient Ohio culture), which had cameras, environmental sensors, and a compass. Built and flew model rockets with Arduino-based electronic payloads that logged altitude data. Named the series Hopewell, for the same reason.</p>
+
+<h3>3D-Printed Telescope</h3>
+<p>Modified a 3D printer for my own purposes, then used it to print a fully functional 8-inch Newtonian reflecting telescope. The mirrors came from China. The mount came from Thingiverse. The rest was patience and a lot of M3 screws.</p>
+
+<h3>Cardboard Computer</h3>
+<p>Built a working Raspberry Pi / Arduino hybrid computer inside a cardboard enclosure — deliberately over-engineered, deliberately nostalgic. It displays temperature, tells random facts, and plays a game of tic-tac-toe written entirely in BASH. It has a pixelated face on an LED matrix. I love it.</p>
+
+<h3>Weather Station + Radio Telescope</h3>
+<p>Built an atmospheric monitoring station that logged pressure, temperature, and light data and uploaded it automatically to the internet. Later folded in a simple radio telescope after getting my amateur radio license. Because why not.</p>
+
+<h3>Yellow House Recording Studio</h3>
+<p>Helped build a full recording studio from a gutted building. Tracked and engineered original music there — my own albums and others', including a session with jazz musician Gene Walker. It was also where my band spent a lot of time, and where some of my favorite memories live.</p>
+
+<h3>Stop-Motion Music Video</h3>
+<p>Spent about a year and a half shooting a stop-motion music video — over 4,000 individual frames on a drafting table. The song took a few hours to write and record. The video took considerably longer. I'd do it again.</p>
+
+<h3>Puzzle Box</h3>
+<p>Designed and built a wooden puzzle box with a hidden locking mechanism for a family charity gift exchange. Sixteen knobs, four of which actually matter. The clue was: "the key to open is in the letters." Most people still needed help.</p>
+
+<h3>Virus Mutation Simulation</h3>
+<p>Wrote a program simulating viral mutation and evolution — purely out of curiosity about emergent complexity and how simple rules produce complicated outcomes. It's one of those projects that taught me more than I expected.</p>
+
+<hr>
+
+<h2>Skills &amp; Tools</h2>
+
+<ul class="tag-list">
+  <li>Electronics diagnostics</li>
+  <li>Schematic reading</li>
+  <li>Soldering / BGA rework</li>
+  <li>Oscilloscopes</li>
+  <li>3D X-ray / flying probe</li>
+  <li>Arduino / Raspberry Pi</li>
+  <li>Python / BASH scripting</li>
+  <li>HTML / CSS</li>
+  <li>Linux</li>
+  <li>3D printing / design</li>
+  <li>Medical equipment repair</li>
+  <li>Root-cause analysis</li>
+  <li>Technical writing</li>
+  <li>Process design</li>
+  <li>Ecommerce / web systems</li>
+  <li>HR / operations</li>
+  <li>Audio recording / engineering</li>
+  <li>Guitar / bass / drums / mandolin</li>
+  <li>Woodworking</li>
+  <li>Welding</li>
+  <li>Home electrical / plumbing</li>
+  <li>Sailing</li>
+</ul>
+
+<hr>
+
+<h2>The Rest of It</h2>
+
+<p>I've kept a daily handwritten journal for twenty years. I refurbish antique mechanical typewriters and actually use them. I've run 44 marathons — all solo, none official, purely for the love of it. I grew up on a farm called Fisher's Greenhouse, which taught me more about work and improvisation than any classroom. I wrestled for six years in middle and high school (cauliflower ear and all). I've sailed, flown small planes, done a little SCUBA. I'm anti-social media in a fairly committed way.</p>
+
+<p>I have a large, close family that gets together as often as possible and celebrates loudly. My wife Stacy and I have been married for 24 years. My daughters Ella and Cameryn are, without question, the best things I've ever made.</p>
+
+<p>My dad — Jeffrey Fisher Sr. — died seven years ago. He was my collaborator, my hero, and the reason the observatory exists. A lot of what I build is still, in some way, for him.</p>
+
+<blockquote>
+  "You are a child of the universe, no less than the trees and the stars; you have a right to be here."<br>
+  — Max Ehrmann, <em>Desiderata</em>
+</blockquote>
+
+<p>I'm drawn to the places where nature and technology overlap, where complexity emerges from simple things, and where the ordinary turns out to be extraordinary if you slow down long enough to look. Astronomy does that for me. So does running. So does a good bowl of ramen on a cold morning.</p>
+
+<p>I wish I were a better writer. I'm working on it.</p>
+
+<hr>
+
+<footer>
+  <p><a href="https://yesteryearforever.xyz/archive.html">archive</a> · <button class="toggle" onclick="document.body.classList.toggle('dark')">toggle dark mode</button></p>
+  <p style="margin-top:0.75rem;">Working page. Incomplete by design.</p>
+</footer>
+
 </body>
 </html>
