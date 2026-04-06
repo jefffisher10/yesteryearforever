@@ -34,13 +34,15 @@ AUDIO_SUBDIR = "audio"
 EXCLUDED_ARCHIVE = {
     "template.html","index.html","mylinks.html","desiderata.html",
     "first_star.html","green_planet.html","space_index.html",
-    "preamble.html","lectures.html","archive.html"
+    "preamble.html","lectures.html","archive.html","profile_v1.html", 
+    "profile_v3.html"
 }
 
 EXCLUDED_RANDOM = {
     "index.html","mylinks.html","template.html",
     "first_star.html","green_planet.html","space_index.html",
-    "preamble.html","lectures.html","archive.html"
+    "preamble.html","lectures.html","archive.html","profile_v1.html", 
+    "profile_v3.html"
 }
 
 EXCLUDED_IMAGE = {
@@ -60,7 +62,9 @@ EXCLUDED_SITEMAP = {
     "deploy.sh",
     "desiderata.html",
     "archive.html",
-    "notes.txt"
+    "notes.txt",
+    "profile_v1.html", 
+    "profile_v3.html"
 }
 
 
