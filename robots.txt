@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://yesteryearforever.xyz/sitemap.xml
+
+Disallow: /freshrss/
