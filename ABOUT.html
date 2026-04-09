@@ -5,46 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>| yesteryear forever |</title>
   <style>
-    :root {
-      --bg: #f5f2eb;
-      --text: #1a1a1a;
-      --muted: #666;
-      --rule: #ccc;
-      --accent: #2a2a2a;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1a1a1a;
-        --text: #e8e4db;
-        --muted: #999;
-        --rule: #444;
-        --accent: #e8e4db;
-      }
-    }
-    html.dark {
-      --bg: #1a1a1a;
-      --text: #e8e4db;
-      --muted: #999;
-      --rule: #444;
-      --accent: #e8e4db;
-    }
-    html {
-      background: var(--bg);
-      transition: background 0.2s;
-    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: #f5f2eb;
+      color: #1a1a1a;
       font-family: Georgia, 'Times New Roman', serif;
       font-size: 1rem;
       line-height: 1.75;
       max-width: 680px;
       margin: 0 auto;
       padding: 3rem 1.5rem 6rem;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.3s, color 0.3s;
     }
-    a { color: var(--text); }
+    html {
+      background: #f5f2eb;
+      transition: background 0.3s;
+    }
+    body.dark-mode {
+      background: #1a1a1a;
+      color: #e8e4db;
+    }
+    html.dark-mode {
+      background: #1a1a1a;
+    }
+    body.dark-mode a { color: #e8e4db; }
+    body.dark-mode h2 { color: #999; border-color: #444; }
+    body.dark-mode .meta { color: #999; }
+    body.dark-mode blockquote { color: #999; border-color: #444; }
+    body.dark-mode hr { border-color: #444; }
+    body.dark-mode .tag-list li { color: #999; border-color: #444; }
+    body.dark-mode footer { color: #999; }
+    body.dark-mode .toggle { color: #999; }
+    a { color: #1a1a1a; }
     a:hover { opacity: 0.6; }
     header {
       text-align: center;
@@ -67,9 +59,9 @@
       font-weight: normal;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--muted);
+      color: #666;
       margin: 2.5rem 0 1rem;
-      border-bottom: 1px solid var(--rule);
+      border-bottom: 1px solid #ccc;
       padding-bottom: 0.4rem;
     }
     h3 {
@@ -79,11 +71,10 @@
     }
     p {
       margin-bottom: 1rem;
-      color: var(--text);
     }
     .meta {
       font-size: 0.85rem;
-      color: var(--muted);
+      color: #666;
       margin-bottom: 1rem;
     }
     .intro {
@@ -108,14 +99,14 @@
     }
     .tag-list li {
       font-size: 0.8rem;
-      color: var(--muted);
-      border: 1px solid var(--rule);
+      color: #666;
+      border: 1px solid #ccc;
       padding: 0.1rem 0.5rem;
       margin: 0;
     }
     hr {
       border: none;
-      border-top: 1px solid var(--rule);
+      border-top: 1px solid #ccc;
       margin: 2.5rem 0;
     }
     .role {
@@ -133,23 +124,23 @@
       color: var(--muted);
     }
     blockquote {
-      border-left: 2px solid var(--rule);
+      border-left: 2px solid #ccc;
       padding-left: 1rem;
       margin: 1.5rem 0;
-      color: var(--muted);
+      color: #666;
       font-style: italic;
     }
     footer {
       margin-top: 4rem;
       font-size: 0.8rem;
-      color: var(--muted);
+      color: #666;
       text-align: center;
     }
     .toggle {
       font-size: 0.8rem;
       cursor: pointer;
       text-decoration: underline;
-      color: var(--muted);
+      color: #666;
       background: none;
       border: none;
       font-family: inherit;
@@ -307,7 +298,7 @@
 <hr>
 
 <footer>
-  <p><button class="toggle" onclick="document.documentElement.classList.toggle('dark')">toggle dark mode</button></p>
+  <p><button class="toggle" onclick="document.documentElement.classList.toggle('dark-mode'); document.body.classList.toggle('dark-mode')">toggle dark mode</button></p>
   <p style="margin-top:0.75rem;">Working page. Incomplete by design.</p>
 </footer>
 
