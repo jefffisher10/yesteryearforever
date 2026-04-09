@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>| About Me |</title>
+  <title>| yesteryear forever |</title>
   <style>
     :root {
       --bg: #f5f2eb;
@@ -21,12 +21,16 @@
         --accent: #e8e4db;
       }
     }
-    body.dark {
+    html.dark {
       --bg: #1a1a1a;
       --text: #e8e4db;
       --muted: #999;
       --rule: #444;
       --accent: #e8e4db;
+    }
+    html {
+      background: var(--bg);
+      transition: background 0.2s;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -152,26 +156,12 @@
       padding: 0;
     }
     .toggle:hover { opacity: 0.6; }
-    .nav-links {
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
-    }
-    .nav-links a {
-      text-decoration: none;
-      margin: 0 0.4rem;
-      color: var(--muted);
-    }
   </style>
 </head>
 <body>
 
 <header>
   <a href="https://yesteryearforever.xyz/index.html">| yesteryear forever |</a>
-  <!-- <div class="nav-links">
-    <a href="https://yesteryearforever.xyz/archive.html">archive</a> ·
-    <a href="https://yesteryearforever.xyz/links.html">links</a> ·
-    <a href="https://yesteryearforever.xyz/desiderata.html">desiderata</a>
-  </div> -->
 </header>
 
 <h1>Jeffrey Fisher Jr.</h1>
@@ -317,7 +307,7 @@
 <hr>
 
 <footer>
-  <p><a href="https://yesteryearforever.xyz/index.html">archive</a> · <button class="toggle" onclick="document.body.classList.toggle('dark')">toggle dark mode</button></p>
+  <p><button class="toggle" onclick="document.documentElement.classList.toggle('dark')">toggle dark mode</button></p>
   <p style="margin-top:0.75rem;">Working page. Incomplete by design.</p>
 </footer>
 
