@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>| About |</title>
+  <title>| yesteryear forever |</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -121,7 +121,7 @@
     }
     .role-dates {
       font-size: 0.85rem;
-      color: var(--muted);
+      color: #666;
     }
     blockquote {
       border-left: 2px solid #ccc;
@@ -147,6 +147,39 @@
       padding: 0;
     }
     .toggle:hover { opacity: 0.6; }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+      margin: 0.75rem 0 1.5rem;
+    }
+    .photo-grid a {
+      display: block;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+    }
+    .photo-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.9);
+      transition: opacity 0.2s, filter 0.2s;
+    }
+    .photo-grid a:hover img {
+      opacity: 0.8;
+      filter: saturate(1.1);
+    }
+    .photo-grid-4col {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .photo-caption {
+      font-size: 0.78rem;
+      color: #888;
+      margin: -0.5rem 0 1.5rem;
+      font-style: italic;
+    }
+    body.dark-mode .photo-caption { color: #777; }
   </style>
 </head>
 <body>
@@ -222,21 +255,52 @@
 
 <h3>The Fisher Observatory</h3>
 <p>Designed and built a professional-grade astronomical observatory in my backyard with my dad. Domed roof, motorized mount, the works. Used it to image galaxies, nebulae, comets, and supernovae. It's still back there. It's one of the things I'm most proud of, and not really because of the telescope.</p>
+<div class="photo-grid">
+  <a href="https://yesteryearforever.xyz/fisher_observatory.html" target="_blank"><img src="https://yesteryearforever.xyz/images/ObPano_20150811_thumb.jpg" alt="Fisher Observatory panorama"></a>
+  <a href="https://yesteryearforever.xyz/fisher_observatory.html" target="_blank"><img src="https://yesteryearforever.xyz/images/FO1_thumb.jpg" alt="Observatory construction"></a>
+  <a href="https://yesteryearforever.xyz/fisher_observatory.html" target="_blank"><img src="https://yesteryearforever.xyz/images/FO8_thumb.jpg" alt="Observatory dome"></a>
+</div>
+<p class="photo-caption">Photos from construction through first light. <a href="https://yesteryearforever.xyz/fisher_observatory.html" target="_blank">Full gallery →</a></p>
 
 <h3>Robots, Rovers, and Rockets</h3>
 <p>Built several autonomous and remote-controlled robots from scratch — everything from a junkbot made out of discarded antique parts to the Adena rover (named after the ancient Ohio culture), which had cameras, environmental sensors, and a compass. Built and flew model rockets with Arduino-based electronic payloads that logged altitude data. Named the series Hopewell, for the same reason.</p>
+<div class="photo-grid photo-grid-4col">
+  <a href="https://yesteryearforever.xyz/adena_rover.html" target="_blank"><img src="https://yesteryearforever.xyz/images/adena1_thumb.jpg" alt="Adena rover"></a>
+  <a href="https://yesteryearforever.xyz/junkbot_alpha.html" target="_blank"><img src="https://yesteryearforever.xyz/images/junkbot_donefront_thumb.jpg" alt="Junkbot"></a>
+  <a href="https://yesteryearforever.xyz/hopewell_v1-0.html" target="_blank"><img src="https://yesteryearforever.xyz/images/Launchanddeploy_thumb.jpg" alt="Hopewell rocket launch"></a>
+  <a href="https://yesteryearforever.xyz/hopewell_v1-0.html" target="_blank"><img src="https://yesteryearforever.xyz/images/AltimeterCollage_thumb.jpg" alt="Rocket payload electronics"></a>
+</div>
+<p class="photo-caption">Left to right: Adena rover, Junkbot, Hopewell launch, payload electronics. <a href="https://yesteryearforever.xyz/adena_rover.html" target="_blank">Adena →</a> · <a href="https://yesteryearforever.xyz/junkbot_alpha.html" target="_blank">Junkbot →</a> · <a href="https://yesteryearforever.xyz/hopewell_v1-0.html" target="_blank">Hopewell →</a></p>
 
 <h3>3D-Printed Telescope</h3>
 <p>Modified a 3D printer for my own purposes, then used it to print a fully functional 8-inch Newtonian reflecting telescope. The mirrors came from China. The mount came from Thingiverse. The rest was patience and a lot of M3 screws.</p>
+<div class="photo-grid">
+  <a href="https://yesteryearforever.xyz/ABSDBS.html" target="_blank"><img src="https://yesteryearforever.xyz/images/finshed_me_thumb.jpg" alt="Completed 3D printed telescope"></a>
+  <a href="https://yesteryearforever.xyz/ABSDBS.html" target="_blank"><img src="https://yesteryearforever.xyz/images/finished_01_thumb.jpg" alt="Telescope finished view"></a>
+  <a href="https://yesteryearforever.xyz/ABSDBS.html" target="_blank"><img src="https://yesteryearforever.xyz/images/mirror_thumb.jpg" alt="Primary mirror"></a>
+</div>
+<p class="photo-caption"><a href="https://yesteryearforever.xyz/ABSDBS.html" target="_blank">Full build log →</a></p>
 
 <h3>Cardboard Computer</h3>
 <p>Built a working Raspberry Pi / Arduino hybrid computer inside a cardboard enclosure — deliberately over-engineered, deliberately nostalgic. It displays temperature, tells random facts, and plays a game of tic-tac-toe written entirely in BASH. It has a pixelated face on an LED matrix. I love it.</p>
+<div class="photo-grid">
+  <a href="https://yesteryearforever.xyz/cardboard_computer.html" target="_blank"><img src="https://yesteryearforever.xyz/images/cc_06_thumb.jpg" alt="Cardboard computer front"></a>
+  <a href="https://yesteryearforever.xyz/cardboard_computer.html" target="_blank"><img src="https://yesteryearforever.xyz/images/cc_01_thumb.jpg" alt="Cardboard computer detail"></a>
+  <a href="https://yesteryearforever.xyz/cardboard_computer.html" target="_blank"><img src="https://yesteryearforever.xyz/images/led_matrix_thumb.jpg" alt="LED matrix display"></a>
+</div>
+<p class="photo-caption"><a href="https://yesteryearforever.xyz/cardboard_computer.html" target="_blank">Full project →</a></p>
 
 <h3>Weather Station + Radio Telescope</h3>
 <p>Built an atmospheric monitoring station that logged pressure, temperature, and light data and uploaded it automatically to the internet. Later folded in a simple radio telescope after getting my amateur radio license. Because why not.</p>
 
 <h3>Yellow House Recording Studio</h3>
 <p>Helped build a full recording studio from a gutted building. Tracked and engineered original music there — my own albums and others', including a session with jazz musician Gene Walker. It was also where my band spent a lot of time, and where some of my favorite memories live.</p>
+<div class="photo-grid">
+  <a href="https://yesteryearforever.xyz/yellow_house_recording_studio.html" target="_blank"><img src="https://yesteryearforever.xyz/images/YHR43_thumb.jpg" alt="Yellow House Recording Studio"></a>
+  <a href="https://yesteryearforever.xyz/yellow_house_recording_studio.html" target="_blank"><img src="https://yesteryearforever.xyz/images/YHR10_thumb.jpg" alt="Studio construction"></a>
+  <a href="https://yesteryearforever.xyz/yellow_house_recording_studio.html" target="_blank"><img src="https://yesteryearforever.xyz/images/YHR22_thumb.jpg" alt="Studio interior"></a>
+</div>
+<p class="photo-caption"><a href="https://yesteryearforever.xyz/yellow_house_recording_studio.html" target="_blank">Construction gallery →</a></p>
 
 <h3>Stop-Motion Music Video</h3>
 <p>Spent about a year and a half shooting a stop-motion music video — over 4,000 individual frames on a drafting table. The song took a few hours to write and record. The video took considerably longer. I'd do it again.</p>
