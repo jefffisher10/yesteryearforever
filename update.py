@@ -16,7 +16,7 @@ SITE_URL = "https://yesteryearforever.xyz"
 IMAGE_DIR = SITE_ROOT / "images"
 IMAGE_SUBDIR = "images"
 THUMB_SUFFIX = "_thumb"
-THUMB_SIZE = (300, 300)
+THUMB_SIZE = (500, 500)
 
 ALLOWED_IMAGE_EXTS = {".jpg",".jpeg",".png",".gif",".webp"}
 
@@ -60,9 +60,7 @@ EXCLUDED_SITEMAP = {
     "deploy.sh",
     "desiderata.html",
     "archive.html",
-    "notes.txt",
-    "profile_v1.html", 
-    "profile_v3.html"
+    "notes.txt"
 }
 
 
