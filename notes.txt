@@ -1,5 +1,9 @@
-*Always pull first! before editing...
-*Run [python update.py] after editing before [git add .]
+* Always pull first! before editing...
+* Run [python update.py] after editing before [git add .]
+
+// To check status before pull:
+git fetch
+git status
 
 // Editing on Windows (using git bash//
 git pull
