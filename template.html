@@ -3,41 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[Post Title Here]</title>
+  <title>[Post Title Here] | yesteryear forever</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 <body>
+
+  <nav id="topnav">
+    <div id="topnav-inner">
+      <a href="ABOUT.html">| about |</a>
+      <span class="nav-sep">·</span>
+      <a href="making.html">| making |</a>
+      <span class="nav-sep">·</span>
+      <a href="writing.html">| writing |</a>
+      <span class="nav-sep">·</span>
+      <a href="seeing.html">| seeing |</a>
+      <span class="nav-sep">·</span>
+      <button id="toggle-dark-mode">| dark mode |</button>
+      <span class="nav-sep">·</span>
+      <button onclick="goRandom()">| random |</button>
+    </div>
+  </nav>
+
   <div class="container">
-    <div id="main">
-      <h1><a href="index.html">| yesteryear forever |</a></h1>
-      <p><blockquote>
-<b>[Post Title Here]</b><br><br>
-[Your poetic thoughts go here.]<br><br>
+    <h1><a href="index.html">| yesteryear forever |</a></h1>
 
-<figure>
-  <img src="images/example_thumb.jpg" 
-       data-full="images/example_full.jpg" 
-       alt="descriptive alt text" 
-       class="thumbnail align-right"
-       loading="lazy">
-  <figcaption>Optional caption here.</figcaption>
-</figure>
+    <blockquote>
+      <p>
+        <strong>[Post Title Here]</strong><br><br>
 
-[Continue writing if you'd like.]<br><br>
-</blockquote>
-[Post Date Here: YYYY-MM-DD]</p>
-    </div>
-    <div id="archive">
-      <button id="toggle-dark-mode" class="sidebar-button">| toggle dark mode |</button>
-	  <button onclick="goRandom()" class="sidebar-button">| random post |</button>
-      <h2>the past</h2>
-		<div id="archive-list"></div>
-    </div>
+        [Your writing goes here.]<br><br>
+
+        <figure>
+          <img src="images/example_thumb.jpg"
+               data-full="images/example_full.jpg"
+               alt="descriptive alt text"
+               class="thumbnail align-right"
+               loading="lazy">
+          <figcaption>Optional caption here.</figcaption>
+        </figure>
+
+        [Continue writing if you'd like.]<br><br>
+      </p>
+    </blockquote>
+
+    <p style="font-size: 0.85rem; color: #999;">[Post Date Here: YYYY-MM-DD]</p>
+
   </div>
 
   <div class="lightbox" id="lightbox">
     <img id="lightbox-img" src="" alt="">
   </div>
+
 </body>
 </html>

@@ -4,57 +4,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>| About |</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #f5f2eb;
-      color: #1a1a1a;
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 1rem;
-      line-height: 1.75;
+
+    .about-content {
       max-width: 680px;
       margin: 0 auto;
       padding: 3rem 1.5rem 6rem;
-      transition: background 0.3s, color 0.3s;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #1a1a1a;
     }
-    html {
-      background: #f5f2eb;
-      transition: background 0.3s;
-    }
-    body.dark-mode {
-      background: #1a1a1a;
+
+    body.dark .about-content {
       color: #e8e4db;
     }
-    html.dark-mode {
-      background: #1a1a1a;
-    }
-    body.dark-mode a { color: #e8e4db; }
-    body.dark-mode h2 { color: #999; border-color: #444; }
-    body.dark-mode .meta { color: #999; }
-    body.dark-mode blockquote { color: #999; border-color: #444; }
-    body.dark-mode hr { border-color: #444; }
-    body.dark-mode .tag-list li { color: #999; border-color: #444; }
-    body.dark-mode footer { color: #999; }
-    body.dark-mode .toggle { color: #999; }
-    a { color: #1a1a1a; }
-    a:hover { opacity: 0.6; }
-    header {
+
+    .about-content a { color: #1a1a1a; }
+    .about-content a:hover { opacity: 0.6; }
+    body.dark .about-content a { color: #e8e4db; }
+
+    .about-content header {
       text-align: center;
       margin-bottom: 3rem;
     }
-    header a {
+    .about-content header a {
       font-size: 0.85rem;
       text-decoration: none;
       letter-spacing: 0.05em;
       text-transform: lowercase;
+      font-family: 'Courier New', Courier, monospace;
     }
-    h1 {
+
+    .about-content h1 {
       font-size: 1.5rem;
       font-weight: normal;
       letter-spacing: 0.02em;
       margin: 2.5rem 0 0.25rem;
+      text-align: left;
+      color: #1a1a1a;
     }
-    h2 {
+    body.dark .about-content h1 { color: #e8e4db; }
+
+    .about-content h2 {
       font-size: 1rem;
       font-weight: normal;
       text-transform: uppercase;
@@ -63,32 +58,45 @@
       margin: 2.5rem 0 1rem;
       border-bottom: 1px solid #ccc;
       padding-bottom: 0.4rem;
+      text-align: left;
     }
-    h3 {
+    body.dark .about-content h2 { color: #999; border-color: #444; }
+
+    .about-content h3 {
       font-size: 1rem;
       font-weight: bold;
       margin: 1.5rem 0 0.25rem;
     }
-    p {
+
+    .about-content p {
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+    }
+    body.dark .about-content p { color: #e8e4db; }
+
+    .about-content ul {
+      padding-left: 1.4rem;
       margin-bottom: 1rem;
     }
+    .about-content li {
+      margin-bottom: 0.3rem;
+      border-bottom: none;
+      padding: 0;
+    }
+
     .meta {
       font-size: 0.85rem;
       color: #666;
       margin-bottom: 1rem;
     }
+    body.dark .meta { color: #999; }
+
     .intro {
       font-size: 1.05rem;
       line-height: 1.85;
       margin-bottom: 2rem;
     }
-    ul {
-      padding-left: 1.4rem;
-      margin-bottom: 1rem;
-    }
-    li {
-      margin-bottom: 0.3rem;
-    }
+
     .tag-list {
       list-style: none;
       padding: 0;
@@ -104,11 +112,15 @@
       padding: 0.1rem 0.5rem;
       margin: 0;
     }
-    hr {
+    body.dark .tag-list li { color: #999; border-color: #444; }
+
+    .about-content hr {
       border: none;
       border-top: 1px solid #ccc;
       margin: 2.5rem 0;
     }
+    body.dark .about-content hr { border-color: #444; }
+
     .role {
       display: flex;
       justify-content: space-between;
@@ -116,37 +128,27 @@
       flex-wrap: wrap;
       gap: 0.25rem;
     }
-    .role-title {
-      font-weight: bold;
-    }
-    .role-dates {
-      font-size: 0.85rem;
-      color: #666;
-    }
-    blockquote {
+    .role-title { font-weight: bold; }
+    .role-dates { font-size: 0.85rem; color: #666; }
+    body.dark .role-dates { color: #999; }
+
+    .about-content blockquote {
       border-left: 2px solid #ccc;
       padding-left: 1rem;
       margin: 1.5rem 0;
       color: #666;
       font-style: italic;
     }
-    footer {
+    body.dark .about-content blockquote { color: #999; border-color: #444; }
+
+    .about-content footer {
       margin-top: 4rem;
       font-size: 0.8rem;
       color: #666;
       text-align: center;
     }
-    .toggle {
-      font-size: 0.8rem;
-      cursor: pointer;
-      text-decoration: underline;
-      color: #666;
-      background: none;
-      border: none;
-      font-family: inherit;
-      padding: 0;
-    }
-    .toggle:hover { opacity: 0.6; }
+    body.dark .about-content footer { color: #999; }
+
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -179,193 +181,222 @@
       margin: -0.5rem 0 1.5rem;
       font-style: italic;
     }
-    body.dark-mode .photo-caption { color: #777; }
+    body.dark .photo-caption { color: #777; }
+
+    @media (max-width: 768px) {
+      .photo-grid-4col {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
 
-<header>
-  <a href="https://yesteryearforever.xyz/index.html">| yesteryear forever |</a>
-</header>
+  <nav id="topnav">
+    <div id="topnav-inner">
+      <a href="ABOUT.html">| about |</a>
+      <span class="nav-sep">·</span>
+      <a href="making.html">| making |</a>
+      <span class="nav-sep">·</span>
+      <a href="writing.html">| writing |</a>
+      <span class="nav-sep">·</span>
+      <a href="seeing.html">| seeing |</a>
+      <span class="nav-sep">·</span>
+      <button id="toggle-dark-mode">| dark mode |</button>
+      <span class="nav-sep">·</span>
+      <button onclick="goRandom()">| random |</button>
+    </div>
+  </nav>
 
-<h1>Jeffrey Ray Fisher Jr.</h1>
-<p class="meta">Columbus, Ohio · Born August 13, 1981 · <a href="mailto:">yesteryearforever.xyz</a></p>
+  <div class="about-content">
 
-<div class="intro">
-  <p>This isn't exactly a résumé. It's not exactly an about page either. It's more like a cross-section — a partial diagram of what's underneath the surface. I've had a strange and winding career path that doesn't fit neatly into any one box, which I've come to think of as a feature rather than a bug. I describe myself in one word: versatile.</p>
-  <p>I've also come to think of myself as a naturalist — someone who finds the natural world to be the primary text worth reading, and who believes that paying careful attention to it is, in itself, a worthy way to be.</p>
-  <p>The common thread through all of it — the farm, the bands, the electronics lab, the seafood startup, the hospital equipment, the backyard rockets — is that I like to understand how things work, fix what's broken, and build things that didn't exist before. I also try to write about it, though I never feel like I'm quite good enough at that part.</p>
-</div>
+    <header>
+      <a href="index.html">| yesteryear forever |</a>
+    </header>
 
-<hr>
+    <h1>Jeffrey Ray Fisher Jr.</h1>
+    <p class="meta">Columbus, Ohio · Born August 13, 1981 · <a href="mailto:JeffFisher10@gmail.com">yesteryearforever.xyz</a></p>
 
-<h2>Work</h2>
+    <div class="intro">
+      <p>This isn't exactly a résumé. It's not exactly an about page either. It's more like a cross-section — a partial diagram of what's underneath the surface. I've had a strange and winding career path that doesn't fit neatly into any one box, which I've come to think of as a feature rather than a bug. I describe myself in one word: versatile.</p>
+      <p>I've also come to think of myself as a naturalist — someone who finds the natural world to be the primary text worth reading, and who believes that paying careful attention to it is, in itself, a worthy way to be.</p>
+      <p>The common thread through all of it — the farm, the bands, the electronics lab, the seafood startup, the hospital equipment, the backyard rockets — is that I like to understand how things work, fix what's broken, and build things that didn't exist before. I also try to write about it, though I never feel like I'm quite good enough at that part.</p>
+    </div>
 
-<h3>
-  <div class="role">
-    <span class="role-title">Biomedical Engineering Technician II</span>
-    <span class="role-dates">2024 – present</span>
+    <hr>
+
+    <h2>Work</h2>
+
+    <h3>
+      <div class="role">
+        <span class="role-title">Biomedical Engineering Technician II</span>
+        <span class="role-dates">2024 – present</span>
+      </div>
+    </h3>
+    <p class="meta">The Ohio State University · Clinical Engineering · Columbus, OH</p>
+    <p>Repair and maintain medical equipment across a large university hospital system — vitals machines, patient monitors, infusion pumps, high-level sanitation devices, and more. This role brings together everything I've picked up over the years: electronics diagnostics, people skills, problem solving under pressure, and the understanding that the stakes are real. It's the job where all the threads finally converge, and I'm proud to be doing it at an institution I've admired my whole life.</p>
+
+    <h3>
+      <div class="role">
+        <span class="role-title">Operations, IT, and Brand</span>
+        <span class="role-dates">2020 – 2024</span>
+      </div>
+    </h3>
+    <p class="meta">Coastal Local Seafood (COLO) · Columbus, OH</p>
+    <p>Left a Fortune 500 career to help build a small, local seafood business from the ground up. Started by building the ecommerce platform and managing online presence, then quickly took on everything else: HR, inventory systems, POS management, brand identity, employee training, LLC formation, insurance, sales projections, and whatever needed doing on any given day — including scrubbing floors. Helped grow a startup into a multimillion dollar company. The most valuable thing I took away wasn't technical. It was learning how to communicate with a wide range of people in a wide range of situations.</p>
+
+    <h3>
+      <div class="role">
+        <span class="role-title">Electronics Engineer Technician / Engineering Team</span>
+        <span class="role-dates">2005 – 2020</span>
+      </div>
+    </h3>
+    <p class="meta">PDSi · Tech Data · Avnet · TD Synnex · Columbus, OH</p>
+    <p>Fifteen years at a mid-sized electronics repair company that was acquired and absorbed a few times over by Fortune 500 corporations. Started as a solder technician learning to read schematics and troubleshoot motherboards. Worked my way up through repair tech, lead, and eventually the engineering team. Along the way I became proficient with 3D X-ray machines, BGA rework, flying probes, chip programmers, oscilloscopes, and most of the instruments you'd find in a serious electronics lab.</p>
+    <p>Worked on high-end servers for Google, Facebook, and HP. Headed projects in POS repair, large display refurbishment, and remote software refits. Managed internal test equipment inventory for the entire location. Designed test area layouts and the tests themselves. Developed a universal hard drive wiping solution from scratch — custom hardware stations, software, and scripts — that is, to my knowledge, still in use today. Eventually joined a small elite team doing root-cause analysis on NetApp machines, which required the kind of attention to detail I genuinely enjoy. Certified in HP networking products and as a NetApp Accredited Hardware Support Engineer.</p>
+
+    <h3>
+      <div class="role">
+        <span class="role-title">Musician · Songwriter · Engineer</span>
+        <span class="role-dates">1999 – 2007</span>
+      </div>
+    </h3>
+    <p class="meta">ONE7ONE · Columbus, OH</p>
+    <p>Played rhythm guitar and sang in an energetic Columbus rock band through the early 2000s. We recorded a studio album, played major Ohio venues (Newport Music Hall, Alrosa Villa, Polaris Amphitheater), shared the stage with national acts like Breaking Benjamin and Fuel, and got some local radio airplay. Our manager also managed Rob Thomas, who was one of my bigger early musical influences. After the band wound down, I recorded a solo album of original material — folk, Americana, a little of everything — at the recording studio I helped build. I played most of the instruments and engineered all of it myself.</p>
+
+    <hr>
+
+    <h2>Education &amp; Credentials</h2>
+
+    <p><strong>B.S., Electronic Engineering Technology</strong> — DeVry University, Columbus, OH</p>
+    <p><strong>NetApp Accredited Hardware Support Engineer</strong></p>
+    <p><strong>HP Networking Certification</strong></p>
+    <p><strong>Amateur Radio Technician License</strong></p>
+    <p><strong>ASA Sailing Certification</strong></p>
+
+    <hr>
+
+    <h2>Selected Personal Projects</h2>
+
+    <p class="meta">A sampling. There are many more half-finished ones in the basement.</p>
+
+    <h3>The Fisher Observatory</h3>
+    <p>Designed and built a professional-grade astronomical observatory in my backyard with my dad. Domed roof, motorized mount, the works. Used it to image galaxies, nebulae, comets, and supernovae. It's still back there. It's one of the things I'm most proud of, and not really because of the telescope.</p>
+    <div class="photo-grid">
+      <a href="fisher_observatory.html"><img src="images/ObPano_20150811_thumb.jpg" alt="Fisher Observatory panorama"></a>
+      <a href="fisher_observatory.html"><img src="images/FO1_thumb.jpg" alt="Observatory construction"></a>
+      <a href="fisher_observatory.html"><img src="images/FO8_thumb.jpg" alt="Observatory dome"></a>
+    </div>
+    <p class="photo-caption">Photos from construction through first light. <a href="fisher_observatory.html">Full gallery →</a></p>
+
+    <h3>Robots, Rovers, and Rockets</h3>
+    <p>Built several autonomous and remote-controlled robots from scratch — everything from a junkbot made out of discarded antique parts to the Adena rover (named after the ancient Ohio culture), which had cameras, environmental sensors, and a compass. Built and flew model rockets with Arduino-based electronic payloads that logged altitude data. Named the series Hopewell, for the same reason.</p>
+    <div class="photo-grid photo-grid-4col">
+      <a href="adena_rover.html"><img src="images/adena1_thumb.jpg" alt="Adena rover"></a>
+      <a href="junkbot_alpha.html"><img src="images/junkbot_donefront_thumb.jpg" alt="Junkbot"></a>
+      <a href="hopewell_v1-0.html"><img src="images/Launchanddeploy_thumb.jpg" alt="Hopewell rocket launch"></a>
+      <a href="hopewell_v1-0.html"><img src="images/AltimeterCollage_thumb.jpg" alt="Rocket payload electronics"></a>
+    </div>
+    <p class="photo-caption">Left to right: Adena rover, Junkbot, Hopewell launch, payload electronics. <a href="adena_rover.html">Adena →</a> · <a href="junkbot_alpha.html">Junkbot →</a> · <a href="hopewell_v1-0.html">Hopewell →</a></p>
+
+    <h3>3D-Printed Telescope</h3>
+    <p>Modified a 3D printer for my own purposes, then used it to print a fully functional 8-inch Newtonian reflecting telescope. The mirrors came from China. The mount came from Thingiverse. The rest was patience and a lot of M3 screws.</p>
+    <div class="photo-grid">
+      <a href="absdbs.html"><img src="images/finshed_me_thumb.jpg" alt="Completed 3D printed telescope"></a>
+      <a href="absdbs.html"><img src="images/finished_01_thumb.jpg" alt="Telescope finished view"></a>
+      <a href="absdbs.html"><img src="images/mirror_okay_thumb.jpg" alt="Primary mirror"></a>
+    </div>
+    <p class="photo-caption"><a href="absdbs.html">Full build log →</a></p>
+
+    <h3>Cardboard Computer</h3>
+    <p>Built a working Raspberry Pi / Arduino hybrid computer inside a cardboard enclosure — deliberately over-engineered, deliberately nostalgic. It displays temperature, tells random facts, and plays a game of tic-tac-toe written entirely in BASH. It has a pixelated face on an LED matrix. I love it.</p>
+    <div class="photo-grid">
+      <a href="cardboard_computer.html"><img src="images/cc_06_thumb.jpg" alt="Cardboard computer front"></a>
+      <a href="cardboard_computer.html"><img src="images/cc_01_thumb.jpg" alt="Cardboard computer detail"></a>
+      <a href="cardboard_computer.html"><img src="images/led_matrix_thumb.jpg" alt="LED matrix display"></a>
+    </div>
+    <p class="photo-caption"><a href="cardboard_computer.html">Full project →</a></p>
+
+    <h3>Weather Station + Radio Telescope</h3>
+    <p>Built an atmospheric monitoring station that logged pressure, temperature, and light data and uploaded it automatically to the internet. Later folded in a simple radio telescope after getting my amateur radio license. Because why not.</p>
+
+    <h3>Yellow House Recording Studio</h3>
+    <p>Helped build a full recording studio from a gutted building. Tracked and engineered original music there — my own albums and others', including a session with jazz musician Gene Walker. It was also where my band spent a lot of time, and where some of my favorite memories live.</p>
+    <div class="photo-grid">
+      <a href="yellow_house_recording_studio.html"><img src="images/YHR43_thumb.jpg" alt="Yellow House Recording Studio"></a>
+      <a href="yellow_house_recording_studio.html"><img src="images/YHR10_thumb.jpg" alt="Studio construction"></a>
+      <a href="yellow_house_recording_studio.html"><img src="images/YHR22_thumb.jpg" alt="Studio interior"></a>
+    </div>
+    <p class="photo-caption"><a href="yellow_house_recording_studio.html">Construction gallery →</a></p>
+
+    <h3>Stop-Motion Music Video</h3>
+    <p>Spent about a year and a half shooting a stop-motion music video — over 4,000 individual frames on a drafting table. The song took a few hours to write and record. The video took considerably longer. I'd do it again.</p>
+
+    <h3>Puzzle Box</h3>
+    <p>Designed and built a wooden puzzle box with a hidden locking mechanism for a family charity gift exchange. Sixteen knobs, four of which actually matter. The clue was: "the key to open is in the letters." Most people still needed help.</p>
+
+    <h3>Virus Mutation Simulation</h3>
+    <p>Wrote a program simulating viral mutation and evolution — purely out of curiosity about emergent complexity and how simple rules produce complicated outcomes. It's one of those projects that taught me more than I expected.</p>
+
+    <hr>
+
+    <h2>Skills &amp; Tools</h2>
+
+    <ul class="tag-list">
+      <li>Electronics diagnostics</li>
+      <li>Schematic reading</li>
+      <li>Soldering / BGA rework</li>
+      <li>Oscilloscopes</li>
+      <li>3D X-ray / flying probe</li>
+      <li>Arduino / Raspberry Pi</li>
+      <li>Python / BASH scripting</li>
+      <li>HTML / CSS</li>
+      <li>Linux</li>
+      <li>3D printing / design</li>
+      <li>Medical equipment repair</li>
+      <li>Root-cause analysis</li>
+      <li>Technical writing</li>
+      <li>Process design</li>
+      <li>Ecommerce / web systems</li>
+      <li>HR / operations</li>
+      <li>Audio recording / engineering</li>
+      <li>Guitar / bass / drums / mandolin</li>
+      <li>Woodworking</li>
+      <li>Welding</li>
+      <li>Home electrical / plumbing</li>
+      <li>Sailing</li>
+    </ul>
+
+    <hr>
+
+    <h2>The Rest of It</h2>
+
+    <p>I've kept a daily handwritten journal for twenty years. I refurbish antique mechanical typewriters and actually use them. I've run 46 marathons — all solo, none official, purely for the love of it. I grew up on a farm called Fisher's Greenhouse, which taught me more about work and improvisation than any classroom. I wrestled for six years in middle and high school (cauliflower ear and all). I've sailed, flown small planes, done a little SCUBA. I'm anti-social media in a fairly committed way.</p>
+
+    <p>I have a large, close family that gets together as often as possible and celebrates loudly. My wife Stacy and I have been married for 24 years. My daughters Ella and Cameryn are, without question, the best things I've ever made.</p>
+
+    <p>My dad — Jeffrey Fisher Sr. — died seven years ago. He was my collaborator, my hero, and the reason the observatory exists. A lot of what I build is still, in some way, for him.</p>
+
+    <blockquote>
+      "You are a child of the universe, no less than the trees and the stars; you have a right to be here."<br>
+      — Max Ehrmann, <em>Desiderata</em>
+    </blockquote>
+
+    <p>At heart I'm a naturalist — drawn to the places where nature and technology overlap, where complexity emerges from simple things, and where the ordinary turns out to be extraordinary if you slow down long enough to look. Astronomy does that for me. So does running. So does a good bowl of ramen on a cold morning.</p>
+
+    <p>I wish I were a better writer. I'm working on it.</p>
+
+    <hr>
+
+    <footer>
+      <p>Working page. Incomplete by design.</p>
+    </footer>
+
   </div>
-</h3>
-<p class="meta">The Ohio State University · Clinical Engineering · Columbus, OH</p>
-<p>Repair and maintain medical equipment across a large university hospital system — vitals machines, patient monitors, infusion pumps, high-level sanitation devices, and more. This role brings together everything I've picked up over the years: electronics diagnostics, people skills, problem solving under pressure, and the understanding that the stakes are real. It's the job where all the threads finally converge, and I'm proud to be doing it at an institution I've admired my whole life.</p>
 
-<h3>
-  <div class="role">
-    <span class="role-title">Operations, IT, and Brand</span>
-    <span class="role-dates">2020 – 2024</span>
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
   </div>
-</h3>
-<p class="meta">Coastal Local Seafood (COLO) · Columbus, OH</p>
-<p>Left a Fortune 500 career to help build a small, local seafood business from the ground up. Started by building the ecommerce platform and managing online presence, then quickly took on everything else: HR, inventory systems, POS management, brand identity, employee training, LLC formation, insurance, sales projections, and whatever needed doing on any given day — including scrubbing floors. Helped grow a startup into a multimillion dollar company. The most valuable thing I took away wasn't technical. It was learning how to communicate with a wide range of people in a wide range of situations.</p>
-
-<h3>
-  <div class="role">
-    <span class="role-title">Electronics Engineer Technician / Engineering Team</span>
-    <span class="role-dates">2005 – 2020</span>
-  </div>
-</h3>
-<p class="meta">PDSi · Tech Data · Avnet · TD Synnex · Columbus, OH</p>
-<p>Fifteen years at a mid-sized electronics repair company that was acquired and absorbed a few times over by Fortune 500 corporations. Started as a solder technician learning to read schematics and troubleshoot motherboards. Worked my way up through repair tech, lead, and eventually the engineering team. Along the way I became proficient with 3D X-ray machines, BGA rework, flying probes, chip programmers, oscilloscopes, and most of the instruments you'd find in a serious electronics lab.</p>
-<p>Worked on high-end servers for Google, Facebook, and HP. Headed projects in POS repair, large display refurbishment, and remote software refits. Managed internal test equipment inventory for the entire location. Designed test area layouts and the tests themselves. Developed a universal hard drive wiping solution from scratch — custom hardware stations, software, and scripts — that is, to my knowledge, still in use today. Eventually joined a small elite team doing root-cause analysis on NetApp machines, which required the kind of attention to detail I genuinely enjoy. Certified in HP networking products and as a NetApp Accredited Hardware Support Engineer.</p>
-
-<h3>
-  <div class="role">
-    <span class="role-title">Musician · Songwriter · Engineer</span>
-    <span class="role-dates">1999 – 2007</span>
-  </div>
-</h3>
-<p class="meta">ONE7ONE · Columbus, OH</p>
-<p>Played rhythm guitar and sang in an energetic Columbus rock band through the early 2000s. We recorded a studio album, played major Ohio venues (Newport Music Hall, Alrosa Villa, Polaris Amphitheater), shared the stage with national acts like Breaking Benjamin and Fuel, and got some local radio airplay. Our manager also managed Rob Thomas, who was one of my bigger early musical influences. After the band wound down, I recorded a solo album of original material — folk, Americana, a little of everything — at the recording studio I helped build. I played most of the instruments and engineered all of it myself.</p>
-
-<hr>
-
-<h2>Education &amp; Credentials</h2>
-
-<p><strong>B.S., Electronic Engineering Technology</strong> — DeVry University, Columbus, OH</p>
-<p><strong>NetApp Accredited Hardware Support Engineer</strong></p>
-<p><strong>HP Networking Certification</strong></p>
-<p><strong>Amateur Radio Technician License</strong></p>
-<p><strong>ASA Sailing Certification</strong></p>
-
-<hr>
-
-<h2>Selected Personal Projects</h2>
-
-<p class="meta">A sampling. There are many more half-finished ones in the basement.</p>
-
-<h3>The Fisher Observatory</h3>
-<p>Designed and built a professional-grade astronomical observatory in my backyard with my dad. Domed roof, motorized mount, the works. Used it to image galaxies, nebulae, comets, and supernovae. It's still back there. It's one of the things I'm most proud of, and not really because of the telescope.</p>
-<div class="photo-grid">
-  <a href="https://yesteryearforever.xyz/fisher_observatory.html" target="_blank"><img src="https://yesteryearforever.xyz/images/ObPano_20150811_thumb.jpg" alt="Fisher Observatory panorama"></a>
-  <a href="https://yesteryearforever.xyz/fisher_observatory.html" target="_blank"><img src="https://yesteryearforever.xyz/images/FO1_thumb.jpg" alt="Observatory construction"></a>
-  <a href="https://yesteryearforever.xyz/fisher_observatory.html" target="_blank"><img src="https://yesteryearforever.xyz/images/FO8_thumb.jpg" alt="Observatory dome"></a>
-</div>
-<p class="photo-caption">Photos from construction through first light. <a href="https://yesteryearforever.xyz/fisher_observatory.html" target="_blank">Full gallery →</a></p>
-
-<h3>Robots, Rovers, and Rockets</h3>
-<p>Built several autonomous and remote-controlled robots from scratch — everything from a junkbot made out of discarded antique parts to the Adena rover (named after the ancient Ohio culture), which had cameras, environmental sensors, and a compass. Built and flew model rockets with Arduino-based electronic payloads that logged altitude data. Named the series Hopewell, for the same reason.</p>
-<div class="photo-grid photo-grid-4col">
-  <a href="https://yesteryearforever.xyz/adena_rover.html" target="_blank"><img src="https://yesteryearforever.xyz/images/adena1_thumb.jpg" alt="Adena rover"></a>
-  <a href="https://yesteryearforever.xyz/junkbot_alpha.html" target="_blank"><img src="https://yesteryearforever.xyz/images/junkbot_donefront_thumb.jpg" alt="Junkbot"></a>
-  <a href="https://yesteryearforever.xyz/hopewell_v1-0.html" target="_blank"><img src="https://yesteryearforever.xyz/images/Launchanddeploy_thumb.jpg" alt="Hopewell rocket launch"></a>
-  <a href="https://yesteryearforever.xyz/hopewell_v1-0.html" target="_blank"><img src="https://yesteryearforever.xyz/images/AltimeterCollage_thumb.jpg" alt="Rocket payload electronics"></a>
-</div>
-<p class="photo-caption">Left to right: Adena rover, Junkbot, Hopewell launch, payload electronics. <a href="https://yesteryearforever.xyz/adena_rover.html" target="_blank">Adena →</a> · <a href="https://yesteryearforever.xyz/junkbot_alpha.html" target="_blank">Junkbot →</a> · <a href="https://yesteryearforever.xyz/hopewell_v1-0.html" target="_blank">Hopewell →</a></p>
-
-<h3>3D-Printed Telescope</h3>
-<p>Modified a 3D printer for my own purposes, then used it to print a fully functional 8-inch Newtonian reflecting telescope. The mirrors came from China. The mount came from Thingiverse. The rest was patience and a lot of M3 screws.</p>
-<div class="photo-grid">
-  <a href="https://yesteryearforever.xyz/absdbs.html" target="_blank"><img src="https://yesteryearforever.xyz/images/finshed_me_thumb.jpg" alt="Completed 3D printed telescope"></a>
-  <a href="https://yesteryearforever.xyz/absdbs.html" target="_blank"><img src="https://yesteryearforever.xyz/images/finished_01_thumb.jpg" alt="Telescope finished view"></a>
-  <a href="https://yesteryearforever.xyz/absdbs.html" target="_blank"><img src="https://yesteryearforever.xyz/images/mirror_okay_thumb.jpg" alt="Primary mirror"></a>
-</div>
-<p class="photo-caption"><a href="https://yesteryearforever.xyz/ABSDBS.html" target="_blank">Full build log →</a></p>
-
-<h3>Cardboard Computer</h3>
-<p>Built a working Raspberry Pi / Arduino hybrid computer inside a cardboard enclosure — deliberately over-engineered, deliberately nostalgic. It displays temperature, tells random facts, and plays a game of tic-tac-toe written entirely in BASH. It has a pixelated face on an LED matrix. I love it.</p>
-<div class="photo-grid">
-  <a href="https://yesteryearforever.xyz/cardboard_computer.html" target="_blank"><img src="https://yesteryearforever.xyz/images/cc_06_thumb.jpg" alt="Cardboard computer front"></a>
-  <a href="https://yesteryearforever.xyz/cardboard_computer.html" target="_blank"><img src="https://yesteryearforever.xyz/images/cc_01_thumb.jpg" alt="Cardboard computer detail"></a>
-  <a href="https://yesteryearforever.xyz/cardboard_computer.html" target="_blank"><img src="https://yesteryearforever.xyz/images/led_matrix_thumb.jpg" alt="LED matrix display"></a>
-</div>
-<p class="photo-caption"><a href="https://yesteryearforever.xyz/cardboard_computer.html" target="_blank">Full project →</a></p>
-
-<h3>Weather Station + Radio Telescope</h3>
-<p>Built an atmospheric monitoring station that logged pressure, temperature, and light data and uploaded it automatically to the internet. Later folded in a simple radio telescope after getting my amateur radio license. Because why not.</p>
-
-<h3>Yellow House Recording Studio</h3>
-<p>Helped build a full recording studio from a gutted building. Tracked and engineered original music there — my own albums and others', including a session with jazz musician Gene Walker. It was also where my band spent a lot of time, and where some of my favorite memories live.</p>
-<div class="photo-grid">
-  <a href="https://yesteryearforever.xyz/yellow_house_recording_studio.html" target="_blank"><img src="https://yesteryearforever.xyz/images/YHR43_thumb.jpg" alt="Yellow House Recording Studio"></a>
-  <a href="https://yesteryearforever.xyz/yellow_house_recording_studio.html" target="_blank"><img src="https://yesteryearforever.xyz/images/YHR10_thumb.jpg" alt="Studio construction"></a>
-  <a href="https://yesteryearforever.xyz/yellow_house_recording_studio.html" target="_blank"><img src="https://yesteryearforever.xyz/images/YHR22_thumb.jpg" alt="Studio interior"></a>
-</div>
-<p class="photo-caption"><a href="https://yesteryearforever.xyz/yellow_house_recording_studio.html" target="_blank">Construction gallery →</a></p>
-
-<h3>Stop-Motion Music Video</h3>
-<p>Spent about a year and a half shooting a stop-motion music video — over 4,000 individual frames on a drafting table. The song took a few hours to write and record. The video took considerably longer. I'd do it again.</p>
-
-<h3>Puzzle Box</h3>
-<p>Designed and built a wooden puzzle box with a hidden locking mechanism for a family charity gift exchange. Sixteen knobs, four of which actually matter. The clue was: "the key to open is in the letters." Most people still needed help.</p>
-
-<h3>Virus Mutation Simulation</h3>
-<p>Wrote a program simulating viral mutation and evolution — purely out of curiosity about emergent complexity and how simple rules produce complicated outcomes. It's one of those projects that taught me more than I expected.</p>
-
-<hr>
-
-<h2>Skills &amp; Tools</h2>
-
-<ul class="tag-list">
-  <li>Electronics diagnostics</li>
-  <li>Schematic reading</li>
-  <li>Soldering / BGA rework</li>
-  <li>Oscilloscopes</li>
-  <li>3D X-ray / flying probe</li>
-  <li>Arduino / Raspberry Pi</li>
-  <li>Python / BASH scripting</li>
-  <li>HTML / CSS</li>
-  <li>Linux</li>
-  <li>3D printing / design</li>
-  <li>Medical equipment repair</li>
-  <li>Root-cause analysis</li>
-  <li>Technical writing</li>
-  <li>Process design</li>
-  <li>Ecommerce / web systems</li>
-  <li>HR / operations</li>
-  <li>Audio recording / engineering</li>
-  <li>Guitar / bass / drums / mandolin</li>
-  <li>Woodworking</li>
-  <li>Welding</li>
-  <li>Home electrical / plumbing</li>
-  <li>Sailing</li>
-</ul>
-
-<hr>
-
-<h2>The Rest of It</h2>
-
-<p>I've kept a daily handwritten journal for twenty years. I refurbish antique mechanical typewriters and actually use them. I've run 46 marathons — all solo, none official, purely for the love of it. I grew up on a farm called Fisher's Greenhouse, which taught me more about work and improvisation than any classroom. I wrestled for six years in middle and high school (cauliflower ear and all). I've sailed, flown small planes, done a little SCUBA. I'm anti-social media in a fairly committed way.</p>
-
-<p>I have a large, close family that gets together as often as possible and celebrates loudly. My wife Stacy and I have been married for 24 years. My daughters Ella and Cameryn are, without question, the best things I've ever made.</p>
-
-<p>My dad — Jeffrey Fisher Sr. — died seven years ago. He was my collaborator, my hero, and the reason the observatory exists. A lot of what I build is still, in some way, for him.</p>
-
-<blockquote>
-  "You are a child of the universe, no less than the trees and the stars; you have a right to be here."<br>
-  — Max Ehrmann, <em>Desiderata</em>
-</blockquote>
-
-<p>At heart I'm a naturalist — drawn to the places where nature and technology overlap, where complexity emerges from simple things, and where the ordinary turns out to be extraordinary if you slow down long enough to look. Astronomy does that for me. So does running. So does a good bowl of ramen on a cold morning.</p>
-
-<p>I wish I were a better writer. I'm working on it.</p>
-
-<hr>
-
-<footer>
-  <p><button class="toggle" onclick="document.documentElement.classList.toggle('dark-mode'); document.body.classList.toggle('dark-mode')">toggle dark mode</button></p>
-  <p style="margin-top:0.75rem;">Working page. Incomplete by design.</p>
-</footer>
 
 </body>
 </html>

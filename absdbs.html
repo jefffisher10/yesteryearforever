@@ -8,6 +8,22 @@
   <script src="script.js" defer></script>
 </head>
 <body>
+  <nav id="topnav">
+    <div id="topnav-inner">
+      <a href="ABOUT.html">| about |</a>
+      <span class="nav-sep">·</span>
+      <a href="making.html">| making |</a>
+      <span class="nav-sep">·</span>
+      <a href="writing.html">| writing |</a>
+      <span class="nav-sep">·</span>
+      <a href="seeing.html">| seeing |</a>
+      <span class="nav-sep">·</span>
+      <button id="toggle-dark-mode">| dark mode |</button>
+      <span class="nav-sep">·</span>
+      <button onclick="goRandom()">| random |</button>
+    </div>
+  </nav>
+
   <div class="container">
     <div id="main">
       <h1><a href="index.html">| yesteryear forever |</a></h1>
@@ -84,12 +100,7 @@ I also used the following designs/makes for this telescope project:<br>
 </blockquote>
 2018-07-10</p>
     </div>
-    <div id="archive">
-      <button id="toggle-dark-mode" class="sidebar-button">| toggle dark mode |</button>
-	  <button onclick="goRandom()" class="sidebar-button">| random post |</button>
-      <h2>the past</h2>
-		<div id="archive-list"></div>
-    </div>
+    
   </div>
 
   <div class="lightbox" id="lightbox">

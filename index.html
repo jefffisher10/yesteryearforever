@@ -3,43 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index</title>
+  <title>| yesteryear forever |</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 <body>
+
+  <nav id="topnav">
+    <div id="topnav-inner">
+      <a href="ABOUT.html">| about |</a>
+      <span class="nav-sep">·</span>
+      <a href="making.html">| making |</a>
+      <span class="nav-sep">·</span>
+      <a href="writing.html">| writing |</a>
+      <span class="nav-sep">·</span>
+      <a href="seeing.html">| seeing |</a>
+      <span class="nav-sep">·</span>
+      <button id="toggle-dark-mode">| dark mode |</button>
+      <span class="nav-sep">·</span>
+      <button onclick="goRandom()">| random |</button>
+    </div>
+  </nav>
+
   <div class="container">
-    <div id="main">
-      <h1><a href="index.html">| yesteryear forever |</a></h1>
-      <p><blockquote>
-<br>
-This is a minimalist, personal website designed to keep the original spirit of The Information Superhighway of my childhood alive.<br><br>
+    <h1><a href="index.html">| yesteryear forever |</a></h1>
 
-A real person posting real projects with not-so-original ideas.<br><br>
+    <p style="text-align:center; font-size: 0.85rem; color: #999; margin-top: 0.25rem; margin-bottom: 2rem;">
+      Columbus, Ohio &nbsp;·&nbsp; est. 2014
+    </p>
 
-Part blog, part notebook, part time capsule...<br><br>
-
-</blockquote>
-2026-05-18</p>
-
-      <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ccc;">
-
-      <p style="text-align: center; font-size: 0.95rem; color: #555;">
-        ✉️ Email: <a href="mailto:JeffFisher10@gmail.com">JeffFisher10@gmail.com</a><br>
-		Instagram: <a href="https://www.instagram.com/ramblin_ray_dixon">Ramblin_Ray_Dixon</a>
+    <blockquote>
+      <p>
+        This is a minimalist, personal website — part blog, part notebook, part time capsule.
+        It exists to keep the original spirit of the early web alive: a real person,
+        posting real things, for no particular reason other than that they seemed worth keeping.
       </p>
+      <p>
+        You'll find handmade projects, homemade rockets, backyard astronomy, philosophical wanderings,
+        and the occasional half-finished idea that turned into something unexpected.
+        Nothing here is optimized. Nothing is trying to sell you anything.
+        It's just a record of a life spent paying attention.
+      </p>
+      <p style="font-size: 0.9rem; color: #888;">
+        — Jeffrey
+      </p>
+    </blockquote>
+
+    <hr>
+
+    <div class="category-showcase">
+      <a href="making.html" class="showcase-card">
+        <h3>— making —</h3>
+        <p>Rockets, robots, telescopes, puzzle boxes, and other things built with hands and questionable plans.</p>
+      </a>
+      <a href="writing.html" class="showcase-card">
+        <h3>— writing —</h3>
+        <p>Essays and reflections on nature, science, consciousness, stargazing, and what it means to be here.</p>
+      </a>
+      <a href="seeing.html" class="showcase-card">
+        <h3>— seeing —</h3>
+        <p>Field observations, night sky images, and the natural world documented one careful look at a time.</p>
+      </a>
+      <a href="ABOUT.html" class="showcase-card">
+        <h3>— about —</h3>
+        <p>A naturalist, tinkerer, and reluctant writer from Columbus, Ohio. This is the longer version.</p>
+      </a>
     </div>
 
-    <div id="archive">
-      <button id="toggle-dark-mode" class="sidebar-button">| toggle dark mode |</button>
-	  <button onclick="goRandom()" class="sidebar-button">| random post |</button>
-      <h2>the past</h2>
-		<div id="archive-list"></div>
-    </div>
+    <hr>
+
+    <p style="text-align: center; font-size: 0.85rem; color: #999;">
+      ✉️ <a href="mailto:JeffFisher10@gmail.com">JeffFisher10@gmail.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.instagram.com/ramblin_ray_dixon">instagram</a>
+    </p>
+
   </div>
 
   <div class="lightbox" id="lightbox">
     <img id="lightbox-img" src="" alt="">
   </div>
+
 </body>
 </html>

@@ -34,13 +34,15 @@ AUDIO_SUBDIR = "audio"
 EXCLUDED_ARCHIVE = {
     "template.html","index.html","mylinks.html","desiderata.html",
     "first_star.html","green_planet.html","space_index.html",
-    "preamble.html","lectures.html","archive.html"
+    "preamble.html","lectures.html","archive.html","making.html",
+    "writing.html","seeing.html"
 }
 
 EXCLUDED_RANDOM = {
     "index.html","mylinks.html","template.html",
     "first_star.html","green_planet.html","space_index.html",
-    "preamble.html","lectures.html","archive.html","desiderata.html"
+    "preamble.html","lectures.html","archive.html","desiderata.html",
+    "making.html","writing.html","seeing.html"
 }
 
 EXCLUDED_IMAGE = {
