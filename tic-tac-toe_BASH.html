@@ -1,79 +1,54 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tic-tac-toe BASH</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>tic-tac-toe BASH</title>
+<link href="style.css" rel="stylesheet"/>
+<script defer="" src="script.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
 </head>
 <body>
-  <nav id="topnav">
-    <div id="topnav-inner">
-      <a href="ABOUT.html">| about |</a>
-      <span class="nav-sep">·</span>
-      <a href="making.html">| making |</a>
-      <span class="nav-sep">·</span>
-      <a href="writing.html">| writing |</a>
-      <span class="nav-sep">·</span>
-      <a href="seeing.html">| seeing |</a>
-      <span class="nav-sep">·</span>
-      <button id="toggle-dark-mode">| dark mode |</button>
-      <span class="nav-sep">·</span>
-      <button onclick="goRandom()">| random |</button>
-    </div>
-  </nav>
-
-  <div class="container">
-      <h1><a href="index.html">| yesteryear forever |</a></h1>
-      <blockquote>
-      <p>
-<b>tic-tac-toe in BASH from scratch</b>
-<figure>
-  <img src="images/ttt_start_thumb.jpg" 
-       data-full="images/ttt_start.jpg"  
-       class="thumbnail align-right"
-       loading="lazy">
-</figure>
-This tic-tac-toe computer game is a sub-project of my <a href="cardboard_computer.html"><u>cardboard computer</u></a> project that originally started as an interactive robot with a digital face named 'facebot' which eventually morphed into more of an art project. But, the interaction piece survived. I imagined the facebot providing fun, random facts, displaying the current temperature, and even playing games, all while presenting a simple digital face on an LED matrix to show correlated emotions.
-<br><br>
-The random facts part was easy: I simply had a text file with a bunch of 1-2 sentence factoids that a python script would randomly parse and print on screen. The temperature portion was much more complicated since it integrated special sensors, hardware, and code to display the current temperature, but I had already implemented similar things in many other projects like a <a href="adena_rover.html"><u>rover</u></a>, a <a href="hopewell_1.html"><u>couple</u></a> <a href="hopewell_1-5.html"><u>rockets</u></a>, and a home <a href="fowls.html"><u>weather station</u></a>. So, that ended up being relatively easy to incorporate as well.
-<figure>
-  <img src="images/ttt_choice_thumb.jpg" 
-       data-full="images/ttt_choice.jpg"  
-       class="thumbnail align-left"
-       loading="lazy">
-</figure>
-What I <i>hadn't</i> built previously was any type of computer game. I wasn't ready to design anything from scratch, and I wanted it to be simple and universal. Naturally, tic-tac-toe was the first thing that came to mind.
-<br><br>
-I wrote it as a shell script since I was doing a lot of <a href="shred.html"><u>work with Linux</u></a> machines at the time. Incidentally, Bash is still my favorite thing to "code" in - <i>I know, it's scripting, not coding, nerds</i> <b>;P</b> - simply because it is what I'm most comfortable with, I'm sure. Plus, it just feels more raw, and I'm all about <a href="cardboard_computer.html"><u>technological brutalism</u></a>.
-<br><br>
-I tinkered with this thing for a while as I do most things. I start with an idea, create something simple, then iterate. Create and iterate, create and iterate... Who knows how many versions it went through? But it eventually got to a point that was functional and that was good enough for me.
-<figure>
-  <img src="images/ttt_wrong_thumb.jpg" 
-       data-full="images/ttt_wrong.jpg"  
-       class="thumbnail align-right"
-       loading="lazy">
-</figure>
-There's really no challenge other than overcoming luck. The computer chooses its move randomly so it is pretty easy to win. And if you do, a python script is called that displays a smiley on the LED matrix. Lose and a sad face is called. Tie? Indifferent... (I think I also put heart eyes and a "flat" face in there, too?)
-<br><br>
-<b>DISCLAIMER:</b> As I've <a href="virus_mutation_simulation.html"><u>said before</u></a>, to all the real programmers out there, a programmer I am not. The only programming I do is for fun as a hobby. I realize my code is sloppy, inefficient, and downright ugly. But hey, for my purposes, it works! And absolutely no AI was used to write any portion; AI wasn't even a thing! <i>Get off my lawn!</i> <b>;P</b>
-<div class="side-by-side">
-  <img src="images/ttt_win_thumb.jpg" data-full="images/ttt_win.jpg" class="thumbnail"  loading="lazy">
-  <img src="images/ttt_lose_thumb.jpg" data-full="images/ttt_lose.jpg" class="thumbnail"  loading="lazy">
-  <img src="images/ttt_tie_thumb.jpg" data-full="images/ttt_tie.jpg" class="thumbnail"  loading="lazy">
+<nav id="topnav">
+<div id="topnav-inner">
+<a href="ABOUT.html">| about |</a>
+<span class="nav-sep">·</span>
+<a href="making.html">| making |</a>
+<span class="nav-sep">·</span>
+<a href="writing.html">| writing |</a>
+<span class="nav-sep">·</span>
+<a href="seeing.html">| seeing |</a>
+<span class="nav-sep">·</span>
+<button id="toggle-dark-mode">| dark mode |</button>
+<span class="nav-sep">·</span>
+<button onclick="goRandom()">| random |</button>
 </div>
-
-<hr>
-<h2><center><u>SOURCE CODE</u></center></h2>
-
-	<!-- replace language-cpp with language-python, language-html, language-css, etc. -->
-<pre><code class="language-bash">
+</nav>
+<div class="container">
+<h1><a href="index.html">| yesteryear forever |</a></h1>
+<blockquote>
+<p><b>tic-tac-toe in BASH from scratch</b></p><figure>
+<img class="thumbnail align-right" data-full="images/ttt_start.jpg" loading="lazy" src="images/ttt_start_thumb.jpg"/>
+</figure><p>This tic-tac-toe computer game is a sub-project of my <a href="cardboard_computer.html"><u>cardboard computer</u></a> project that originally started as an interactive robot with a digital face named 'facebot' which eventually morphed into more of an art project. But, the interaction piece survived. I imagined the facebot providing fun, random facts, displaying the current temperature, and even playing games, all while presenting a simple digital face on an LED matrix to show correlated emotions.
+<br/><br/>
+The random facts part was easy: I simply had a text file with a bunch of 1-2 sentence factoids that a python script would randomly parse and print on screen. The temperature portion was much more complicated since it integrated special sensors, hardware, and code to display the current temperature, but I had already implemented similar things in many other projects like a <a href="adena_rover.html"><u>rover</u></a>, a <a href="hopewell_1.html"><u>couple</u></a> <a href="hopewell_1-5.html"><u>rockets</u></a>, and a home <a href="fowls.html"><u>weather station</u></a>. So, that ended up being relatively easy to incorporate as well.</p><figure>
+<img class="thumbnail align-left" data-full="images/ttt_choice.jpg" loading="lazy" src="images/ttt_choice_thumb.jpg"/>
+</figure><p>What I <i>hadn't</i> built previously was any type of computer game. I wasn't ready to design anything from scratch, and I wanted it to be simple and universal. Naturally, tic-tac-toe was the first thing that came to mind.
+<br/><br/>
+I wrote it as a shell script since I was doing a lot of <a href="shred.html"><u>work with Linux</u></a> machines at the time. Incidentally, Bash is still my favorite thing to "code" in - <i>I know, it's scripting, not coding, nerds</i> <b>;P</b> - simply because it is what I'm most comfortable with, I'm sure. Plus, it just feels more raw, and I'm all about <a href="cardboard_computer.html"><u>technological brutalism</u></a>.
+<br/><br/>
+I tinkered with this thing for a while as I do most things. I start with an idea, create something simple, then iterate. Create and iterate, create and iterate... Who knows how many versions it went through? But it eventually got to a point that was functional and that was good enough for me.</p><figure>
+<img class="thumbnail align-right" data-full="images/ttt_wrong.jpg" loading="lazy" src="images/ttt_wrong_thumb.jpg"/>
+</figure><p>There's really no challenge other than overcoming luck. The computer chooses its move randomly so it is pretty easy to win. And if you do, a python script is called that displays a smiley on the LED matrix. Lose and a sad face is called. Tie? Indifferent... (I think I also put heart eyes and a "flat" face in there, too?)
+<br/><br/>
+<b>DISCLAIMER:</b> As I've <a href="virus_mutation_simulation.html"><u>said before</u></a>, to all the real programmers out there, a programmer I am not. The only programming I do is for fun as a hobby. I realize my code is sloppy, inefficient, and downright ugly. But hey, for my purposes, it works! And absolutely no AI was used to write any portion; AI wasn't even a thing! <i>Get off my lawn!</i> <b>;P</b></p><div class="side-by-side">
+<img class="thumbnail" data-full="images/ttt_win.jpg" loading="lazy" src="images/ttt_win_thumb.jpg"/>
+<img class="thumbnail" data-full="images/ttt_lose.jpg" loading="lazy" src="images/ttt_lose_thumb.jpg"/>
+<img class="thumbnail" data-full="images/ttt_tie.jpg" loading="lazy" src="images/ttt_tie_thumb.jpg"/>
+</div><hr/><h2><center><u>SOURCE CODE</u></center></h2><p>replace language-cpp with language-python, language-html, language-css, etc.</p><pre><code class="language-bash">
 #!/bin/bash
 
 ##############
@@ -144,84 +119,84 @@ print_horizontal_border() {
 
 win_check() {
 	# HUMAN WIN
-	if [[ ($a = "print_x" && $b = "print_x") && $c = "print_x" ]]; then
-		python /facebot/python/sad.py &
+	if [[ ($a = "print_x" &amp;&amp; $b = "print_x") &amp;&amp; $c = "print_x" ]]; then
+		python /facebot/python/sad.py &amp;
 		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($d = "print_x" && $e = "print_x") && $f = "print_x" ]]; then
-		python /facebot/python/sad.py &
+	elif [[ ($d = "print_x" &amp;&amp; $e = "print_x") &amp;&amp; $f = "print_x" ]]; then
+		python /facebot/python/sad.py &amp;
 		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($g = "print_x" && $h = "print_x") && $i = "print_x" ]]; then
-		python /facebot/python/sad.py &
+	elif [[ ($g = "print_x" &amp;&amp; $h = "print_x") &amp;&amp; $i = "print_x" ]]; then
+		python /facebot/python/sad.py &amp;
 		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($a = "print_x" && $d = "print_x") && $g = "print_x" ]]; then
-		python /facebot/python/sad.py &
+	elif [[ ($a = "print_x" &amp;&amp; $d = "print_x") &amp;&amp; $g = "print_x" ]]; then
+		python /facebot/python/sad.py &amp;
 		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($b = "print_x" && $e = "print_x") && $h = "print_x" ]]; then
-		python /facebot/python/sad.py &
+	elif [[ ($b = "print_x" &amp;&amp; $e = "print_x") &amp;&amp; $h = "print_x" ]]; then
+		python /facebot/python/sad.py &amp;
 		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($c = "print_x" && $f = "print_x") && $i = "print_x" ]]; then
-		python /facebot/python/sad.py &
+	elif [[ ($c = "print_x" &amp;&amp; $f = "print_x") &amp;&amp; $i = "print_x" ]]; then
+		python /facebot/python/sad.py &amp;
 		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($a = "print_x" && $e = "print_x") && $i = "print_x" ]]; then
-		python /facebot/python/sad.py &
+	elif [[ ($a = "print_x" &amp;&amp; $e = "print_x") &amp;&amp; $i = "print_x" ]]; then
+		python /facebot/python/sad.py &amp;
 		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($c = "print_x" && $e = "print_x") && $g = "print_x" ]]; then
-		python /facebot/python/sad.py &
+	elif [[ ($c = "print_x" &amp;&amp; $e = "print_x") &amp;&amp; $g = "print_x" ]]; then
+		python /facebot/python/sad.py &amp;
 		echo -e "\e[92m\n\n  YOU WIN! :) \n\e[0m"
 		sleep 2 
 	  	exit
 	# COMP WIN
-	elif [[ ($a = "print_o" && $b = "print_o") && $c = "print_o" ]]; then
-		python /facebot/python/happy.py &
+	elif [[ ($a = "print_o" &amp;&amp; $b = "print_o") &amp;&amp; $c = "print_o" ]]; then
+		python /facebot/python/happy.py &amp;
 		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($d = "print_o" && $e = "print_o") && $f = "print_o" ]]; then
-		python /facebot/python/happy.py &
+	elif [[ ($d = "print_o" &amp;&amp; $e = "print_o") &amp;&amp; $f = "print_o" ]]; then
+		python /facebot/python/happy.py &amp;
 		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($g = "print_o" && $h = "print_o") && $i = "print_o" ]]; then
-		python /facebot/python/happy.py &
+	elif [[ ($g = "print_o" &amp;&amp; $h = "print_o") &amp;&amp; $i = "print_o" ]]; then
+		python /facebot/python/happy.py &amp;
 		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($a = "print_o" && $d = "print_o") && $g = "print_o" ]]; then
-		python /facebot/python/happy.py &
+	elif [[ ($a = "print_o" &amp;&amp; $d = "print_o") &amp;&amp; $g = "print_o" ]]; then
+		python /facebot/python/happy.py &amp;
 		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($b = "print_o" && $e = "print_o") && $h = "print_o" ]]; then
-		python /facebot/python/happy.py &
+	elif [[ ($b = "print_o" &amp;&amp; $e = "print_o") &amp;&amp; $h = "print_o" ]]; then
+		python /facebot/python/happy.py &amp;
 		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($c = "print_o" && $f = "print_o") && $i = "print_o" ]]; then
-		python /facebot/python/happy.py &
+	elif [[ ($c = "print_o" &amp;&amp; $f = "print_o") &amp;&amp; $i = "print_o" ]]; then
+		python /facebot/python/happy.py &amp;
 		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($a = "print_o" && $e = "print_o") && $i = "print_o" ]]; then
-		python /facebot/python/happy.py &
+	elif [[ ($a = "print_o" &amp;&amp; $e = "print_o") &amp;&amp; $i = "print_o" ]]; then
+		python /facebot/python/happy.py &amp;
 		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
 		sleep 2 
 	  	exit
-	elif [[ ($c = "print_o" && $e = "print_o") && $g = "print_o" ]]; then
-		python /facebot/python/happy.py &
+	elif [[ ($c = "print_o" &amp;&amp; $e = "print_o") &amp;&amp; $g = "print_o" ]]; then
+		python /facebot/python/happy.py &amp;
 		echo -e "\e[91m\n\n  I WIN! :P \n\e[0m"
 		sleep 2 
 	  	exit
@@ -229,8 +204,8 @@ win_check() {
 }
 
 draw_check() {
-	if [[ $a != "blank" && $b != "blank" && $c != "blank" && $d != "blank" && $e != "blank" && $f != "blank" && $g != "blank" && $h != "blank" && $i != "blank" ]]; then
-		python /facebot/python/neutral.py &
+	if [[ $a != "blank" &amp;&amp; $b != "blank" &amp;&amp; $c != "blank" &amp;&amp; $d != "blank" &amp;&amp; $e != "blank" &amp;&amp; $f != "blank" &amp;&amp; $g != "blank" &amp;&amp; $h != "blank" &amp;&amp; $i != "blank" ]]; then
+		python /facebot/python/neutral.py &amp;
 		echo -e "\e[96m\n\n  It's a draw :/\n\e[0m"
 		sleep 2
 		exit
@@ -274,7 +249,7 @@ while [ 1 ]; do
 
 	read -n 1 COMP
 
-	if [ ${!COMP} != "blank" 2>/dev/null ]; then	# is choice already picked?
+	if [ ${!COMP} != "blank" 2&gt;/dev/null ]; then	# is choice already picked?
 		echo -e "\n\n\e[93m  Please choose again... \e[0m"
 		sleep 2
 	else
@@ -300,10 +275,10 @@ done
 
 computer_turn() {
 while [ 1 ]; do
-	COMP=$(< /dev/urandom tr -dc _a-i | head -c${1:-1})
+	COMP=$(&lt; /dev/urandom tr -dc _a-i | head -c${1:-1})
 
 	if [ ${!COMP} != "blank" ]; then	# is choice already picked?
-		echo > /dev/null
+		echo &gt; /dev/null
 	else
 		case $COMP in
 			A|a) a="print_o"; break ;;
@@ -339,16 +314,11 @@ while [ 1 ]; do
 
 done
 
-</code></pre>
-
-<br><br>
-</blockquote>
-
-    <p style="font-size: 0.85rem; color: #999;">2020-01-07</p>
-  </div>
-
-  <div class="lightbox" id="lightbox">
-    <img id="lightbox-img" src="" alt="">
-  </div>
+</code></pre></blockquote>
+<p style="font-size: 0.85rem; color: #999;">2020-01-07</p>
+</div>
+<div class="lightbox" id="lightbox">
+<img alt="" id="lightbox-img" src=""/>
+</div>
 </body>
 </html>

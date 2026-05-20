@@ -1,82 +1,71 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Remote Lamp Switch</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Remote Lamp Switch</title>
+<link href="style.css" rel="stylesheet"/>
+<script defer="" src="script.js"></script>
 </head>
 <body>
-  <nav id="topnav">
-    <div id="topnav-inner">
-      <a href="ABOUT.html">| about |</a>
-      <span class="nav-sep">·</span>
-      <a href="making.html">| making |</a>
-      <span class="nav-sep">·</span>
-      <a href="writing.html">| writing |</a>
-      <span class="nav-sep">·</span>
-      <a href="seeing.html">| seeing |</a>
-      <span class="nav-sep">·</span>
-      <button id="toggle-dark-mode">| dark mode |</button>
-      <span class="nav-sep">·</span>
-      <button onclick="goRandom()">| random |</button>
-    </div>
-  </nav>
-
-  <div class="container">
-      <h1><a href="index.html">| yesteryear forever |</a></h1>
-      <blockquote>
-      <p>
-<b>Remote Lamp Switch</b><br><br>
+<nav id="topnav">
+<div id="topnav-inner">
+<a href="ABOUT.html">| about |</a>
+<span class="nav-sep">·</span>
+<a href="making.html">| making |</a>
+<span class="nav-sep">·</span>
+<a href="writing.html">| writing |</a>
+<span class="nav-sep">·</span>
+<a href="seeing.html">| seeing |</a>
+<span class="nav-sep">·</span>
+<button id="toggle-dark-mode">| dark mode |</button>
+<span class="nav-sep">·</span>
+<button onclick="goRandom()">| random |</button>
+</div>
+</nav>
+<div class="container">
+<h1><a href="index.html">| yesteryear forever |</a></h1>
+<blockquote>
+<p><b>Remote Lamp Switch</b><br/><br/>
 Projects that involve multiple hardware and software layers and sublayers are like catnip to me. And I love interacting with the physical world using electromechanical surrogates. So, this project developed very organically and easily.
-<br><br>
+<br/><br/>
 I was looking for an excuse to use one of my new favorite devices, a NodeMCU. It's basically a mini arduino with built-in WiFi (ESP8266)! How awesome - and practical - is that?! So, it was going to connect to the internet for sure, and these micro servos (Sg90s) are a perfect way to interact with the world. I also needed an excuse to design something with my new 3D printer (Bambu Lab A1), so this project was also going to involve something 3D printed.
-<br><br>
+<br/><br/>
 I had an idea...
-<br>
-<video class="minimal-video" controls loop muted playsinline>
-  <source src="images/glp_idea.mp4" type="video/mp4">
+<br/>
+<video class="minimal-video" controls="" loop="" muted="" playsinline="">
+<source src="images/glp_idea.mp4" type="video/mp4"/>
   Your browser doesn't support videos.
 </video>
 
 Remote controlled IoT devices are neat, but I never could justify their cost for what "benefits" they claimed to provide around the house. Also, I could just <i>make</i> one. Bam! A perfect application that integrated all the capabilities of these devices AND satisfied my desire for multi-layered projects utilizing hardware, software, a web interface, 3D design and printing, and a practical application:
-<br><br>
+<br/><br/>
 A remote controlled light switch.
-<br><br>
+<br/><br/>
 Revolutionary, I know. But it's the journey, friends. Not the destination. ;)
-<br><br>
+<br/><br/>
 The NodeMCU has a web server hosting a simple html website that "listens" for a button press. When the button is pressed, the servo moves. Simple! But I designed a mount that holds the NodeMCU and servo neatly inside my favorite green desk lamp, and since the servo is physically attached to to the lamp pull chain, the lamp turns on or off remotely with the touch of a button on any internet-connected device (i.e. my phone).
-<br><br>
+<br/><br/>
 Necessary? Absolutely not.
-<br><br>
-Fun? Absolutely!
-<br><br>
-<div class="side-by-side">
-  <img src="images/glp_tinker_thumb.jpg" class="thumbnail" data-full="images/glp_tinker.jpg" loading="lazy">
-  <img src="images/glp_prototype_thumb.jpg" class="thumbnail" data-full="images/glp_prototype.jpg" loading="lazy">
-</div>
-<div class="side-by-side">
-  <img src="images/glp_code_thumb.jpg" class="thumbnail" data-full="images/glp_code.jpg" loading="lazy">
-  <img src="images/glp_print_thumb.jpg" class="thumbnail" data-full="images/glp_print.jpg" loading="lazy">
-</div>
-<div class="side-by-side">
-  <img src="images/glp_build_thumb.jpg" class="thumbnail" data-full="images/glp_build.jpg" loading="lazy">
-  <img src="images/glp_install_thumb.jpg" class="thumbnail" data-full="images/glp_install.jpg" loading="lazy">
-</div>
-
-<video class="minimal-video" controls loop muted playsinline>
-  <source src="images/glp_nec.mp4" type="video/mp4">
+<br/><br/>
+Fun? Absolutely!</p><div class="side-by-side">
+<img class="thumbnail" data-full="images/glp_tinker.jpg" loading="lazy" src="images/glp_tinker_thumb.jpg"/>
+<img class="thumbnail" data-full="images/glp_prototype.jpg" loading="lazy" src="images/glp_prototype_thumb.jpg"/>
+</div><div class="side-by-side">
+<img class="thumbnail" data-full="images/glp_code.jpg" loading="lazy" src="images/glp_code_thumb.jpg"/>
+<img class="thumbnail" data-full="images/glp_print.jpg" loading="lazy" src="images/glp_print_thumb.jpg"/>
+</div><div class="side-by-side">
+<img class="thumbnail" data-full="images/glp_build.jpg" loading="lazy" src="images/glp_build_thumb.jpg"/>
+<img class="thumbnail" data-full="images/glp_install.jpg" loading="lazy" src="images/glp_install_thumb.jpg"/>
+</div><p><video class="minimal-video" controls="" loop="" muted="" playsinline="">
+<source src="images/glp_nec.mp4" type="video/mp4"/>
   Your browser doesn't support videos.
-</video>
-<br><br>
-</blockquote>
-
-    <p style="font-size: 0.85rem; color: #999;">2024-10-26</p>
-  </div>
-
-  <div class="lightbox" id="lightbox">
-    <img id="lightbox-img" src="" alt="">
-  </div>
+</video></p></blockquote>
+<p style="font-size: 0.85rem; color: #999;">2024-10-26</p>
+</div>
+<div class="lightbox" id="lightbox">
+<img alt="" id="lightbox-img" src=""/>
+</div>
 </body>
 </html>

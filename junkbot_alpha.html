@@ -1,80 +1,58 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Junkbot</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Junkbot</title>
+<link href="style.css" rel="stylesheet"/>
+<script defer="" src="script.js"></script>
 </head>
 <body>
-  <nav id="topnav">
-    <div id="topnav-inner">
-      <a href="ABOUT.html">| about |</a>
-      <span class="nav-sep">·</span>
-      <a href="making.html">| making |</a>
-      <span class="nav-sep">·</span>
-      <a href="writing.html">| writing |</a>
-      <span class="nav-sep">·</span>
-      <a href="seeing.html">| seeing |</a>
-      <span class="nav-sep">·</span>
-      <button id="toggle-dark-mode">| dark mode |</button>
-      <span class="nav-sep">·</span>
-      <button onclick="goRandom()">| random |</button>
-    </div>
-  </nav>
-
-  <div class="container">
-      <h1><a href="index.html">| yesteryear forever |</a></h1>
-      <blockquote>
-      <p>
-<b>Junkbot</b><br>
-<figure>
-  <img src="images/junkbot_parts_thumb.jpg" 
-       data-full="images/junkbot_parts.jpg"  
-       class="thumbnail align-right"
-       loading="lazy">
-</figure>
-After playing a lot of video games and watching a lot of TV shows and movies about robots and A.I., I was inspired to make my own robot. But I wanted to give it a little style, so I decided to use modern technology for the guts but use authentic vintage components for the outside parts like the body and wheels.
-<br><br>
-I already had most of the guts like the Raspberry Pi (2B), motors, sensors, and batteries, and only had to buy a couple sensors… this stuff was all leftover from an improved rover I was going to build but never did. As for the body parts, I took a trip to the Antique Mall and found all kinds of cool stuff! I found an old camera for the body, a couple cool-looking gauges (just for looks), antique roller skates for the wheels, and some classic binoculars used for the theater for the ‘eyes.’
-<figure>
-  <img src="images/junkbot_insidefront_thumb.jpg" 
-       data-full="images/junkbot_insidefront.jpg"  
-       class="thumbnail align-left"
-       loading="lazy">
-</figure>
-The last robot I built was designed so that it had to be controlled by a person, not unlike a remote control car. But I wanted this robot to be as autonomous as possible so I included a range sensor. This made it so that when it came up against a wall or obstacle it would stop, turn around, and keep going all on its own.
-<br><br>
-My original plan was to give it a speaker as well so that it would say random factoids along with a call for help if it ever fell over. (The sensors I installed also included an accelerometer, a pressure/temperature sensor, and compass.) Unfortunately, I never got the chance to install the speaker.
-<figure>
-  <img src="images/junkbot_donefront_thumb.jpg" 
-       data-full="images/junkbot_donefront.jpg"  
-       class="thumbnail align-right"
-       loading="lazy">
-</figure>
-The robot was rechargeable, however, and the entire power system fit very nicely into the bottom section of the body. Despite having two separate 5V power systems that included 3.7V rechargeable batteries and 5V power boosters, the Raspberry Pi and Arduino just sucked out way too much power – which turned out to be the main downfall of the robot causing me to prematurely abandon the project. I ended up getting a new, better battery module but it turned out to be too big and wouldn’t fit properly.
-<br><br>
-This, along with a few other small things I didn’t like about the bot, made me call this project ‘finished.’ I designed it, I built it, I tested it – and it worked for a short period of time – but it didn’t quite work the way I wanted it to. The amount of redesigning and rebuilding wasn’t justifiable to me, BUT I learned a ton and will make the next one even better...
-<br><br>
-<b>Construction images:</b>
-<br><br>
-<div class="gallery">
-  <img src="images/junkbot_wheels_thumb.jpg" data-full="images/junkbot_wheels.jpg" class="thumbnail" loading="lazy">
-  <img src="images/junkbot_motors_thumb.jpg" data-full="images/junkbot_motors.jpg" class="thumbnail" loading="lazy">
-  <img src="images/junkbot_help_thumb.jpg" data-full="images/junkbot_help.jpg" class="thumbnail" loading="lazy">
-  <img src="images/junkbot_bottom_thumb.jpg" data-full="images/junkbot_bottom.jpg" class="thumbnail" loading="lazy">
-  <img src="images/junkbot_insideback_thumb.jpg" data-full="images/junkbot_insideback.jpg" class="thumbnail" loading="lazy">
-  <img src="images/junkbot_doneback_thumb.jpg" data-full="images/junkbot_doneback.jpg" class="thumbnail" loading="lazy">
+<nav id="topnav">
+<div id="topnav-inner">
+<a href="ABOUT.html">| about |</a>
+<span class="nav-sep">·</span>
+<a href="making.html">| making |</a>
+<span class="nav-sep">·</span>
+<a href="writing.html">| writing |</a>
+<span class="nav-sep">·</span>
+<a href="seeing.html">| seeing |</a>
+<span class="nav-sep">·</span>
+<button id="toggle-dark-mode">| dark mode |</button>
+<span class="nav-sep">·</span>
+<button onclick="goRandom()">| random |</button>
 </div>
-<br>
-</blockquote>
-
-    <p style="font-size: 0.85rem; color: #999;">2017-01-26</p>
-  </div>
-
-  <div class="lightbox" id="lightbox">
-    <img id="lightbox-img" src="" alt="">
-  </div>
+</nav>
+<div class="container">
+<h1><a href="index.html">| yesteryear forever |</a></h1>
+<blockquote>
+<p><b>Junkbot</b></p><figure>
+<img class="thumbnail align-right" data-full="images/junkbot_parts.jpg" loading="lazy" src="images/junkbot_parts_thumb.jpg"/>
+</figure><p>After playing a lot of video games and watching a lot of TV shows and movies about robots and A.I., I was inspired to make my own robot. But I wanted to give it a little style, so I decided to use modern technology for the guts but use authentic vintage components for the outside parts like the body and wheels.
+<br/><br/>
+I already had most of the guts like the Raspberry Pi (2B), motors, sensors, and batteries, and only had to buy a couple sensors… this stuff was all leftover from an improved rover I was going to build but never did. As for the body parts, I took a trip to the Antique Mall and found all kinds of cool stuff! I found an old camera for the body, a couple cool-looking gauges (just for looks), antique roller skates for the wheels, and some classic binoculars used for the theater for the ‘eyes.’</p><figure>
+<img class="thumbnail align-left" data-full="images/junkbot_insidefront.jpg" loading="lazy" src="images/junkbot_insidefront_thumb.jpg"/>
+</figure><p>The last robot I built was designed so that it had to be controlled by a person, not unlike a remote control car. But I wanted this robot to be as autonomous as possible so I included a range sensor. This made it so that when it came up against a wall or obstacle it would stop, turn around, and keep going all on its own.
+<br/><br/>
+My original plan was to give it a speaker as well so that it would say random factoids along with a call for help if it ever fell over. (The sensors I installed also included an accelerometer, a pressure/temperature sensor, and compass.) Unfortunately, I never got the chance to install the speaker.</p><figure>
+<img class="thumbnail align-right" data-full="images/junkbot_donefront.jpg" loading="lazy" src="images/junkbot_donefront_thumb.jpg"/>
+</figure><p>The robot was rechargeable, however, and the entire power system fit very nicely into the bottom section of the body. Despite having two separate 5V power systems that included 3.7V rechargeable batteries and 5V power boosters, the Raspberry Pi and Arduino just sucked out way too much power – which turned out to be the main downfall of the robot causing me to prematurely abandon the project. I ended up getting a new, better battery module but it turned out to be too big and wouldn’t fit properly.
+<br/><br/>
+This, along with a few other small things I didn’t like about the bot, made me call this project ‘finished.’ I designed it, I built it, I tested it – and it worked for a short period of time – but it didn’t quite work the way I wanted it to. The amount of redesigning and rebuilding wasn’t justifiable to me, BUT I learned a ton and will make the next one even better...
+<br/><br/>
+<b>Construction images:</b></p><div class="gallery">
+<img class="thumbnail" data-full="images/junkbot_wheels.jpg" loading="lazy" src="images/junkbot_wheels_thumb.jpg"/>
+<img class="thumbnail" data-full="images/junkbot_motors.jpg" loading="lazy" src="images/junkbot_motors_thumb.jpg"/>
+<img class="thumbnail" data-full="images/junkbot_help.jpg" loading="lazy" src="images/junkbot_help_thumb.jpg"/>
+<img class="thumbnail" data-full="images/junkbot_bottom.jpg" loading="lazy" src="images/junkbot_bottom_thumb.jpg"/>
+<img class="thumbnail" data-full="images/junkbot_insideback.jpg" loading="lazy" src="images/junkbot_insideback_thumb.jpg"/>
+<img class="thumbnail" data-full="images/junkbot_doneback.jpg" loading="lazy" src="images/junkbot_doneback_thumb.jpg"/>
+</div></blockquote>
+<p style="font-size: 0.85rem; color: #999;">2017-01-26</p>
+</div>
+<div class="lightbox" id="lightbox">
+<img alt="" id="lightbox-img" src=""/>
+</div>
 </body>
 </html>

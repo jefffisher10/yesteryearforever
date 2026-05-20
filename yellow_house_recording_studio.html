@@ -1,104 +1,90 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yellow House Recording Studio</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yellow House Recording Studio</title>
+<link href="style.css" rel="stylesheet"/>
+<script defer="" src="script.js"></script>
 </head>
 <body>
-  <nav id="topnav">
-    <div id="topnav-inner">
-      <a href="ABOUT.html">| about |</a>
-      <span class="nav-sep">·</span>
-      <a href="making.html">| making |</a>
-      <span class="nav-sep">·</span>
-      <a href="writing.html">| writing |</a>
-      <span class="nav-sep">·</span>
-      <a href="seeing.html">| seeing |</a>
-      <span class="nav-sep">·</span>
-      <button id="toggle-dark-mode">| dark mode |</button>
-      <span class="nav-sep">·</span>
-      <button onclick="goRandom()">| random |</button>
-    </div>
-  </nav>
-
-  <div class="container">
-      <h1><a href="index.html">| yesteryear forever |</a></h1>
-      <blockquote>
-      <p>
-<b>Yellow House Recording Studio</b><br><br>
-<figure>
-  <img src="images/YHR43_thumb.jpg" 
-       data-full="images/YHR43.jpg" 
-       class="thumbnail align-center"
-       loading="lazy">
-</figure>
-
-In 2005, Jeffrey Fisher Sr., Ian Holmes, Andy Sisinger and I completed the construction of the Yellow House Recording Studio. Below is a gallery featuring images of the construction process.
-<br><br>
-The Yellow House Recording Studio recorded dozens of artists including jazz saxophonist Gene Walker.
-<br><br>
-<div class="gallery">
-  <img src="images/YHR01_thumb.jpg" data-full="images/YHR01.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR02_thumb.jpg" data-full="images/YHR02.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR03_thumb.jpg" data-full="images/YHR03.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR04_thumb.jpg" data-full="images/YHR04.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR05_thumb.jpg" data-full="images/YHR05.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR06_thumb.jpg" data-full="images/YHR06.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR07_thumb.jpg" data-full="images/YHR07.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR08_thumb.jpg" data-full="images/YHR08.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR09_thumb.jpg" data-full="images/YHR09.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR10_thumb.jpg" data-full="images/YHR10.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR11_thumb.jpg" data-full="images/YHR11.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR12_thumb.jpg" data-full="images/YHR12.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR13_thumb.jpg" data-full="images/YHR13.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR14_thumb.jpg" data-full="images/YHR14.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR15_thumb.jpg" data-full="images/YHR15.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR16_thumb.jpg" data-full="images/YHR16.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR17_thumb.jpg" data-full="images/YHR17.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR18_thumb.jpg" data-full="images/YHR18.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR19_thumb.jpg" data-full="images/YHR19.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR20_thumb.jpg" data-full="images/YHR20.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR21_thumb.jpg" data-full="images/YHR21.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR22_thumb.jpg" data-full="images/YHR22.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR23_thumb.jpg" data-full="images/YHR23.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR24_thumb.jpg" data-full="images/YHR24.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR25_thumb.jpg" data-full="images/YHR25.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR26_thumb.jpg" data-full="images/YHR26.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR27_thumb.jpg" data-full="images/YHR27.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR28_thumb.jpg" data-full="images/YHR28.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR29_thumb.jpg" data-full="images/YHR29.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR30_thumb.jpg" data-full="images/YHR30.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR31_thumb.jpg" data-full="images/YHR31.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR32_thumb.jpg" data-full="images/YHR32.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR33_thumb.jpg" data-full="images/YHR33.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR34_thumb.jpg" data-full="images/YHR34.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR35_thumb.jpg" data-full="images/YHR35.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR36_thumb.jpg" data-full="images/YHR36.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR37_thumb.jpg" data-full="images/YHR37.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR38_thumb.jpg" data-full="images/YHR38.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR39_thumb.jpg" data-full="images/YHR39.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR40_thumb.jpg" data-full="images/YHR40.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR41_thumb.jpg" data-full="images/YHR41.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR42_thumb.jpg" data-full="images/YHR42.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR43_thumb.jpg" data-full="images/YHR43.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR44_thumb.jpg" data-full="images/YHR44.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR45_thumb.jpg" data-full="images/YHR45.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR46_thumb.jpg" data-full="images/YHR46.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR47_thumb.jpg" data-full="images/YHR47.jpg" class="thumbnail" loading="lazy">
-  <img src="images/YHR48_thumb.jpg" data-full="images/YHR48.jpg" class="thumbnail" loading="lazy">
-  
+<nav id="topnav">
+<div id="topnav-inner">
+<a href="ABOUT.html">| about |</a>
+<span class="nav-sep">·</span>
+<a href="making.html">| making |</a>
+<span class="nav-sep">·</span>
+<a href="writing.html">| writing |</a>
+<span class="nav-sep">·</span>
+<a href="seeing.html">| seeing |</a>
+<span class="nav-sep">·</span>
+<button id="toggle-dark-mode">| dark mode |</button>
+<span class="nav-sep">·</span>
+<button onclick="goRandom()">| random |</button>
 </div>
-<br><br>
-</blockquote>
-
-    <p style="font-size: 0.85rem; color: #999;">2005-10-15</p>
-  </div>
-
-  <div class="lightbox" id="lightbox">
-    <img id="lightbox-img" src="" alt="">
-  </div>
+</nav>
+<div class="container">
+<h1><a href="index.html">| yesteryear forever |</a></h1>
+<blockquote>
+<p><b>Yellow House Recording Studio</b></p><figure>
+<img class="thumbnail align-center" data-full="images/YHR43.jpg" loading="lazy" src="images/YHR43_thumb.jpg"/>
+</figure><p>In 2005, Jeffrey Fisher Sr., Ian Holmes, Andy Sisinger and I completed the construction of the Yellow House Recording Studio. Below is a gallery featuring images of the construction process.
+<br/><br/>
+The Yellow House Recording Studio recorded dozens of artists including jazz saxophonist Gene Walker.</p><div class="gallery">
+<img class="thumbnail" data-full="images/YHR01.jpg" loading="lazy" src="images/YHR01_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR02.jpg" loading="lazy" src="images/YHR02_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR03.jpg" loading="lazy" src="images/YHR03_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR04.jpg" loading="lazy" src="images/YHR04_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR05.jpg" loading="lazy" src="images/YHR05_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR06.jpg" loading="lazy" src="images/YHR06_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR07.jpg" loading="lazy" src="images/YHR07_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR08.jpg" loading="lazy" src="images/YHR08_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR09.jpg" loading="lazy" src="images/YHR09_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR10.jpg" loading="lazy" src="images/YHR10_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR11.jpg" loading="lazy" src="images/YHR11_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR12.jpg" loading="lazy" src="images/YHR12_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR13.jpg" loading="lazy" src="images/YHR13_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR14.jpg" loading="lazy" src="images/YHR14_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR15.jpg" loading="lazy" src="images/YHR15_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR16.jpg" loading="lazy" src="images/YHR16_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR17.jpg" loading="lazy" src="images/YHR17_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR18.jpg" loading="lazy" src="images/YHR18_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR19.jpg" loading="lazy" src="images/YHR19_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR20.jpg" loading="lazy" src="images/YHR20_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR21.jpg" loading="lazy" src="images/YHR21_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR22.jpg" loading="lazy" src="images/YHR22_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR23.jpg" loading="lazy" src="images/YHR23_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR24.jpg" loading="lazy" src="images/YHR24_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR25.jpg" loading="lazy" src="images/YHR25_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR26.jpg" loading="lazy" src="images/YHR26_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR27.jpg" loading="lazy" src="images/YHR27_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR28.jpg" loading="lazy" src="images/YHR28_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR29.jpg" loading="lazy" src="images/YHR29_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR30.jpg" loading="lazy" src="images/YHR30_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR31.jpg" loading="lazy" src="images/YHR31_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR32.jpg" loading="lazy" src="images/YHR32_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR33.jpg" loading="lazy" src="images/YHR33_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR34.jpg" loading="lazy" src="images/YHR34_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR35.jpg" loading="lazy" src="images/YHR35_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR36.jpg" loading="lazy" src="images/YHR36_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR37.jpg" loading="lazy" src="images/YHR37_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR38.jpg" loading="lazy" src="images/YHR38_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR39.jpg" loading="lazy" src="images/YHR39_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR40.jpg" loading="lazy" src="images/YHR40_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR41.jpg" loading="lazy" src="images/YHR41_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR42.jpg" loading="lazy" src="images/YHR42_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR43.jpg" loading="lazy" src="images/YHR43_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR44.jpg" loading="lazy" src="images/YHR44_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR45.jpg" loading="lazy" src="images/YHR45_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR46.jpg" loading="lazy" src="images/YHR46_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR47.jpg" loading="lazy" src="images/YHR47_thumb.jpg"/>
+<img class="thumbnail" data-full="images/YHR48.jpg" loading="lazy" src="images/YHR48_thumb.jpg"/>
+</div></blockquote>
+<p style="font-size: 0.85rem; color: #999;">2005-10-15</p>
+</div>
+<div class="lightbox" id="lightbox">
+<img alt="" id="lightbox-img" src=""/>
+</div>
 </body>
 </html>
