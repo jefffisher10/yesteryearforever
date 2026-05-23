@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[Post Title Here] | yesteryear forever</title>
+  <title>Post Title Here</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
@@ -29,25 +29,89 @@
     <h1><a href="index.html">| yesteryear forever |</a></h1>
 
     <blockquote>
-      <p>
-        <strong>[Post Title Here]</strong><br><br>
 
-        [Your writing goes here.]<br><br>
+      <p><strong>Post Title Here</strong></p>
 
-        <figure>
-          <img src="images/example_thumb.jpg"
-               data-full="images/example_full.jpg"
-               alt="descriptive alt text"
-               class="thumbnail align-right"
-               loading="lazy">
-          <figcaption>Optional caption here.</figcaption>
-        </figure>
+      <!-- ============================================================
+           BASIC TEXT PARAGRAPH
+           Use one <p> per paragraph. Never put images inside a <p>.
+           ============================================================ -->
+      <p>First paragraph of text goes here. Lorem ipsum dolor sit amet,
+      consectetur adipiscing elit. Keep each paragraph in its own p tag.</p>
 
-        [Continue writing if you'd like.]<br><br>
-      </p>
+      <!-- ============================================================
+           IMAGE — FLOAT RIGHT
+           Replace filenames. Remove align-right for centered image.
+           Use align-left to float left instead.
+           ============================================================ -->
+      <figure>
+        <img src="images/FILENAME_thumb.jpg"
+             data-full="images/FILENAME.jpg"
+             alt="describe the image here"
+             class="thumbnail align-right"
+             loading="lazy">
+        <figcaption>Optional caption here.</figcaption>
+      </figure>
+
+      <!-- Text after a figure goes in its own <p> — never inside the figure -->
+      <p>Second paragraph of text goes here. Notice how the image above floats
+      beside this text. Keep writing and the text wraps naturally around it.</p>
+
+      <p>Third paragraph. You can have as many as you like. Each one is its
+      own p tag.</p>
+
+      <!-- ============================================================
+           IMAGE — FLOAT LEFT
+           ============================================================ -->
+      <figure>
+        <img src="images/FILENAME2_thumb.jpg"
+             data-full="images/FILENAME2.jpg"
+             alt="describe the image here"
+             class="thumbnail align-left"
+             loading="lazy">
+        <figcaption>Optional caption here.</figcaption>
+      </figure>
+
+      <p>Text beside the left-floated image goes here. Same rules apply —
+      always a fresh p tag after the figure closes.</p>
+
+      <!-- ============================================================
+           TWO IMAGES SIDE BY SIDE
+           ============================================================ -->
+      <div class="side-by-side">
+        <img src="images/FILENAME3_thumb.jpg" class="thumbnail" data-full="images/FILENAME3.jpg" loading="lazy">
+        <img src="images/FILENAME4_thumb.jpg" class="thumbnail" data-full="images/FILENAME4.jpg" loading="lazy">
+      </div>
+
+      <p>Text after the side-by-side pair goes here.</p>
+
+      <!-- ============================================================
+           IMAGE GALLERY GRID (3+ images)
+           Add or remove img lines as needed.
+           ============================================================ -->
+      <div class="gallery">
+        <img src="images/FILENAME5_thumb.jpg" data-full="images/FILENAME5.jpg" class="thumbnail" loading="lazy">
+        <img src="images/FILENAME6_thumb.jpg" data-full="images/FILENAME6.jpg" class="thumbnail" loading="lazy">
+        <img src="images/FILENAME7_thumb.jpg" data-full="images/FILENAME7.jpg" class="thumbnail" loading="lazy">
+        <img src="images/FILENAME8_thumb.jpg" data-full="images/FILENAME8.jpg" class="thumbnail" loading="lazy">
+        <img src="images/FILENAME9_thumb.jpg" data-full="images/FILENAME9.jpg" class="thumbnail" loading="lazy">
+        <img src="images/FILENAME10_thumb.jpg" data-full="images/FILENAME10.jpg" class="thumbnail" loading="lazy">
+      </div>
+
+      <p>Text after the gallery goes here.</p>
+
+      <!-- ============================================================
+           CLOSING QUOTE (optional)
+           ============================================================ -->
+      <p><em>"Quote goes here."</em><br>
+      — Attribution</p>
+
     </blockquote>
 
-    <p style="font-size: 0.85rem; color: #999;">[Post Date Here: YYYY-MM-DD]</p>
+    <!-- ============================================================
+         DATE — format YYYY-MM-DD
+         ============================================================ -->
+    <p style="font-size: 0.85rem; color: #999;">YYYY-MM-DD</p>
 
   </div>
 
