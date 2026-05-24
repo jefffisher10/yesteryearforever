@@ -9,6 +9,14 @@
 </head>
 <body>
 
+  <!-- ============================================================
+       CATEGORY: writing | making | sensing  (pick one, delete others)
+       DESC:     one short line describing this post
+       update.py reads these to build the category pages automatically.
+       ============================================================ -->
+  <!-- category: writing -->
+  <!-- desc: your one-line description here -->
+
   <nav id="topnav">
     <div id="topnav-inner">
       <a href="ABOUT.html">| about |</a>
@@ -17,7 +25,7 @@
       <span class="nav-sep">·</span>
       <a href="writing.html">| writing |</a>
       <span class="nav-sep">·</span>
-      <a href="seeing.html">| seeing |</a>
+      <a href="sensing.html">| sensing |</a>
       <span class="nav-sep">·</span>
       <button id="toggle-dark-mode">| dark mode |</button>
       <span class="nav-sep">·</span>
@@ -36,13 +44,13 @@
            BASIC TEXT PARAGRAPH
            Use one <p> per paragraph. Never put images inside a <p>.
            ============================================================ -->
-      <p>First paragraph of text goes here. Lorem ipsum dolor sit amet,
-      consectetur adipiscing elit. Keep each paragraph in its own p tag.</p>
+      <p>First paragraph of text goes here. Keep each paragraph in its own
+      p tag. Never nest images or divs inside a p tag.</p>
 
       <!-- ============================================================
            IMAGE — FLOAT RIGHT
-           Replace filenames. Remove align-right for centered image.
-           Use align-left to float left instead.
+           Replace filenames. Use align-left to float left instead.
+           Remove align-right entirely for a centered image.
            ============================================================ -->
       <figure>
         <img src="images/FILENAME_thumb.jpg"
@@ -53,12 +61,11 @@
         <figcaption>Optional caption here.</figcaption>
       </figure>
 
-      <!-- Text after a figure goes in its own <p> — never inside the figure -->
-      <p>Second paragraph of text goes here. Notice how the image above floats
-      beside this text. Keep writing and the text wraps naturally around it.</p>
+      <!-- Text after a figure always goes in its own <p> -->
+      <p>Second paragraph. The image above floats beside this text.
+      Text wraps naturally around it.</p>
 
-      <p>Third paragraph. You can have as many as you like. Each one is its
-      own p tag.</p>
+      <p>Third paragraph. As many as you like.</p>
 
       <!-- ============================================================
            IMAGE — FLOAT LEFT
@@ -72,8 +79,7 @@
         <figcaption>Optional caption here.</figcaption>
       </figure>
 
-      <p>Text beside the left-floated image goes here. Same rules apply —
-      always a fresh p tag after the figure closes.</p>
+      <p>Text beside the left-floated image goes here.</p>
 
       <!-- ============================================================
            TWO IMAGES SIDE BY SIDE
@@ -108,9 +114,7 @@
 
     </blockquote>
 
-    <!-- ============================================================
-         DATE — format YYYY-MM-DD
-         ============================================================ -->
+    <!-- DATE — format YYYY-MM-DD -->
     <p style="font-size: 0.85rem; color: #999;">YYYY-MM-DD</p>
 
   </div>
