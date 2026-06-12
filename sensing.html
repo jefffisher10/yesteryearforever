@@ -69,64 +69,68 @@
 
       <!-- -- INTRO -- -->
       <p>
-        [YOUR INTRO PARAGRAPH HERE — set the scene. Something like: There is a small white tube
-        standing in the garden behind my house on West Mound St. It has been there since late May 2026,
-        quietly watching. It does not move. It does not speak. Every thirty minutes it takes the
-        temperature, feels the humidity, checks the soil, measures the light, and sends a small
-        report back to the house over WiFi. Then it goes back to watching.]
+        <strong>Deliberate Simplicity</strong><br>
+		We're inundated with powerful technology nowadays; the glass computer we carry in our pockets are practically indistinguishable from magic. But this project isn't about pushing humanity forward. To the contrary, it's about slowing down and paying attention. It's about integrating clever, human-made tools with nature as a deliberate way to observe and document... and simplicity is the point.<br>
+		I could've spent ~$1,200 on a pre-built weather station, or even just downloaded a weather app on my glass pocket computer, but the journey's at least partly the point. The other part is interpretation and observation as a sign of respect and admiration.
       </p>
 
       <p>
-        [SECOND PARAGRAPH — the philosophy. The unmanned probe idea. Voyager. Sojourner.
-        The beauty of sparse data. Why you love this kind of thing.]
+        <strong>Basic Avatars</strong><br>
+		I've always loved the idea of human space flight and exploration, but as I've gotten older, I've grown to love our robot surrogates even more. Unfortunately, human space travel is insanely difficult and mostly impractical. We can send robots in our stead to explore quicker, faster, cheaper. The downside, though, is comparatively limited data acquisition; we only get a select few data points to collect and scrutinize depending on the onboard sensors. In order to build a complete picture, we must extrapolate...
       </p>
 
       <!-- -- FIRST IMAGE — float right -- -->
       <figure>
-        <img src="images/mound_deployed_thumb.jpg"
-             data-full="images/mound_deployed.jpg"
-             alt="MOUND deployed in the garden"
+        <img src="images/mound_28_thumb.jpg"
+             data-full="images/mound_28.jpg"
+             alt="MOUND deployed"
              class="thumbnail align-right"
              loading="lazy">
-        <figcaption>MOUND on its pole, first day outside.</figcaption>
+        <figcaption>MOUND deployed in the garden.</figcaption>
       </figure>
 
       <p>
-        [PARAGRAPH ABOUT THE NAME — West Mound St., the Ohio ancient culture naming tradition,
-        Adena rover, Hopewell rockets. MOUND fits the family.]
+        <strong>Ambiguity as a Feature, not a Bug</strong><br>
+		The scariest monster isn't the one shown on screen, it's the one in your imagination. The corporate weather app or the fancy store-bought weather station would've provided much more detail, but ambiguity is intriguing - who doesn't love a good mystery?! Creating a <i>story</i> out of scraps of data is so much more fulfilling. A picture from the surface of Mars tells us SO much about the environment and what it would be like to visit and explore, but a word-picture is richer and more compelling; it's why the book is always better than the movie. MOUND's simple text data files and graphs are deliberate, and only half the story. The other half is the <b>imagined</b> world MOUND inhabits.
+      </p>
+	  
+	  <p>
+        <strong>Imagined Reality</strong><br>
+		Think of the last nature documentary you watched or a memorable National Geographic photo... those are <i>real places</i>. Those places <i>actually exist</i>. Pick out a rock in the foreground - that rock is probably still there! Imagine sitting next to it: Maybe it's a quiet evening... sun setting, light breeze, quiet. Pick it up, feel the weight in your hand. The dirt is warm and comforting. Scan the horizon. Notice the patterns in the clouds and the trees in the distance. The rock experienced this for eons and will continue to lie there patiently for eons after you've left.<br>
+		Those dark scenes at the bottom of the ocean with the roaming crabs on the whale carcass are just as real and are playing out <i>right now</i>. So are the cliffs of the Valles Marineris - the Grand Canyon on Mars. A rock just slipped from the top and tumbled down even though no one was there to hear it. It still happened.<br>
+		The select few data points from this humble weather observatory sets the stage for a real place on an actual planet in a solar system on the edge of a genuine galaxy.<br>
+		"That's here. That's home. That's us." ...and these sparse data points from MOUND start to tell the story of this tiny, remote outpost here on Earth
       </p>
 
       <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
 
-      <!-- -- HOW IT WORKS -- -->
-      <p><strong>how it works</strong></p>
+      <!-- -- THE BUILD -- -->
+      <p><strong>the build</strong></p>
 
       <p>
-        [BRIEF NON-TECHNICAL EXPLANATION — sensors listed simply. BME280 for temperature,
-        humidity and pressure. TSL2591 for light. DS18B20 for soil temperature. Capacitive
-        probe for soil moisture. Rain sensor. Pi camera. All wired to a Raspberry Pi Zero W
-        running on a small solar panel and battery pack.]
+        <strong>Practicality vs. Play</strong><br>
+		I could have easily thrown all these components in a box where everything is accessible with plenty of room for upgrades and adjustments, but where's the fun in that? I love practicality, but <b>art</b> and <b>play</b> is where the <b>soul</b> of life lives. Instead, I had Tatooine mechanisms on my mind while designing the enclosure; weird devices with questionable purposes integrated with the planet because... it's cool! We all need a little more whimsy in our lives. 
       </p>
-
-      <!-- -- SECOND IMAGE — float left -- -->
+	  
+	        <!-- -- SECOND IMAGE — float left -- -->
       <figure>
-        <img src="images/mound_internals_thumb.jpg"
-             data-full="images/mound_internals.jpg"
-             alt="MOUND internals — perfboard and wiring"
+        <img src="images/mound_02_thumb.jpg"
+             data-full="images/mound_02.jpg"
+             alt="MOUND prototyping"
              class="thumbnail align-left"
              loading="lazy">
-        <figcaption>The perfboard — vestigial organs and all.</figcaption>
+        <figcaption>Prototyping and testing.</figcaption>
       </figure>
-
-      <p>
-        [PARAGRAPH ABOUT THE BUILD PROCESS — organic, tinkered, not perfectly engineered.
-        The vestigial organs quote. The wire wrapping. The PVC housing. The toggle switch
-        because of course there's a toggle switch.]
+	  
+	  <p>
+        <strong>Intelligent Evolution</strong><br>
+		I know. It's messy. It's <i>technically</i> "poorly designed". Why would I wire that <i>there</i>? Well, I'm a tinkerer, not a designer. I build and create and add... and whatever comes out at the end is anyone's guess. Building is more fun that way! I like to think of it almost like gestation; parts get added and tested, then things get left like vestigial organs. It infuses character and uniqueness instead of boring standardization. Feels more alive, and "mine". 
       </p>
-
-      <p>
-        [PARAGRAPH ABOUT THE SOLAR POWER — Waveshare charge controller, 18650 cells,
-        the small panel. The experiment of it. What happens in November.]
+	  
+	  <p>
+        <strong>What's in a Name?</strong><br>
+		The names of a few of my previous projects were inspired by indigenous peoples of this area: Adena & Hopewell. While brainstorming to continue the trend, I realized the street I live on is called "Mound", as in, effigy mounds built by Native American cultures. Seemed too fitting to pass up.<br>
+		These people -<i>real people</i> with stories and experiences of their own- were naturalists too. They built mounds to observe the sky, to mark seasons, to pay attention to the land. MOUND is doing something quietly similar - sitting on that same Ohio earth, watching the sky, and marking time. The data files are just a different kind of mound... layers of accumulated observation, one reading at a time.
       </p>
 
       <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
@@ -135,28 +139,40 @@
       <p><strong>what it sees</strong></p>
 
       <p>
-        [PARAGRAPH ABOUT THE DATA — what you've noticed so far. The humidity inversely
-        mirroring temperature. Watching the sun rise in the lux graph. Soil temperature
-        lagging hours behind air temperature. The pressure story. Waiting for Stacy to
-        water the garden so you can see it in the soil moisture graph.]
+        - **Temperature** drops sharply from 90°F down to 82°F right at the rain event<br>
+		- **Humidity** spikes dramatically — jumping from ~45% back up to 67% instantly<br>
+		- **Pressure** plummets to its lowest point of the day right at that moment — the storm system arriving<br>
+		- **Light** — already near zero as the storm clouds rolled in<br>
+		- **Soil temp** — barely flinches, all that thermal mass absorbing the shock<br>
+		- **Soil moisture** — LOOK at that spike! Dry all day around 15000, then the rain hits and it shoots up to 18000+ instantly and keeps climbing<br><br>
+		That's a complete weather event captured in six sensor channels. You can literally watch the storm arrive, hit, and the aftermath unfolding in real time.
       </p>
 
       <!-- -- SIDE BY SIDE — sample graph -- -->
       <figure>
-        <img src="mound/graphs/today.png"
+        <img src="mound/graphs/archive/2026-06-11.png"
              alt="Sample MOUND sensor graph"
              style="width:100%; max-width:860px; display:block; margin: 0.5rem auto;"
              loading="lazy">
-        <figcaption>A typical day — six sensor channels on a shared time axis.</figcaption>
+        <figcaption>A sample day — six sensor channels on a shared time axis.</figcaption>
       </figure>
-
-      <p>
-        [PARAGRAPH ABOUT WHAT YOU HOPE TO SEE OVER TIME — seasons changing, storms,
-        the bat mic arriving from Japan, eventually a radio telescope. The long game.]
-      </p>
 
       <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
 
+      <!-- -- HOW IT WORKS -- -->
+      <p><strong>how it works</strong></p>
+	  
+	  <p>
+        BME280 for temperature, humidity and pressure. TSL2591 for light. DS18B20 for soil temperature. Capacitive probe for soil moisture. Rain sensor. Pi camera. All wired to a Raspberry Pi Zero W running on a small solar panel and battery pack.
+      </p>
+	  
+	  <p>
+        SOLAR POWER — Waveshare charge controller, 18650 cells,
+        the small panel. The experiment of it. Bigger panel...
+      </p>
+	  
+      <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
+	  
       <!-- -- BUILD PHOTO GALLERY -- -->
       <p><strong>the build</strong></p>
 
@@ -181,6 +197,17 @@
         <img src="images/mound_18_thumb.jpg" data-full="images/mound_18.jpg" class="thumbnail" loading="lazy">
         <img src="images/mound_19_thumb.jpg" data-full="images/mound_19.jpg" class="thumbnail" loading="lazy">
         <img src="images/mound_20_thumb.jpg" data-full="images/mound_20.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_21_thumb.jpg" data-full="images/mound_21.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_22_thumb.jpg" data-full="images/mound_22.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_23_thumb.jpg" data-full="images/mound_23.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_24_thumb.jpg" data-full="images/mound_24.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_25_thumb.jpg" data-full="images/mound_25.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_26_thumb.jpg" data-full="images/mound_26.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_27_thumb.jpg" data-full="images/mound_27.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_28_thumb.jpg" data-full="images/mound_28.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_29_thumb.jpg" data-full="images/mound_29.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_30_thumb.jpg" data-full="images/mound_30.jpg" class="thumbnail" loading="lazy">
+		<img src="images/mound_31_thumb.jpg" data-full="images/mound_31.jpg" class="thumbnail" loading="lazy">
       </div>
 
       <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
@@ -203,7 +230,7 @@
 
     </blockquote>
 
-    <p style="font-size: 0.85rem; color: #999;">2026-05-31</p>
+    <p style="font-size: 0.85rem; color: #999;">2026-06-13</p>
 
   </div>
 
