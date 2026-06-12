@@ -3,7 +3,7 @@ const pages = [ "absdbs", "adena_rover", "backyard_astronomy", "brief_morning_wa
 
 function goRandom() {
   const random = pages[Math.floor(Math.random() * pages.length)];
-  window.location.href = random + ".html";
+  window.location.href = "/" + random + ".html";
 }
 
 
