@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sensing | yesteryear forever</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <nav id="topnav">
+    <div id="topnav-inner">
+      <a href="ABOUT.html">| about |</a>
+      <span class="nav-sep">·</span>
+      <a href="making.html">| making |</a>
+      <span class="nav-sep">·</span>
+      <a href="writing.html">| writing |</a>
+      <span class="nav-sep">·</span>
+      <a href="sensing.html">| sensing |</a>
+      <span class="nav-sep">·</span>
+      <button id="toggle-dark-mode">| dark mode |</button>
+      <span class="nav-sep">·</span>
+      <button onclick="goRandom()">| random |</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1><a href="index.html">| yesteryear forever |</a></h1>
+
+    <blockquote>
+
+      <p><strong>MOUND — Backyard Observatory</strong></p>
+
+      <!-- -- LIVE DATA TEASER -- -->
+      <div id="mound-teaser" style="border-left: 3px solid #2C3E50; padding: 0.8rem 1rem; margin: 1rem 0; font-size:0.9rem;">
+        <p style="margin:0 0 0.4rem 0;">
+          <strong>live — Central Ohio</strong>
+          &nbsp;·&nbsp;
+          <span id="mound-updated">loading...</span>
+        </p>
+        <p style="margin:0;">
+          <span id="mound-temp">--</span>
+          &nbsp;&nbsp;·&nbsp;&nbsp;
+          <span id="mound-humidity">--</span>
+          &nbsp;&nbsp;·&nbsp;&nbsp;
+          <span id="mound-condition">--</span>
+        </p>
+        <p style="margin:0.5rem 0 0 0;">
+          <a href="mound/index.html">&rarr; full sensor data, graphs, and archive</a>
+        </p>
+      </div>
+
+      <script>
+        fetch('/mound/data/latest.json')
+          .then(r => r.json())
+          .then(d => {
+            document.getElementById('mound-updated').textContent = 'last updated ' + d.updated;
+            document.getElementById('mound-temp').textContent = d.temp;
+            document.getElementById('mound-humidity').textContent = d.humidity;
+            document.getElementById('mound-condition').textContent = d.condition;
+          })
+          .catch(() => {
+            document.getElementById('mound-updated').textContent = 'data unavailable';
+          });
+      </script>
+
+      <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
+
+      <!-- -- INTRO -- -->
+      <p>
+        [YOUR INTRO PARAGRAPH HERE — set the scene. Something like: There is a small white tube
+        standing in the garden behind my house on West Mound St. It has been there since late May 2026,
+        quietly watching. It does not move. It does not speak. Every thirty minutes it takes the
+        temperature, feels the humidity, checks the soil, measures the light, and sends a small
+        report back to the house over WiFi. Then it goes back to watching.]
+      </p>
+
+      <p>
+        [SECOND PARAGRAPH — the philosophy. The unmanned probe idea. Voyager. Sojourner.
+        The beauty of sparse data. Why you love this kind of thing.]
+      </p>
+
+      <!-- -- FIRST IMAGE — float right -- -->
+      <figure>
+        <img src="images/mound_deployed_thumb.jpg"
+             data-full="images/mound_deployed.jpg"
+             alt="MOUND deployed in the garden"
+             class="thumbnail align-right"
+             loading="lazy">
+        <figcaption>MOUND on its pole, first day outside.</figcaption>
+      </figure>
+
+      <p>
+        [PARAGRAPH ABOUT THE NAME — West Mound St., the Ohio ancient culture naming tradition,
+        Adena rover, Hopewell rockets. MOUND fits the family.]
+      </p>
+
+      <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
+
+      <!-- -- HOW IT WORKS -- -->
+      <p><strong>how it works</strong></p>
+
+      <p>
+        [BRIEF NON-TECHNICAL EXPLANATION — sensors listed simply. BME280 for temperature,
+        humidity and pressure. TSL2591 for light. DS18B20 for soil temperature. Capacitive
+        probe for soil moisture. Rain sensor. Pi camera. All wired to a Raspberry Pi Zero W
+        running on a small solar panel and battery pack.]
+      </p>
+
+      <!-- -- SECOND IMAGE — float left -- -->
+      <figure>
+        <img src="images/mound_internals_thumb.jpg"
+             data-full="images/mound_internals.jpg"
+             alt="MOUND internals — perfboard and wiring"
+             class="thumbnail align-left"
+             loading="lazy">
+        <figcaption>The perfboard — vestigial organs and all.</figcaption>
+      </figure>
+
+      <p>
+        [PARAGRAPH ABOUT THE BUILD PROCESS — organic, tinkered, not perfectly engineered.
+        The vestigial organs quote. The wire wrapping. The PVC housing. The toggle switch
+        because of course there's a toggle switch.]
+      </p>
+
+      <p>
+        [PARAGRAPH ABOUT THE SOLAR POWER — Waveshare charge controller, 18650 cells,
+        the small panel. The experiment of it. What happens in November.]
+      </p>
+
+      <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
+
+      <!-- -- THE DATA -- -->
+      <p><strong>what it sees</strong></p>
+
+      <p>
+        [PARAGRAPH ABOUT THE DATA — what you've noticed so far. The humidity inversely
+        mirroring temperature. Watching the sun rise in the lux graph. Soil temperature
+        lagging hours behind air temperature. The pressure story. Waiting for Stacy to
+        water the garden so you can see it in the soil moisture graph.]
+      </p>
+
+      <!-- -- SIDE BY SIDE — sample graph -- -->
+      <figure>
+        <img src="mound/graphs/today.png"
+             alt="Sample MOUND sensor graph"
+             style="width:100%; max-width:860px; display:block; margin: 0.5rem auto;"
+             loading="lazy">
+        <figcaption>A typical day — six sensor channels on a shared time axis.</figcaption>
+      </figure>
+
+      <p>
+        [PARAGRAPH ABOUT WHAT YOU HOPE TO SEE OVER TIME — seasons changing, storms,
+        the bat mic arriving from Japan, eventually a radio telescope. The long game.]
+      </p>
+
+      <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
+
+      <!-- -- BUILD PHOTO GALLERY -- -->
+      <p><strong>the build</strong></p>
+
+      <div class="gallery">
+        <img src="images/mound_01_thumb.jpg" data-full="images/mound_01.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_02_thumb.jpg" data-full="images/mound_02.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_03_thumb.jpg" data-full="images/mound_03.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_04_thumb.jpg" data-full="images/mound_04.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_05_thumb.jpg" data-full="images/mound_05.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_06_thumb.jpg" data-full="images/mound_06.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_07_thumb.jpg" data-full="images/mound_07.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_08_thumb.jpg" data-full="images/mound_08.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_09_thumb.jpg" data-full="images/mound_09.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_10_thumb.jpg" data-full="images/mound_10.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_11_thumb.jpg" data-full="images/mound_11.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_12_thumb.jpg" data-full="images/mound_12.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_13_thumb.jpg" data-full="images/mound_13.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_14_thumb.jpg" data-full="images/mound_14.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_15_thumb.jpg" data-full="images/mound_15.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_16_thumb.jpg" data-full="images/mound_16.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_17_thumb.jpg" data-full="images/mound_17.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_18_thumb.jpg" data-full="images/mound_18.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_19_thumb.jpg" data-full="images/mound_19.jpg" class="thumbnail" loading="lazy">
+        <img src="images/mound_20_thumb.jpg" data-full="images/mound_20.jpg" class="thumbnail" loading="lazy">
+      </div>
+
+      <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
+
+      <!-- -- CLOSING -- -->
+      <p>
+        [CLOSING PARAGRAPH — something quiet and naturalist. The feeling of knowing something
+        is out there watching even when you're not. The Desiderata angle maybe.
+        The cosmos in a backyard on a Tuesday night in Ohio.]
+      </p>
+
+      <p><em>"[CLOSING QUOTE]"</em><br>
+      — [ATTRIBUTION]</p>
+
+      <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
+
+      <p style="text-align:center;">
+        <a href="mound/index.html">? live sensor data, graphs, and daily archive</a>
+      </p>
+
+    </blockquote>
+
+    <p style="font-size: 0.85rem; color: #999;">2026-05-31</p>
+
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+</body>
+</html>
