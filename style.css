@@ -460,10 +460,11 @@ video.minimal-video {
 }
 
 .gallery img.thumbnail {
-  width: 100%;
-  max-width: 160px;
-  height: auto;
-  cursor: zoom-in;
+    width: 160px;
+    height: 160px;
+    max-width: none;
+    object-fit: cover;
+    cursor: zoom-in;
 }
 
 /* =====================

@@ -179,7 +179,11 @@ def generate_category_pages():
         categories[cat].sort(key=lambda x: x["date"], reverse=True)
 
     # Write each category page
+    SKIP_CATEGORY_PAGES = {"sensing"}
+
     for cat, posts in categories.items():
+        if cat in SKIP_CATEGORY_PAGES:
+            continue
         outfile = Path(f"{cat}.html")
 
         header = CATEGORY_TITLES[cat]
