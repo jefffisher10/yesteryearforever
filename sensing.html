@@ -6,6 +6,44 @@
   <title>sensing | yesteryear forever</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
+  <style>
+    /* Float figures for sensing.html — stack cleanly on mobile */
+    figure.mound-float-right {
+      float: right;
+      width: 220px;
+      margin: 0 0 1rem 1.5rem;
+    }
+    figure.mound-float-left {
+      float: left;
+      width: 220px;
+      margin: 0 1.5rem 1rem 0;
+    }
+    /* Higher specificity than figure img.thumbnail to enforce width */
+    figure.mound-float-right img,
+    figure.mound-float-left img {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      display: block;
+    }
+    figure.mound-float-right figcaption,
+    figure.mound-float-left figcaption {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      figure.mound-float-right,
+      figure.mound-float-left {
+        float: none;
+        display: block;
+        width: 100%;
+        max-width: 280px;
+        margin: 1rem auto;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -34,15 +72,16 @@
 
       <!-- ── INTRO: picture + blurb ── -->
       <div class="album-layout">
-        <figure style="margin:0;">
+        <figure style="margin:0; flex-shrink:0;">
           <img src="images/mound_32_thumb.jpg"
                data-full="images/mound_32.jpg"
                alt="MOUND deployed in the garden"
-               class="album-cover"
+               class="album-cover thumbnail"
+               style="width:180px; height:auto; cursor:zoom-in;"
                loading="lazy">
           <figcaption>MOUND deployed in the garden.</figcaption>
         </figure>
-        <div>
+        <div style="flex:1; min-width:0;">
           <p style="margin:0;">
             <strong>A Backyard Weather Observatory</strong><br><br>
             MOUND is a small solar-powered sensor array watching the backyard from a post in the garden.
@@ -103,27 +142,26 @@
       </p>
 
       <!-- ── Basic Avatars + solar panel image ── -->
-      <div class="album-layout">
-        <div>
-          <p style="margin:0;">
-            <strong>Basic Avatars</strong><br><br>
-            I've always loved the idea of human space flight and exploration, but as I've gotten older,
-            I've grown to love our robot surrogates even more. Unfortunately, human space travel is insanely
-            difficult and mostly impractical. We can send robots in our stead to explore quicker, faster, cheaper.
-            The downside, though, is comparatively limited data acquisition; we only get a select few data points
-            to collect and scrutinize depending on the onboard sensors. In order to build a complete picture,
-            we must extrapolate...
-          </p>
-        </div>
-        <figure style="margin:0;">
-          <img src="images/mound_28_thumb.jpg"
-               data-full="images/mound_28.jpg"
-               alt="MOUND with upgraded solar panel"
-               class="album-cover"
-               loading="lazy">
-          <figcaption>MOUND with upgraded solar panel.</figcaption>
-        </figure>
-      </div>
+      <figure class="mound-float-right">
+        <img src="images/mound_28_thumb.jpg"
+             data-full="images/mound_28.jpg"
+             alt="MOUND with upgraded solar panel"
+             class="thumbnail"
+             loading="lazy">
+        <figcaption>MOUND with upgraded solar panel.</figcaption>
+      </figure>
+
+      <p>
+        <strong>Basic Avatars</strong><br>
+        I've always loved the idea of human space flight and exploration, but as I've gotten older,
+        I've grown to love our robot surrogates even more. Unfortunately, human space travel is insanely
+        difficult and mostly impractical. We can send robots in our stead to explore quicker, faster, cheaper.
+        The downside, though, is comparatively limited data acquisition; we only get a select few data points
+        to collect and scrutinize depending on the onboard sensors. In order to build a complete picture,
+        we must extrapolate...
+      </p>
+
+      <div style="clear:both;"></div>
 
       <p>
         <strong>Ambiguity as a Feature, not a Bug</strong><br>
@@ -138,35 +176,34 @@
       </p>
 
       <!-- ── Imagined Reality + image ── -->
-      <div class="album-layout">
-        <figure style="margin:0;">
-          <img src="images/mound_29_thumb.jpg"
-               data-full="images/mound_29.jpg"
-               alt="MOUND in the garden"
-               class="album-cover"
-               loading="lazy">
-          <figcaption>MOUND watching.</figcaption>
-        </figure>
-        <div>
-          <p style="margin:0;">
-            <strong>Imagined Reality</strong><br><br>
-            Think of the last nature documentary you watched or a memorable National Geographic photo... those
-            are <em>real places</em>. Those places <em>actually exist</em>. Pick out a rock in the foreground &mdash;
-            that rock is probably still there! Imagine sitting next to it: Maybe it's a quiet evening... sun
-            setting, light breeze, quiet. Pick it up, feel the weight in your hand. The dirt is warm and comforting.
-            Scan the horizon. Notice the patterns in the clouds and the trees in the distance. The rock experienced
-            this for eons and will continue to lie there patiently for eons after you've left.<br><br>
-            Those dark scenes at the bottom of the ocean with the roaming crabs on the whale carcass are just as
-            real and are playing out <em>right now</em>. So are the cliffs of the Valles Marineris &mdash; the Grand Canyon
-            on Mars. A rock just slipped from the top and tumbled down even though no one was there to hear it.
-            It still happened.<br><br>
-            The select few data points from this humble weather observatory set the stage for a real place on an
-            actual planet in a solar system in a genuine galaxy.<br>
-            &ldquo;That's here. That's home. That's us.&rdquo; ...and these sparse data points from MOUND start to tell
-            the story of this tiny, remote outpost here on Earth.
-          </p>
-        </div>
-      </div>
+      <figure class="mound-float-left">
+        <img src="images/mound_29_thumb.jpg"
+             data-full="images/mound_29.jpg"
+             alt="MOUND in the garden"
+             class="thumbnail"
+             loading="lazy">
+        <figcaption>MOUND watching.</figcaption>
+      </figure>
+
+      <p>
+        <strong>Imagined Reality</strong><br>
+        Think of the last nature documentary you watched or a memorable National Geographic photo... those
+        are <em>real places</em>. Those places <em>actually exist</em>. Pick out a rock in the foreground &mdash;
+        that rock is probably still there! Imagine sitting next to it: Maybe it's a quiet evening... sun
+        setting, light breeze, quiet. Pick it up, feel the weight in your hand. The dirt is warm and comforting.
+        Scan the horizon. Notice the patterns in the clouds and the trees in the distance. The rock experienced
+        this for eons and will continue to lie there patiently for eons after you've left.<br><br>
+        Those dark scenes at the bottom of the ocean with the roaming crabs on the whale carcass are just as
+        real and are playing out <em>right now</em>. So are the cliffs of the Valles Marineris &mdash; the Grand Canyon
+        on Mars. A rock just slipped from the top and tumbled down even though no one was there to hear it.
+        It still happened.<br><br>
+        The select few data points from this humble weather observatory set the stage for a real place on an
+        actual planet in a solar system in a genuine galaxy.<br>
+        &ldquo;That's here. That's home. That's us.&rdquo; ...and these sparse data points from MOUND start to tell
+        the story of this tiny, remote outpost here on Earth.
+      </p>
+
+      <div style="clear:both;"></div>
 
       <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
 
@@ -184,26 +221,25 @@
       </p>
 
       <!-- ── Intelligent Evolution + prototyping image ── -->
-      <div class="album-layout">
-        <figure style="margin:0;">
-          <img src="images/mound_02_thumb.jpg"
-               data-full="images/mound_02.jpg"
-               alt="MOUND prototyping and testing"
-               class="album-cover"
-               loading="lazy">
-          <figcaption>Prototyping and testing.</figcaption>
-        </figure>
-        <div>
-          <p style="margin:0;">
-            <strong>Intelligent Evolution</strong><br><br>
-            I know. It's messy. It's <em>technically</em> "poorly designed". Why would I wire that <em>there</em>?
-            Well, I'm a tinkerer, not a designer. I build and create and add... and whatever comes out at the end
-            is anyone's guess. Building is more fun that way! I like to think of it almost like gestation; parts
-            get added and tested, then things get left like vestigial organs. It infuses character and uniqueness
-            instead of boring standardization. Feels more alive, and "mine".
-          </p>
-        </div>
-      </div>
+      <figure class="mound-float-left">
+        <img src="images/mound_02_thumb.jpg"
+             data-full="images/mound_02.jpg"
+             alt="MOUND prototyping and testing"
+             class="thumbnail"
+             loading="lazy">
+        <figcaption>Prototyping and testing.</figcaption>
+      </figure>
+
+      <p>
+        <strong>Intelligent Evolution</strong><br>
+        I know. It's messy. It's <em>technically</em> "poorly designed". Why would I wire that <em>there</em>?
+        Well, I'm a tinkerer, not a designer. I build and create and add... and whatever comes out at the end
+        is anyone's guess. Building is more fun that way! I like to think of it almost like gestation; parts
+        get added and tested, then things get left like vestigial organs. It infuses character and uniqueness
+        instead of boring standardization. Feels more alive, and "mine".
+      </p>
+
+      <div style="clear:both;"></div>
 
       <p>
         <strong>What's in a Name?</strong><br>
