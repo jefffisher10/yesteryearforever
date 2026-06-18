@@ -176,7 +176,10 @@ def generate_category_pages():
 
     # Sort each category newest first; undated sink to bottom
     for cat in categories:
-        categories[cat].sort(key=lambda x: x["date"], reverse=True)
+        categories[cat].sort(
+            key=lambda x: x["date"] if x["date"] != "0000-00-00" else "9999-99-99",
+            reverse=True
+        )
 
     # Write each category page
     SKIP_CATEGORY_PAGES = {"sensing"}
