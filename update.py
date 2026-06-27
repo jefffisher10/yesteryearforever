@@ -36,12 +36,11 @@ EXCLUDED_PAGES = {
     "template.html","index.html","mylinks.html","desiderata.html",
     "first_star.html","green_planet.html","space_index.html",
     "preamble.html","lectures.html","archive.html",
-    "making.html","writing.html","sensing.html","seeing.html",
-    "ABOUT.html",
+    "making.html","writing.html","ABOUT.html"
 }
 
 EXCLUDED_RANDOM = EXCLUDED_PAGES | {
-    "links.html",
+    "mylinks.html",
 }
 
 EXCLUDED_IMAGE = {
@@ -49,7 +48,7 @@ EXCLUDED_IMAGE = {
 }
 
 EXCLUDED_SITEMAP = EXCLUDED_PAGES | {
-    "README.md","deploy.sh","notes.txt","links.html",
+    "README.md","deploy.sh","notes.txt","mylinks.html",
 }
 
 # Valid category names
