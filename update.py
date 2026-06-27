@@ -53,7 +53,7 @@ EXCLUDED_SITEMAP = EXCLUDED_PAGES | {
 }
 
 # Valid category names
-VALID_CATEGORIES = {"writing", "making", "sensing"}
+VALID_CATEGORIES = {"writing", "making"}
 
 
 # -----------------------
@@ -127,7 +127,6 @@ def get_desc(path):
 CATEGORY_TITLES = {
     "writing": "— writing —",
     "making":  "— making —",
-    "sensing": "— sensing —",
 }
 
 NAV_HTML = """  <nav id="topnav">
@@ -182,11 +181,7 @@ def generate_category_pages():
         )
 
     # Write each category page
-    SKIP_CATEGORY_PAGES = {"sensing"}
-
     for cat, posts in categories.items():
-        if cat in SKIP_CATEGORY_PAGES:
-            continue
         outfile = Path(f"{cat}.html")
 
         header = CATEGORY_TITLES[cat]
@@ -242,7 +237,7 @@ def generate_category_pages():
 </html>
 """
         outfile.write_text(page, encoding="utf-8")
-        print(f"📂 {cat}.html rebuilt ({len(posts)} posts)")
+        print(f"?? {cat}.html rebuilt ({len(posts)} posts)")
 
 
 # -----------------------
@@ -258,7 +253,8 @@ def update_nav():
         re.DOTALL
     )
 
-    skip = EXCLUDED_PAGES | {"making.html", "writing.html", "sensing.html", "index.html", "ABOUT.html"}
+    # sensing.html is now a hand-written page, so include it in nav updates
+    skip = EXCLUDED_PAGES - {"sensing.html"} | {"making.html", "writing.html", "index.html", "ABOUT.html"}
 
     updated_count = 0
 
@@ -268,7 +264,7 @@ def update_nav():
 
         content = f.read_text(encoding="utf-8")
 
-        # Also fix seeing.html → sensing.html references in older navs
+        # Also fix seeing.html ? sensing.html references in older navs
         content_fixed = content.replace(
             'href="seeing.html"', 'href="sensing.html"'
         ).replace(
@@ -281,7 +277,7 @@ def update_nav():
             f.write_text(new_content, encoding="utf-8")
             updated_count += 1
 
-    print(f"🧭 nav updated in {updated_count} pages")
+    print(f"?? nav updated in {updated_count} pages")
 
 
 # -----------------------
@@ -291,7 +287,7 @@ def update_nav():
 def generate_thumbnails():
 
     if not IMAGE_DIR.exists():
-        print("⚠ images directory not found")
+        print("? images directory not found")
         return
 
     for image_path in IMAGE_DIR.iterdir():
@@ -312,10 +308,10 @@ def generate_thumbnails():
             with Image.open(image_path) as img:
                 img.thumbnail(THUMB_SIZE)
                 img.save(thumb_path)
-                print(f"🖼 thumbnail created: {thumb_name}")
+                print(f"?? thumbnail created: {thumb_name}")
 
         except Exception as e:
-            print(f"❌ thumbnail failed: {image_path.name} — {e}")
+            print(f"? thumbnail failed: {image_path.name} — {e}")
 
 
 # -----------------------
@@ -363,7 +359,7 @@ def update_image_tags():
 
         if updated != content:
             html_file.write_text(updated, encoding="utf-8")
-            print(f"🖼 image tags updated: {html_file.name}")
+            print(f"?? image tags updated: {html_file.name}")
 
 
 # -----------------------
@@ -388,9 +384,9 @@ def update_random_posts(js_file="script.js"):
         content = Path(js_file).read_text(encoding="utf-8")
         updated = pattern.sub(rf"\1 {pages_array} \2", content)
         Path(js_file).write_text(updated, encoding="utf-8")
-        print("🎲 random post list updated")
+        print("?? random post list updated")
     except:
-        print("⚠ script.js not found")
+        print("? script.js not found")
 
 
 # -----------------------
@@ -444,7 +440,7 @@ def generate_rss():
 </rss>
 """
     Path("rss.xml").write_text(rss, encoding="utf-8")
-    print("📰 rss.xml generated")
+    print("?? rss.xml generated")
 
 
 # -----------------------
@@ -475,7 +471,7 @@ def generate_sitemap():
 </urlset>
 """
     Path("sitemap.xml").write_text(sitemap)
-    print("🗺 sitemap.xml generated")
+    print("?? sitemap.xml generated")
 
 
 # -----------------------
@@ -521,7 +517,7 @@ def main():
 
     fix_permissions()
 
-    print("\n✅ Site update complete\n")
+    print("\n? Site update complete\n")
 
 
 if __name__ == "__main__":
