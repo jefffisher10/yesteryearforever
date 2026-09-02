@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOUND — Master Wiring Reference</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d0d;
+    color: #c8c8c8;
+    font-family: 'Courier New', monospace;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    color: #7ecf7e;
+    margin-bottom: 0.3rem;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #555;
+    letter-spacing: 0.2em;
+    margin-bottom: 2rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #111;
+    border: 1px solid #222;
+    border-top: 2px solid;
+    padding: 1.2rem;
+  }
+  .card.i2c   { border-top-color: #4a9eff; }
+  .card.onewire { border-top-color: #ff9f4a; }
+  .card.analog  { border-top-color: #c47aff; }
+  .card.gpio    { border-top-color: #ff6b6b; }
+  .card.power   { border-top-color: #7ecf7e; }
+  .card.camera  { border-top-color: #ffd700; }
+  .card.solar   { border-top-color: #f4c542; }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid #222;
+  }
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #eee;
+    letter-spacing: 0.1em;
+  }
+  .badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+  }
+  .badge.i2c     { background: #1a3a5c; color: #4a9eff; }
+  .badge.onewire { background: #3d2a00; color: #ff9f4a; }
+  .badge.analog  { background: #2a1a40; color: #c47aff; }
+  .badge.gpio    { background: #3d1a1a; color: #ff6b6b; }
+  .badge.power   { background: #1a2e1a; color: #7ecf7e; }
+  .badge.camera  { background: #2e2a00; color: #ffd700; }
+  .badge.solar   { background: #3a2f00; color: #f4c542; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  th {
+    text-align: left;
+    color: #555;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  td {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #1a1a1a;
+    vertical-align: top;
+  }
+  td:first-child { color: #aaa; width: 80px; }
+  td:nth-child(2) { color: #eee; width: 140px; }
+  td:nth-child(3) { color: #888; font-size: 0.75rem; }
+
+  .wire-vcc  { color: #ff6b6b !important; }
+  .wire-gnd  { color: #888 !important; }
+  .wire-sda  { color: #4a9eff !important; }
+  .wire-scl  { color: #7ecf7e !important; }
+  .wire-data { color: #ff9f4a !important; }
+  .wire-aout { color: #c47aff !important; }
+  .wire-csi  { color: #ffd700 !important; }
+  .wire-solar{ color: #f4c542 !important; }
+
+  .note {
+    margin-top: 0.8rem;
+    font-size: 0.72rem;
+    color: #777;
+    line-height: 1.6;
+    padding-top: 0.6rem;
+    border-top: 1px solid #1a1a1a;
+  }
+  .note span { color: #999; }
+
+  .power-flow {
+    max-width: 1200px;
+    margin: 0 auto 1.5rem;
+    background: #111;
+    border: 1px solid #222;
+    border-top: 2px solid #7ecf7e;
+    padding: 1.2rem;
+  }
+  .power-flow h2 {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: #7ecf7e;
+    margin-bottom: 1rem;
+  }
+  .flow-diagram {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: #999;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .flow-diagram .lbl-solar { color: #f4c542; }
+  .flow-diagram .lbl-diode { color: #ff9f4a; }
+  .flow-diagram .lbl-ctrl  { color: #7ecf7e; }
+  .flow-diagram .lbl-batt  { color: #ff6b6b; }
+  .flow-diagram .lbl-ina   { color: #4a9eff; }
+  .flow-diagram .lbl-pi    { color: #eee; }
+
+  .i2c-map {
+    max-width: 1200px;
+    margin: 1.5rem auto 0;
+    background: #111;
+    border: 1px solid #222;
+    border-top: 2px solid #4a9eff;
+    padding: 1.2rem;
+  }
+  .i2c-map h2 {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: #4a9eff;
+    margin-bottom: 1rem;
+  }
+  .i2c-devices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .i2c-device {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+  .i2c-device .addr {
+    color: #4a9eff;
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+  }
+  .i2c-device .name { color: #888; font-size: 0.72rem; }
+
+  .pi-pins {
+    max-width: 1200px;
+    margin: 1.5rem auto 0;
+    background: #111;
+    border: 1px solid #222;
+    border-top: 2px solid #7ecf7e;
+    padding: 1.2rem;
+  }
+  .pi-pins h2 {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: #7ecf7e;
+    margin-bottom: 1rem;
+  }
+  .pin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.5rem;
+    font-size: 0.78rem;
+  }
+  .pin-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    background: #0d0d0d;
+    border: 1px solid #1e1e1e;
+  }
+  .pin-num {
+    background: #1e1e1e;
+    color: #555;
+    width: 28px;
+    text-align: center;
+    font-size: 0.7rem;
+    padding: 0.1rem;
+    flex-shrink: 0;
+  }
+  .pin-use { color: #ccc; }
+  .pin-sensor { color: #888; font-size: 0.7rem; margin-left: auto; }
+
+  .retired {
+    max-width: 1200px;
+    margin: 1.5rem auto 0;
+    background: #0f0f0f;
+    border: 1px dashed #2a2a2a;
+    padding: 1rem 1.2rem;
+    font-size: 0.75rem;
+    color: #888;
+    line-height: 1.7;
+  }
+  .retired h2 {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: #999;
+    margin-bottom: 0.6rem;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.7rem;
+    color: #333;
+    letter-spacing: 0.2em;
+  }
+</style>
+</head>
+<body>
+
+<h1>◈ MOUND SENSOR ARRAY — WIRING REFERENCE ◈</h1>
+<p class="subtitle">RASPBERRY PI ZERO W — UNIT 01 — WEST MOUND ST., COLUMBUS OHIO</p>
+
+<!-- Power Flow Overview -->
+<div class="power-flow">
+  <h2>▸ POWER CHAIN OVERVIEW</h2>
+  <div class="flow-diagram"><span class="lbl-solar">Panel 1 (10W, East)</span> --[+]--&gt; <span class="lbl-diode">[Diode 1]</span> --+
+                                          +--&gt; <span class="lbl-ctrl">Controller PV+</span>
+<span class="lbl-solar">Panel 2 (20W, West)</span> --[+]--&gt; <span class="lbl-diode">[Diode 2]</span> --+
+
+<span class="lbl-solar">Panels (-)</span> ------------------------------&gt; <span class="lbl-ctrl">Controller PV-</span>
+
+<span class="lbl-batt">Battery (+)</span> --&gt; <span class="lbl-ina">INA219 VIN+</span>  ...  <span class="lbl-ina">INA219 VIN-</span> --&gt; <span class="lbl-ctrl">Controller BAT+</span>
+<span class="lbl-batt">Battery (-)</span> --------------------------------------&gt; <span class="lbl-ctrl">Controller BAT-</span>
+
+<span class="lbl-ctrl">Controller USB 5V OUT</span> --&gt; <span class="lbl-pi">Pi Zero W power in</span>  (Load Mode 17 — Always On)</div>
+</div>
+
+<div class="grid">
+
+  <!-- Solar Panels -->
+  <div class="card solar">
+    <div class="card-header">
+      <span class="card-title">SOLAR PANELS (x2, PARALLEL)</span>
+      <span class="badge solar">10W + 20W · 12V</span>
+    </div>
+    <table>
+      <tr><th>PANEL</th><th>FACING</th><th>NOTE</th></tr>
+      <tr><td class="wire-solar">10W</td><td>East</td><td>catches morning tree gap</td></tr>
+      <tr><td class="wire-solar">20W</td><td>West</td><td>catches evening tree gap</td></tr>
+    </table>
+    <div class="note"><span>⚠</span> Each panel's (+) lead runs through its own 1N5822 Schottky blocking diode before joining the shared bus — prevents the sunlit panel from backfeeding the shaded one.<br>Negatives join directly, no diode needed.</div>
+  </div>
+
+  <!-- Charge Controller -->
+  <div class="card power">
+    <div class="card-header">
+      <span class="card-title">NEWPOWA NPC-PHL10A</span>
+      <span class="badge power">PWM 10A CONTROLLER</span>
+    </div>
+    <table>
+      <tr><th>TERMINAL</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-solar">PV+/PV-</td><td>Panel diode bus</td><td>solar input</td></tr>
+      <tr><td class="wire-vcc">BAT+</td><td>INA219 VIN-</td><td>battery, via monitor</td></tr>
+      <tr><td class="wire-gnd">BAT-</td><td>Battery (-)</td><td>direct</td></tr>
+      <tr><td class="wire-data">USB OUT</td><td>Pi Zero W power in</td><td>regulated 5V/2A</td></tr>
+    </table>
+    <div class="note"><span>ℹ</span> Battery Type set to <b>SEL</b> (Sealed/AGM). Load Mode set to <b>17 — Always On</b>, so USB output survives a brownout without manual intervention.<br>LOAD terminals unused.</div>
+  </div>
+
+  <!-- Batteries -->
+  <div class="card power">
+    <div class="card-header">
+      <span class="card-title">SLA/AGM BATTERIES (x2, PARALLEL)</span>
+      <span class="badge power">12V LEAD-ACID</span>
+    </div>
+    <table>
+      <tr><th>TERMINAL</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-vcc">+</td><td>INA219 VIN+</td><td>through power monitor</td></tr>
+      <tr><td class="wire-gnd">-</td><td>Controller BAT-</td><td>direct</td></tr>
+    </table>
+    <div class="note"><span>ℹ</span> Sourced free via workplace UPS supply.<br>Replaced 18650 Li-ion cells — SLA tolerates MOUND's real-world partial-charge cycling far better.</div>
+  </div>
+
+  <!-- INA219 -->
+  <div class="card i2c">
+    <div class="card-header">
+      <span class="card-title">INA219 — POWER MONITOR</span>
+      <span class="badge i2c">I2C · 0x40</span>
+    </div>
+    <table>
+      <tr><th>PIN</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-vcc">VCC</td><td>3.3V — Pin 1</td><td>power</td></tr>
+      <tr><td class="wire-gnd">GND</td><td>Ground — Pin 6</td><td></td></tr>
+      <tr><td class="wire-sda">SDA</td><td>GPIO2 — Pin 3</td><td>I2C data</td></tr>
+      <tr><td class="wire-scl">SCL</td><td>GPIO3 — Pin 5</td><td>I2C clock</td></tr>
+      <tr><td class="wire-vcc">VIN+</td><td>Battery (+)</td><td>battery-side, in-line</td></tr>
+      <tr><td class="wire-gnd">VIN-</td><td>Controller BAT+</td><td>battery-side, in-line</td></tr>
+    </table>
+    <div class="note"><span>⚠</span> Relocated from load-side (Pi 5V) to battery-side. Now reads true battery voltage and real charge (-) / discharge (+) current direction.<br>Library: adafruit-circuitpython-ina219</div>
+  </div>
+
+  <!-- ADS1115 -->
+  <div class="card i2c">
+    <div class="card-header">
+      <span class="card-title">ADS1115 — ADC</span>
+      <span class="badge i2c">I2C · 0x48</span>
+    </div>
+    <table>
+      <tr><th>PIN</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-vcc">VDD</td><td>3.3V — Pin 1</td><td>power</td></tr>
+      <tr><td class="wire-gnd">GND</td><td>Ground — Pin 6</td><td></td></tr>
+      <tr><td class="wire-sda">SDA</td><td>GPIO2 — Pin 3</td><td>I2C data</td></tr>
+      <tr><td class="wire-scl">SCL</td><td>GPIO3 — Pin 5</td><td>I2C clock</td></tr>
+      <tr><td class="wire-gnd">ADDR</td><td>Ground — Pin 6</td><td>sets 0x48</td></tr>
+    </table>
+    <div class="note"><span>ℹ</span> 4-channel ADC. Analog sensors connect to A0–A3<br>Library: adafruit-circuitpython-ads1x15</div>
+  </div>
+
+  <!-- Soil Moisture -->
+  <div class="card analog">
+    <div class="card-header">
+      <span class="card-title">CAPACITIVE SOIL MOISTURE</span>
+      <span class="badge analog">ANALOG → ADS1115</span>
+    </div>
+    <table>
+      <tr><th>PIN</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-vcc">VCC</td><td>3.3V — Pin 1</td><td>power</td></tr>
+      <tr><td class="wire-gnd">GND</td><td>Ground — Pin 6</td><td></td></tr>
+      <tr><td class="wire-aout">AOUT</td><td>ADS1115 — A0</td><td>analog signal</td></tr>
+    </table>
+    <div class="note"><span>⚠</span> Disconnected wire reads as floating noise (large swings, sometimes negative) — not a real reading. Confirm connector is seated if values look erratic.</div>
+  </div>
+
+  <!-- BME280 -->
+  <div class="card i2c">
+    <div class="card-header">
+      <span class="card-title">BME280 — ENV SENSOR</span>
+      <span class="badge i2c">I2C · 0x76</span>
+    </div>
+    <table>
+      <tr><th>PIN</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-vcc">VCC</td><td>3.3V — Pin 1</td><td>power</td></tr>
+      <tr><td class="wire-gnd">GND</td><td>Ground — Pin 6</td><td></td></tr>
+      <tr><td class="wire-sda">SDA</td><td>GPIO2 — Pin 3</td><td>I2C data</td></tr>
+      <tr><td class="wire-scl">SCL</td><td>GPIO3 — Pin 5</td><td>I2C clock</td></tr>
+    </table>
+    <div class="note"><span>ℹ</span> Board replaced Aug 2026 after corrosion damage from earlier enclosure water intrusion killed the original unit.<br>Library: adafruit-circuitpython-bme280</div>
+  </div>
+
+  <!-- TSL2591 -->
+  <div class="card i2c">
+    <div class="card-header">
+      <span class="card-title">TSL2591 — LIGHT SENSOR</span>
+      <span class="badge i2c">I2C · 0x29</span>
+    </div>
+    <table>
+      <tr><th>PIN</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-vcc">VIN</td><td>3.3V — Pin 1</td><td>power</td></tr>
+      <tr><td class="wire-gnd">GND</td><td>Ground — Pin 6</td><td></td></tr>
+      <tr><td class="wire-sda">SDA</td><td>GPIO2 — Pin 3</td><td>I2C data</td></tr>
+      <tr><td class="wire-scl">SCL</td><td>GPIO3 — Pin 5</td><td>I2C clock</td></tr>
+    </table>
+    <div class="note"><span>ℹ</span> Wide dynamic range — full sun to near darkness<br>Reads: Lux (visible + infrared channels)<br>Library: adafruit-circuitpython-tsl2591</div>
+  </div>
+
+  <!-- DS18B20 -->
+  <div class="card onewire">
+    <div class="card-header">
+      <span class="card-title">DS18B20 — SOIL TEMP PROBE</span>
+      <span class="badge onewire">1-WIRE · GPIO4</span>
+    </div>
+    <table>
+      <tr><th>PIN</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-vcc">VCC</td><td>3.3V — Pin 1</td><td>power (red wire)</td></tr>
+      <tr><td class="wire-gnd">GND</td><td>Ground — Pin 6</td><td>black wire</td></tr>
+      <tr><td class="wire-data">DATA</td><td>GPIO4 — Pin 7</td><td>yellow wire</td></tr>
+    </table>
+    <div class="note"><span>⚠</span> 4.7kΩ pull-up resistor between VCC and DATA required<br>Reads as a file: /sys/bus/w1/devices/</div>
+  </div>
+
+  <!-- Rain Sensor -->
+  <div class="card analog">
+    <div class="card-header">
+      <span class="card-title">FC-37 RAIN SENSOR</span>
+      <span class="badge analog">ANALOG + GPIO</span>
+    </div>
+    <table>
+      <tr><th>PIN</th><th>CONNECTS TO</th><th>NOTE</th></tr>
+      <tr><td class="wire-vcc">VCC</td><td>3.3V — Pin 1</td><td>power</td></tr>
+      <tr><td class="wire-gnd">GND</td><td>Ground — Pin 6</td><td></td></tr>
+      <tr><td class="wire-aout">AO</td><td>ADS1115 — A1</td><td>rain intensity</td></tr>
+      <tr><td class="wire-data">DO</td><td>GPIO17 — Pin 11</td><td>yes/no rain</td></tr>
+    </table>
+    <div class="note"><span>ℹ</span> AO = analog rain intensity into ADS1115 A1<br>DO = digital trigger, adjust threshold via onboard pot</div>
+  </div>
+
+  <!-- Pi Camera -->
+  <div class="card camera">
+    <div class="card-header">
+      <span class="card-title">PI CAMERA REV 1.3</span>
+      <span class="badge camera">CSI RIBBON</span>
+    </div>
+    <table>
+      <tr><th>INTERFACE</th><th>DETAIL</th><th>NOTE</th></tr>
+      <tr><td class="wire-csi">CSI</td><td>Camera connector</td><td>blue side → USB ports</td></tr>
+      <tr><td>RIBBON</td><td>Pi Zero adapter</td><td>15→22 pin adapter req'd</td></tr>
+    </table>
+    <div class="note"><span>ℹ</span> 5MP OV5647 sensor · Noon keeper capture only<br>Command: rpicam-still -o ~/mound/photo.jpg</div>
+  </div>
+
+</div>
+
+<!-- I2C Address Map -->
+<div class="i2c-map">
+  <h2>▸ I2C BUS ADDRESS MAP — GPIO2 (SDA) / GPIO3 (SCL)</h2>
+  <div class="i2c-devices">
+    <div class="i2c-device">
+      <span class="addr">0x40</span>
+      <span class="name">INA219 · Battery Power Monitor</span>
+    </div>
+    <div class="i2c-device">
+      <span class="addr">0x48</span>
+      <span class="name">ADS1115 · ADC</span>
+    </div>
+    <div class="i2c-device">
+      <span class="addr">0x29</span>
+      <span class="name">TSL2591 · Light Sensor</span>
+    </div>
+    <div class="i2c-device">
+      <span class="addr">0x76</span>
+      <span class="name">BME280 · Env Sensor</span>
+    </div>
+  </div>
+</div>
+
+<!-- Pi Zero W Pin Reference -->
+<div class="pi-pins">
+  <h2>▸ PI ZERO W — PIN ASSIGNMENTS</h2>
+  <div class="pin-grid">
+    <div class="pin-row"><span class="pin-num">1</span><span class="wire-vcc pin-use">3.3V</span><span class="pin-sensor">all sensors</span></div>
+    <div class="pin-row"><span class="pin-num">3</span><span class="wire-sda pin-use">GPIO2 SDA</span><span class="pin-sensor">I2C bus</span></div>
+    <div class="pin-row"><span class="pin-num">5</span><span class="wire-scl pin-use">GPIO3 SCL</span><span class="pin-sensor">I2C bus</span></div>
+    <div class="pin-row"><span class="pin-num">6</span><span class="wire-gnd pin-use">GND</span><span class="pin-sensor">all sensors</span></div>
+    <div class="pin-row"><span class="pin-num">7</span><span class="wire-data pin-use">GPIO4</span><span class="pin-sensor">DS18B20</span></div>
+    <div class="pin-row"><span class="pin-num">11</span><span class="wire-data pin-use">GPIO17</span><span class="pin-sensor">Rain DO</span></div>
+    <div class="pin-row"><span class="pin-num">CSI</span><span class="wire-csi pin-use">CAMERA</span><span class="pin-sensor">Pi Cam Rev 1.3</span></div>
+    <div class="pin-row"><span class="pin-num">PWR</span><span class="wire-data pin-use">USB-IN</span><span class="pin-sensor">Controller USB 5V</span></div>
+  </div>
+</div>
+
+<!-- Retired Hardware -->
+<div class="retired">
+  <h2>▸ RETIRED HARDWARE (pre-Aug 2026 rebuild)</h2>
+  Waveshare Solar Power Manager (D) — lithium-only, incompatible with lead-acid chemistry.<br>
+  Waveshare 6V 5W solar panel — replaced by dual Newpowa panel array.<br>
+  3x/4x 18650 Li-ion cells — chronic overnight power failure under tree shade; SLA/AGM tolerates MOUND's partial-charge cycling far better.
+</div>
+
+<footer>MOUND — BACKYARD OBSERVATORY · WEST MOUND ST. COLUMBUS OHIO · UNIT 01</footer>
+
+</body>
+</html>
