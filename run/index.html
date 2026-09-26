@@ -751,8 +751,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     border:1px solid var(--line);backdrop-filter:blur(3px);
   }
   #gpsBadge{top:9px;left:9px;}
-  #gpsBadge.ok{color:var(--ok);border-color:#2b5c3f;}
-  #gpsBadge.bad{color:var(--warn);border-color:#6b4d16;}
+  #wakeBadge{top:37px;left:9px;}
+  .map-badge.ok{color:var(--ok);border-color:#2b5c3f;}
+  .map-badge.bad{color:var(--warn);border-color:#6b4d16;}
   #cacheBadge{top:9px;right:9px;}
 
   #recenterBtn{
@@ -800,6 +801,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .run-card .info{flex:1;min-width:0;}
   .run-card .rdate{font-size:13px;font-weight:600;margin-bottom:3px;}
   .run-card .rmeta{font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums;}
+  .run-card .rgap{font-size:11px;color:var(--warn);margin-top:3px;font-variant-numeric:tabular-nums;}
+  .run-card .rnote{
+    font-size:11.5px;color:var(--dim);margin-top:6px;line-height:1.45;
+    white-space:pre-wrap;overflow-wrap:anywhere;
+    border-left:2px solid var(--line);padding-left:8px;
+  }
   .run-card .acts{display:flex;gap:4px;flex:0 0 auto;}
   .run-card .acts button{
     background:var(--panel-2);border:1px solid var(--line);color:var(--dim);
@@ -807,6 +814,29 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   .run-card .acts .del{color:var(--stop);border-color:#5c2b2b;}
   #panelEmpty{color:var(--dim);font-size:13px;text-align:center;padding:26px 0;}
+
+  /* ---- run note editor ---- */
+  #noteEditor{
+    position:fixed;inset:0;z-index:1100;background:var(--bg);
+    display:flex;flex-direction:column;
+    padding:calc(14px + env(safe-area-inset-top,0px)) 14px calc(14px + env(safe-area-inset-bottom,0px));
+    gap:11px;
+  }
+  #noteEditor header h1{font-size:14px;color:var(--text);}
+  #noteMeta{font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums;flex:0 0 auto;}
+  #noteText{
+    flex:1 1 auto;width:100%;resize:none;
+    background:var(--panel);border:1px solid var(--line);color:var(--text);
+    border-radius:12px;padding:12px;font-size:15px;line-height:1.55;
+    font-family:inherit;
+  }
+  #noteText::placeholder{color:var(--dim);opacity:.7;}
+  #noteActions{display:flex;gap:9px;flex:0 0 auto;}
+  #noteActions button{
+    flex:1;border-radius:11px;padding:13px;font-size:13px;font-family:inherit;font-weight:600;
+  }
+  #noteSave{background:var(--accent-solid);color:#fff;border:none;flex:1.4;}
+  #noteCancel,#noteCopy{background:var(--panel-2);color:var(--dim);border:1px solid var(--line);}
   #panelFoot{
     flex:0 0 auto;border-top:1px solid var(--line);padding-top:11px;
     display:flex;flex-direction:column;gap:9px;
@@ -859,6 +889,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <div id="mapWrap">
   <div id="map"></div>
   <div class="map-badge" id="gpsBadge">GPS --</div>
+  <div class="map-badge" id="wakeBadge" hidden>screen held</div>
   <div class="map-badge" id="cacheBadge">cache --</div>
   <button id="recenterBtn" type="button" hidden>Recenter</button>
   <div id="mapHint">Tap Start to begin.<br>The map loads once GPS gets a fix.</div>
@@ -870,6 +901,20 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <button id="pauseBtn" class="ctrl" type="button" hidden>Pause</button>
   <button id="resumeBtn" class="ctrl" type="button" hidden>Resume</button>
   <button id="stopBtn" class="ctrl" type="button" hidden>Stop</button>
+</div>
+
+<div id="noteEditor" hidden>
+  <header>
+    <h1>Run note</h1>
+    <button class="chip" id="noteClose" type="button">Close</button>
+  </header>
+  <div id="noteMeta"></div>
+  <textarea id="noteText" placeholder="Weather, how you felt, anything worth remembering&#10;&#10;e.g. 52&deg; and clear. Legs heavy until mile 6, then great. Two deer at the north turn, and a snake sunning on the gravel."></textarea>
+  <div id="noteActions">
+    <button id="noteCancel" type="button">Cancel</button>
+    <button id="noteCopy" type="button">Copy</button>
+    <button id="noteSave" type="button">Save note</button>
+  </div>
 </div>
 
 <div id="panel" hidden>
@@ -892,6 +937,27 @@ svg.leaflet-image-layer.leaflet-interactive path {
     </div>
     <input id="customUrl" type="url" inputmode="url" spellcheck="false" hidden
            placeholder="https://your-pi/tiles/{z}/{x}/{y}.png">
+    <div class="foot-row">
+      <label for="fetchWx" style="flex:1;min-width:0;">
+        Look up weather after a run
+        <span style="display:block;opacity:.75;margin-top:2px;">
+          Sends the run's finishing coordinates to open-meteo.com to fill in temperature
+          and conditions. The only request this app makes other than map tiles. Turn it
+          off and nothing leaves the phone but tile requests.
+        </span>
+      </label>
+      <input type="checkbox" id="fetchWx">
+    </div>
+    <div class="foot-row">
+      <label for="keepAwake" style="flex:1;min-width:0;">
+        Play silent audio while tracking
+        <span style="display:block;opacity:.75;margin-top:2px;">
+          Experimental. May keep Android from suspending the page with the screen off.
+          Costs battery and may show a media notification. Watch the gap counter to see if it helps.
+        </span>
+      </label>
+      <input type="checkbox" id="keepAwake" style="flex:0 0 auto;width:20px;height:20px;">
+    </div>
     <div class="foot-row">
       <span id="cacheInfo">Map cache: --</span>
       <div style="display:flex;gap:7px;">
@@ -1114,6 +1180,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
      ============================================================ */
   const RUNS_KEY = "runtracker_runs_v2";
   const UNIT_KEY = "runtracker_unit_v2";
+  const WX_KEY = "runtracker_weather_v1";
+  // The only request this app makes besides map tiles, and the only one that sends a
+  // position anywhere. Off switches it off completely — nothing is queued or retried.
+  const wxOn = () => { try{ return localStorage.getItem(WX_KEY) !== "0"; }catch(e){ return true; } };
 
   const loadRuns = () => { try{ return JSON.parse(localStorage.getItem(RUNS_KEY)) || []; }catch(e){ return []; } };
   const saveRuns = r => {
@@ -1134,6 +1204,20 @@ svg.leaflet-image-layer.leaflet-interactive path {
   let segStart = null;             // wall-clock start of current active stretch
   let bankedMs = 0;                // time accumulated before the current stretch
   let totalM = 0;
+  let gapMs = 0;                   // time the page was suspended (screen locked)
+  let gapCount = 0;
+  let keepAliveAudio = null;
+
+  /* When we're inside the Android shell, the native foreground service does the
+     recording — it can keep a GPS subscription alive with the screen off, which
+     no browser will. This layer then just renders what it's handed. */
+  const NATIVE = (function(){
+    try{ return !!(window.Android && window.Android.isNative && window.Android.isNative()); }
+    catch(e){ return false; }
+  })();
+  let nativeElapsed = 0;
+  let nativeGaps = 0, nativeGapMs = 0;   // signal dropouts reported by the service
+  let nativeStale = false;
   let timer = null;
   let following = true;
   let viewingRun = null;           // past-run layers when browsing history
@@ -1148,6 +1232,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const panel = $("panel"), panelList = $("panelList"), panelEmpty = $("panelEmpty"), panelClose = $("panelClose");
   const clearCacheBtn = $("clearCacheBtn"), clearRunsBtn = $("clearRunsBtn");
   const viewingBanner = $("viewingBanner"), viewingText = $("viewingText"), closeViewing = $("closeViewing");
+  const noteEditor = $("noteEditor"), noteMeta = $("noteMeta"), noteText = $("noteText");
+  const noteSave = $("noteSave"), noteCancel = $("noteCancel"), noteClose = $("noteClose");
+  const noteCopy = $("noteCopy");
 
   /* ============================================================
      Units & formatting
@@ -1170,6 +1257,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     return mm + ":" + (ss<10?"0":"") + ss;
   }
   const fmtDist = m => toUnit(m).toFixed(2);
+  // Elevation follows the distance unit: feet alongside miles, metres alongside km.
+  const eleUnit = () => unit === "km" ? "m" : "ft";
+  const fmtEle = m => unit === "km" ? Math.round(m) : Math.round(m * 3.28084);
   function fmtDate(ts){
     const d = new Date(ts);
     return d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"}) +
@@ -1288,6 +1378,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const MAX_ACC = 65;        // metres — ignore fixes worse than this for distance
   const MIN_STEP = 2.5;      // metres — below this is GPS jitter while standing still
   const MAX_SPEED = 12;      // m/s (~27 mph) — above this is a GPS spike, not a person
+  const GAP_SECONDS = 10;    // no fix for this long means the page was suspended
+  const GAP_METRES = 25;     // ...and we actually moved while it was
 
   function onPosition(pos){
     const c = pos.coords;
@@ -1323,8 +1415,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const d = haversine(prev, p);
     const dt = Math.max(0.001, (p.t - prev.t)/1000);
 
+    // A long silence followed by a big jump means the browser suspended us —
+    // screen locked, or Chrome backgrounded. We have no idea what path was
+    // taken in between, so don't draw a straight line across it and don't
+    // invent the distance. Break the track and account for the lost time.
+    if(dt > GAP_SECONDS && d > GAP_METRES){
+      gapMs += dt * 1000;
+      gapCount++;
+      newSegment();
+      const fresh = segments[segments.length-1];
+      fresh.pts.push(p);
+      fresh.casing.addLatLng([p.lat, p.lng]);
+      fresh.line.addLatLng([p.lat, p.lng]);
+      showNotice(
+        "<b>Tracking gap detected.</b> The browser suspended this page — most likely " +
+        "the screen locked. Location can't be recorded in the background, so that stretch " +
+        "is missing rather than guessed at. Keep the screen on to avoid it.", "gap");
+      tick();
+      return;
+    }
+
     if(d < MIN_STEP) return;                       // standing still
-    if(d/dt > MAX_SPEED && dt < 30) return;        // teleport spike
+    if(d/dt > MAX_SPEED) return;                   // teleport spike
 
     totalM += d;
     seg.pts.push(p);
@@ -1352,25 +1464,197 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   async function lockScreen(){
-    try{ if("wakeLock" in navigator) wakeLock = await navigator.wakeLock.request("screen"); }catch(e){}
+    try{
+      if("wakeLock" in navigator){
+        wakeLock = await navigator.wakeLock.request("screen");
+        wakeLock.addEventListener("release", () => { wakeLock = null; renderWakeBadge(); });
+      }
+    }catch(e){ wakeLock = null; }
+    renderWakeBadge();
   }
   function unlockScreen(){
     try{ if(wakeLock){ wakeLock.release(); wakeLock = null; } }catch(e){}
+    renderWakeBadge();
   }
+
+  /* Experimental: Android keeps a page alive longer while it's playing audio.
+     Whether geolocation keeps firing with the screen off varies by device, so
+     this is opt-in and the gap counter is the honest measure of whether it worked. */
+  const SILENT_WAV = "data:audio/wav;base64,UklGRvQHAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YdAHAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==";
+  const KEEPALIVE_KEY = "runtracker_keepalive_v2";
+  const keepAliveOn = () => { try{ return localStorage.getItem(KEEPALIVE_KEY) === "1"; }catch(e){ return false; } };
+
+  function startKeepAlive(){
+    if(!keepAliveOn()) return;
+    try{
+      if(!keepAliveAudio){
+        keepAliveAudio = new Audio(SILENT_WAV);
+        keepAliveAudio.loop = true;
+        keepAliveAudio.volume = 0.01;   // silent in practice, but real playback
+      }
+      keepAliveAudio.play().catch(() => {});
+    }catch(e){}
+  }
+  function stopKeepAlive(){
+    try{ if(keepAliveAudio) keepAliveAudio.pause(); }catch(e){}
+  }
+
   document.addEventListener("visibilitychange", () => {
-    if(document.visibilityState === "visible" && state === "tracking") lockScreen();
+    if(document.visibilityState === "visible" && state === "tracking"){
+      lockScreen();
+      startKeepAlive();
+    }
   });
+
+  /* ============================================================
+     Native bridge. The Android service calls nativeSync() about once a
+     second while the app is on screen, handing over whatever it recorded
+     since the last call — or the whole track, when `reset` is set, because
+     the phone was locked and we missed a stretch.
+     ============================================================ */
+  function nativeSync(payload){
+    if(!payload) return;
+
+    if(payload.reset){
+      clearRouteLayers();
+      segments = [];
+    }
+
+    if(payload.state !== state){
+      state = payload.state;
+      if(state === "tracking")      { setStatus("live","live");     showControls("tracking"); }
+      else if(state === "paused")   { setStatus("paused","paused"); showControls("paused"); }
+      else                          { setStatus("idle","");         showControls("idle"); }
+    }
+
+    totalM = payload.distanceM || 0;
+    nativeElapsed = payload.elapsedMs || 0;
+
+    nativeGaps  = payload.gaps || 0;
+    nativeGapMs = payload.gapMs || 0;
+    nativeStale = !!payload.stale;
+
+    const acc = payload.accuracy || 0;
+    if(nativeStale){
+      // Still recording — the clock runs and the distance will bridge straight across
+      // once a fix returns. This says the shape of the current stretch is unknown.
+      gpsBadge.textContent = "GPS lost";
+      gpsBadge.className = "map-badge bad";
+    } else if(acc > 0){
+      gpsBadge.textContent = "GPS " + Math.round(acc) + "m";
+      gpsBadge.className = "map-badge " + (acc <= 20 ? "ok" : acc <= MAX_ACC ? "" : "bad");
+    }
+
+    let last = null;
+    (payload.pts || []).forEach(a => {
+      const segIdx = a[0], lat = a[1], lng = a[2], t = a[3];
+      while(segments.length <= segIdx) newSegment();
+      const s = segments[segIdx];
+      s.pts.push({lat, lng, t});
+      s.casing.addLatLng([lat, lng]);
+      s.line.addLatLng([lat, lng]);
+      last = {lat, lng, acc};
+    });
+
+    if(last && !viewingRun){
+      mapHint.hidden = true;
+      drawPosition(last);
+      if(!startMarker && segments[0] && segments[0].pts.length){
+        const p0 = segments[0].pts[0];
+        startMarker = L.circleMarker([p0.lat, p0.lng],
+          {radius:5, color:"#FFFFFF", weight:2, fillColor:"#4ADE80", fillOpacity:1}).addTo(map);
+      }
+      if(following) map.setView([last.lat, last.lng], Math.max(map.getZoom(), 16),
+                                {animate:true, duration:.4});
+    }
+    tick();
+  }
+
+  function nativePermission(granted){
+    if(!granted){
+      showNotice("<b>Location permission needed.</b> Grant it in Android settings " +
+                 "(App info → Permissions → Location) so runs can be recorded.", "perm");
+    } else {
+      if(noticeKey === "perm"){ noticeKey = null; hideNotice(); }
+    }
+  }
+
+  /** A run handed back by the service when tracking stops. */
+  function saveNativeRun(run){
+    if(!run || !run.segments || !run.segments.length) return null;
+    if(!(run.distanceM > 10)) return null;
+    const runs = loadRuns();
+    const rec = {
+      id: Date.now(),
+      startedAt: run.startedAt,
+      durationMs: run.durationMs,
+      distanceM: run.distanceM,
+      gaps: run.gaps || 0, gapMs: run.gapMs || 0,
+      elevGainM: run.elevGainM || 0, elevLossM: run.elevLossM || 0,
+      segments: run.segments.map(seg =>
+        seg.map(p => {
+          const o = {lat:+Number(p.lat).toFixed(6), lng:+Number(p.lng).toFixed(6), t:p.t};
+          if(p.ele != null) o.ele = +Number(p.ele).toFixed(1);   // 0.1 m is far finer than the sensor
+          return o;
+        }))
+    };
+    runs.unshift(rec);
+    if(!saveRuns(runs)){
+      alert("Couldn't save this run — the app's storage is full.\n\n" +
+            "Open Runs, export a few old ones as GPX, then delete them to make room.");
+      return null;
+    }
+    return rec;
+  }
 
   /* ============================================================
      Timer & display
      ============================================================ */
-  const elapsed = () => state === "idle" ? 0 : state === "paused" ? bankedMs : bankedMs + (Date.now() - segStart);
+  // Untracked gaps come out of the clock as well as the distance, so pace stays
+  // honest: both numbers describe the same recorded stretch of the run.
+  function elapsed(){
+    if(NATIVE) return nativeElapsed;      // the service owns the clock
+    const raw = state === "idle" ? 0
+              : state === "paused" ? bankedMs
+              : bankedMs + (Date.now() - segStart);
+    return Math.max(0, raw - gapMs);
+  }
 
   function tick(){
+    // Browsing history: showRun() has put a past run's numbers in the tiles and the
+    // native pump is still ticking once a second. Don't overwrite them with the live
+    // (idle, zeroed) run state.
+    if(viewingRun){ renderWakeBadge(); return; }
     const ms = elapsed();
     timeVal.textContent = fmtTime(ms);
     distVal.textContent = fmtDist(totalM);
     paceVal.textContent = fmtPace(ms, totalM);
+    renderWakeBadge();
+  }
+
+  function renderWakeBadge(){
+    const b = document.getElementById("wakeBadge");
+    if(!b) return;
+    if(state === "idle"){ b.hidden = true; return; }
+    b.hidden = false;
+    if(NATIVE){                                   // recording survives the lock screen
+      if(nativeGaps){
+        b.textContent = nativeGaps + (nativeGaps === 1 ? " signal gap" : " signal gaps") +
+                        " · " + fmtTime(nativeGapMs) + " estimated";
+        b.className = "map-badge bad";
+        return;
+      }
+      b.textContent = "recording in background";
+      b.className = "map-badge ok";
+      return;
+    }
+    if(gapCount){
+      b.textContent = gapCount + (gapCount === 1 ? " gap" : " gaps") + " · " + fmtTime(gapMs) + " lost";
+      b.className = "map-badge bad";
+    } else {
+      b.textContent = wakeLock ? "screen held" : "screen may sleep";
+      b.className = "map-badge" + (wakeLock ? " ok" : " bad");
+    }
   }
 
   function setStatus(t, cls){ statusPill.textContent = t; statusPill.className = "pill " + (cls||""); }
@@ -1387,57 +1671,99 @@ svg.leaflet-image-layer.leaflet-interactive path {
   startBtn.addEventListener("click", () => {
     exitViewing();
     clearRouteLayers();
-    totalM = 0; bankedMs = 0; segStart = Date.now();
+    totalM = 0; bankedMs = 0; gapMs = 0; gapCount = 0; nativeElapsed = 0; segStart = Date.now();
+    nativeGaps = 0; nativeGapMs = 0; nativeStale = false;
     state = "tracking"; following = true; recenterBtn.hidden = true;
     mapHint.textContent = "Waiting for GPS fix…";
+    if(noticeKey === "gap"){ noticeKey = null; hideNotice(); }
+
+    if(NATIVE){
+      segments = [];
+      window.Android.start();       // the service takes it from here
+      setStatus("live","live"); showControls("tracking");
+      timer = setInterval(tick, 1000); tick();
+      return;
+    }
+
     newSegment();
     if(!startWatch()){ state = "idle"; showControls("idle"); return; }
     setStatus("live","live"); showControls("tracking");
-    lockScreen();
+    lockScreen(); startKeepAlive();
     timer = setInterval(tick, 1000); tick();
   });
 
   pauseBtn.addEventListener("click", () => {
     if(state !== "tracking") return;
+    if(NATIVE){
+      window.Android.pause();
+      state = "paused";
+      setStatus("paused","paused"); showControls("paused"); tick();
+      return;
+    }
     bankedMs += Date.now() - segStart;
     state = "paused";
     newSegment();                 // resume draws a fresh line; the gap stays a gap
     setStatus("paused","paused"); showControls("paused");
-    unlockScreen(); tick();
+    unlockScreen(); stopKeepAlive(); tick();
   });
 
   resumeBtn.addEventListener("click", () => {
     if(state !== "paused") return;
+    if(NATIVE){
+      window.Android.resume();
+      state = "tracking";
+      setStatus("live","live"); showControls("tracking"); tick();
+      return;
+    }
     segStart = Date.now();
     state = "tracking";
     setStatus("live","live"); showControls("tracking");
-    lockScreen(); tick();
+    lockScreen(); startKeepAlive(); tick();
   });
 
   stopBtn.addEventListener("click", () => {
     if(state === "idle") return;
     if(!confirm("Finish and save this run?")) return;
 
+    if(NATIVE){
+      let run = null;
+      try{ run = JSON.parse(window.Android.stop()); }catch(e){}
+      clearInterval(timer);
+      const saved = saveNativeRun(run);
+      state = "idle"; nativeElapsed = 0; totalM = 0;
+      nativeGaps = 0; nativeGapMs = 0; nativeStale = false;
+      setStatus("idle",""); showControls("idle");
+      gpsBadge.textContent = "GPS --"; gpsBadge.className = "map-badge";
+      timeVal.textContent = "0:00:00"; distVal.textContent = "0.00"; paceVal.textContent = "--:--";
+      recenterBtn.hidden = true;
+      renderWakeBadge(); renderRuns();
+      if(saved){ openNote(saved); attachWeather(saved); }   // Cancel skips the note
+      return;
+    }
+
     const finalMs = elapsed();
-    stopWatch(); unlockScreen(); clearInterval(timer);
+    stopWatch(); unlockScreen(); stopKeepAlive(); clearInterval(timer);
 
     // 6 decimal places is ~0.1 m — plenty, and roughly halves what each run costs to store
     const kept = segments.filter(s => s.pts.length > 1)
       .map(s => s.pts.map(p => ({lat:+p.lat.toFixed(6), lng:+p.lng.toFixed(6), t:p.t})));
 
+    let saved = null;
     if(totalM > 10 && kept.length){
       const runs = loadRuns();
-      runs.unshift({
+      const rec = {
         id: Date.now(),
         startedAt: kept[0][0].t,
         durationMs: finalMs,
         distanceM: totalM,
+        gaps: gapCount,
+        gapMs: Math.round(gapMs),
         segments: kept
-      });
-      if(!saveRuns(runs)){
-        alert("Couldn't save this run — the app's storage is full.\n\n" +
-              "Open Runs, export a few old ones as GPX, then delete them to make room.");
-      }
+      };
+      runs.unshift(rec);
+      if(saveRuns(runs)) saved = rec;
+      else alert("Couldn't save this run — the app's storage is full.\n\n" +
+                 "Open Runs, export a few old ones as GPX, then delete them to make room.");
     }
 
     state = "idle";
@@ -1445,7 +1771,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     gpsBadge.textContent = "GPS --"; gpsBadge.className = "map-badge";
     timeVal.textContent = "0:00:00"; distVal.textContent = "0.00"; paceVal.textContent = "--:--";
     recenterBtn.hidden = true;
+    renderWakeBadge();
     renderRuns();
+    if(saved){ openNote(saved); attachWeather(saved); }
   });
 
   unitToggle.addEventListener("click", () => {
@@ -1471,8 +1799,36 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const m = document.createElement("div");
       m.className = "rmeta";
       m.textContent = fmtDist(run.distanceM) + " " + unit + "  ·  " + fmtTime(run.durationMs) +
-                      "  ·  " + fmtPace(run.durationMs, run.distanceM) + "/" + unit;
+                      "  ·  " + fmtPace(run.durationMs, run.distanceM) + "/" + unit +
+                      (run.elevGainM ? "  ·  ↗ " + fmtEle(run.elevGainM) + " " + eleUnit() : "");
       info.appendChild(d); info.appendChild(m);
+
+      if(run.gaps){
+        const g = document.createElement("div");
+        g.className = "rgap";
+        // Native gaps are lost *signal* — the distance across them is still counted as a
+        // straight line. Browser gaps are lost *recording* — that distance is simply gone.
+        g.textContent = run.gaps + (run.gaps === 1 ? " signal gap" : " signal gaps") +
+                        " · " + fmtTime(run.gapMs || 0) +
+                        (NATIVE ? " estimated" : " not recorded");
+        info.appendChild(g);
+      }
+
+      const wxText = weatherLine(run.weather);
+      if(wxText){
+        const w = document.createElement("div");
+        w.className = "rmeta";
+        w.style.marginTop = "3px";
+        w.textContent = wxText;
+        info.appendChild(w);
+      }
+
+      if(run.note){
+        const n = document.createElement("div");
+        n.className = "rnote";
+        n.textContent = run.note;          // textContent, so a note can't inject markup
+        info.appendChild(n);
+      }
 
       const acts = document.createElement("div");
       acts.className = "acts";
@@ -1480,6 +1836,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const viewB = document.createElement("button");
       viewB.textContent = "Map";
       viewB.addEventListener("click", () => { showRun(run); panel.hidden = true; });
+
+      const noteB = document.createElement("button");
+      noteB.textContent = run.note ? "Edit" : "Note";
+      noteB.addEventListener("click", () => openNote(run));
 
       const gpxB = document.createElement("button");
       gpxB.textContent = "GPX";
@@ -1493,12 +1853,237 @@ svg.leaflet-image-layer.leaflet-interactive path {
         renderRuns();
       });
 
-      acts.appendChild(viewB); acts.appendChild(gpxB); acts.appendChild(delB);
+      acts.appendChild(viewB); acts.appendChild(noteB);
+      acts.appendChild(gpxB); acts.appendChild(delB);
       card.appendChild(info); card.appendChild(acts);
       panelList.appendChild(card);
     });
     TileCache.renderBadge();
   }
+
+  /* ============================================================
+     Run notes — the part of a run worth rereading a year later.
+     Stored on the run record, exported in the GPX <desc>.
+     ============================================================ */
+  let noteRunId = null;
+  let notePrefill = "";     // what openNote() wrote, so we can tell if it's been touched
+
+  /* ============================================================
+     Weather — Open-Meteo, free and keyless.
+
+     Everything here is best-effort and must stay that way: it runs after the run is
+     already saved, it is time-limited, and every failure path ends in "no weather line"
+     rather than an error the user sees. Losing the temperature must never cost a run.
+     ============================================================ */
+  const WMO = {
+    0:"clear", 1:"mainly clear", 2:"partly cloudy", 3:"overcast",
+    45:"fog", 48:"freezing fog",
+    51:"light drizzle", 53:"drizzle", 55:"heavy drizzle",
+    56:"freezing drizzle", 57:"freezing drizzle",
+    61:"light rain", 63:"rain", 65:"heavy rain",
+    66:"freezing rain", 67:"freezing rain",
+    71:"light snow", 73:"snow", 75:"heavy snow", 77:"snow grains",
+    80:"light showers", 81:"showers", 82:"heavy showers",
+    85:"snow showers", 86:"snow showers",
+    95:"thunderstorms", 96:"thunderstorms with hail", 99:"thunderstorms with hail"
+  };
+
+  // Stored in Celsius and km/h; converted on display so the mi/km toggle still works
+  // on runs recorded before it was flipped.
+  const fmtTemp = c => unit === "km" ? Math.round(c) + "°C"
+                                     : Math.round(c * 9/5 + 32) + "°F";
+  const fmtWind = k => unit === "km" ? Math.round(k) + " km/h"
+                                     : Math.round(k * 0.621371) + " mph";
+
+  const num = v => (typeof v === "number" && isFinite(v)) ? v : null;
+
+  /**
+   * Conditions at [lat,lng] now, plus the temperature back at [startedAt] so a long run
+   * can show how far it moved. Resolves to null on any problem at all.
+   */
+  function fetchWeather(lat, lng, startedAt){
+    return new Promise(resolve => {
+      let done = false;
+      const finish = v => { if(!done){ done = true; resolve(v); } };
+      // Belt and braces: AbortController plus a hard timer, in case abort isn't honoured.
+      setTimeout(() => finish(null), 8000);
+
+      try{
+        const ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
+        if(ctl) setTimeout(() => { try{ ctl.abort(); }catch(e){} }, 7000);
+
+        const url = "https://api.open-meteo.com/v1/forecast" +
+          "?latitude=" + encodeURIComponent(lat.toFixed(4)) +
+          "&longitude=" + encodeURIComponent(lng.toFixed(4)) +
+          "&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code" +
+          "&hourly=temperature_2m&past_days=1&forecast_days=1" +
+          "&timeformat=unixtime&timezone=UTC";
+
+        fetch(url, ctl ? {signal: ctl.signal} : undefined)
+          .then(r => r.ok ? r.json() : null)
+          .then(d => {
+            if(!d || typeof d !== "object") return finish(null);
+            const c = d.current || {};
+            const out = {};
+
+            const t = num(c.temperature_2m);
+            if(t == null) return finish(null);        // no temperature, no point
+            out.tempC = t;
+
+            const rh = num(c.relative_humidity_2m); if(rh != null) out.humidity = rh;
+            const w  = num(c.wind_speed_10m);       if(w  != null) out.windKmh = w;
+            const wc = num(c.weather_code);
+            if(wc != null && WMO[wc]) out.sky = WMO[wc];
+
+            // Temperature when the run began, from the hourly series.
+            try{
+              const h = d.hourly || {};
+              if(Array.isArray(h.time) && Array.isArray(h.temperature_2m)){
+                const target = Math.floor(startedAt / 1000);
+                let best = -1, bestGap = Infinity;
+                for(let i = 0; i < h.time.length; i++){
+                  const gap = Math.abs(h.time[i] - target);
+                  if(gap < bestGap){ bestGap = gap; best = i; }
+                }
+                // Only trust it if an hourly sample actually covers the run's start.
+                if(best >= 0 && bestGap <= 3600){
+                  const st = num(h.temperature_2m[best]);
+                  if(st != null) out.startTempC = st;
+                }
+              }
+            }catch(e){}
+
+            out.at = Date.now();
+            finish(out);
+          })
+          .catch(() => finish(null));
+      }catch(e){ finish(null); }
+    });
+  }
+
+  /** One line of conditions for the note, or "" when there's nothing worth saying. */
+  function weatherLine(w){
+    if(!w || w.tempC == null) return "";
+    let s = fmtTemp(w.tempC);
+    // Only mention the start temperature when it actually differed.
+    if(w.startTempC != null && Math.abs(w.startTempC - w.tempC) >= 1.5){
+      s = fmtTemp(w.startTempC) + " at the start, " + fmtTemp(w.tempC) + " at the finish";
+    }
+    if(w.sky) s += ", " + w.sky;
+    const bits = [];
+    if(w.humidity != null) bits.push(Math.round(w.humidity) + "% humidity");
+    if(w.windKmh != null && w.windKmh >= 1) bits.push(fmtWind(w.windKmh) + " wind");
+    if(bits.length) s += " · " + bits.join(", ");
+    return s;
+  }
+
+  /**
+   * Fire-and-forget: look up conditions for a run that's already safely saved, and fold
+   * them in if they arrive. Deliberately does nothing visible when it fails.
+   */
+  function attachWeather(run){
+    if(!wxOn() || typeof fetch !== "function") return;
+    let last = null;
+    try{
+      for(const seg of run.segments || []){
+        if(seg && seg.length) last = seg[seg.length - 1];
+      }
+    }catch(e){ return; }
+    if(!last || num(last.lat) == null || num(last.lng) == null) return;
+
+    fetchWeather(last.lat, last.lng, run.startedAt).then(w => {
+      if(!w) return;
+      try{
+        const runs = loadRuns();
+        const r = runs.find(x => x.id === run.id);
+        if(!r) return;
+        r.weather = w;
+        if(!saveRuns(runs)) return;
+        run.weather = w;
+
+        // If the editor is still showing the untouched prefill for this run, rebuild it
+        // so the conditions appear. If he's started writing, leave his text alone.
+        if(!noteEditor.hidden && noteRunId === r.id && noteText.value === notePrefill){
+          notePrefill = statsBlock(r) + "\n\n";
+          noteText.value = notePrefill;
+        }
+        renderRuns();
+      }catch(e){}
+    });
+  }
+
+  /** The stats block that heads a fresh note — the bit that gets copied into the journal. */
+  function statsBlock(run){
+    const d = new Date(run.startedAt);
+    let s = d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"}) +
+            "\n" + d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}) +
+            "  ·  " + fmtTime(run.durationMs) +
+            "\n" + fmtDist(run.distanceM) + " " + unit +
+            "  ·  " + fmtPace(run.durationMs, run.distanceM) + "/" + unit;
+    if(run.elevGainM) s += "  ·  " + fmtEle(run.elevGainM) + " " + eleUnit() + " gain";
+    const wx = weatherLine(run.weather);
+    if(wx) s += "\n" + wx;
+    if(run.gaps) s += "\n" + run.gaps + (run.gaps === 1 ? " signal gap" : " signal gaps") +
+                      " · " + fmtTime(run.gapMs || 0) + " estimated";
+    return s;
+  }
+
+  function openNote(run){
+    noteRunId = run.id;
+    noteMeta.textContent = fmtDate(run.startedAt) + "  ·  " + fmtDist(run.distanceM) + " " + unit +
+                           "  ·  " + fmtTime(run.durationMs);
+    // A new note starts with the numbers already filled in, so the whole entry can go
+    // straight into the paper journal. It's ordinary text — edit or delete any of it.
+    notePrefill = statsBlock(run) + "\n\n";
+    noteText.value = run.note || notePrefill;
+    noteEditor.hidden = false;
+  }
+
+  function closeNote(){
+    noteEditor.hidden = true;
+    noteRunId = null;
+    noteText.value = "";
+  }
+
+  noteSave.addEventListener("click", () => {
+    if(noteRunId == null){ closeNote(); return; }
+    const runs = loadRuns();
+    const r = runs.find(x => x.id === noteRunId);
+    if(r){
+      const v = noteText.value.trim();
+      // Saving the untouched prefill isn't a note — the card already shows those numbers.
+      const untouched = v === statsBlock(r).trim();
+      if(v && !untouched) r.note = v; else delete r.note;
+      if(!saveRuns(runs)){
+        alert("Couldn't save the note — the app's storage is full.\n\n" +
+              "Open Runs, export a few old ones as GPX, then delete them to make room.");
+        return;
+      }
+    }
+    closeNote();
+    renderRuns();
+  });
+
+  noteCancel.addEventListener("click", closeNote);
+  noteClose.addEventListener("click", closeNote);
+
+  // Copy the whole entry — stats and all — for the paper journal.
+  noteCopy.addEventListener("click", () => {
+    const text = noteText.value;
+    const flash = ok => {
+      noteCopy.textContent = ok ? "Copied" : "Copy failed";
+      setTimeout(() => { noteCopy.textContent = "Copy"; }, 1400);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(() => flash(true), () => flash(false));
+      return;
+    }
+    try{                                   // older WebViews
+      noteText.select();
+      flash(document.execCommand("copy"));
+      noteText.setSelectionRange(noteText.value.length, noteText.value.length);
+    }catch(e){ flash(false); }
+  });
 
   function showRun(run){
     if(state !== "idle"){ alert("Finish the current run first."); return; }
@@ -1545,20 +2130,34 @@ svg.leaflet-image-layer.leaflet-interactive path {
     x += '<gpx version="1.1" creator="Run Tracker" xmlns="http://www.topografix.com/GPX/1/1">\n';
     x += '  <metadata><time>' + new Date(run.startedAt).toISOString() + '</time></metadata>\n';
     x += '  <trk><name>' + esc(fmtDate(run.startedAt)) + '</name>\n';
+    // <desc> is standard GPX, so the note survives into anything that reads the file.
+    if(run.note) x += '    <desc>' + esc(run.note) + '</desc>\n';
     run.segments.forEach(pts => {
       x += '    <trkseg>\n';
       pts.forEach(p => {
+        // GPX requires <ele> before <time>; the other order fails schema validation.
         x += '      <trkpt lat="' + p.lat.toFixed(7) + '" lon="' + p.lng.toFixed(7) + '">' +
+             (p.ele != null ? '<ele>' + Number(p.ele).toFixed(1) + '</ele>' : '') +
              '<time>' + new Date(p.t).toISOString() + '</time></trkpt>\n';
       });
       x += '    </trkseg>\n';
     });
     x += '  </trk>\n</gpx>\n';
 
+    const name = "run-" + new Date(run.startedAt).toISOString()
+                            .slice(0,16).replace(/[:T]/g,"-") + ".gpx";
+
+    // A WebView won't act on <a download> at all, so hand the file to the native side.
+    if(NATIVE && window.Android && window.Android.saveGpx){
+      const err = window.Android.saveGpx(name, x);
+      if(err) alert("Couldn't save the GPX file.\n\n" + err);
+      return;
+    }
+
     const blob = new Blob([x], {type:"application/gpx+xml"});
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "run-" + new Date(run.startedAt).toISOString().slice(0,16).replace(/[:T]/g,"-") + ".gpx";
+    a.download = name;
     document.body.appendChild(a); a.click();
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
   }
@@ -1611,14 +2210,62 @@ svg.leaflet-image-layer.leaflet-interactive path {
   sourceSelect.addEventListener("change", changeSource);
   customUrl.addEventListener("change", changeSource);
 
+  const fetchWx = $("fetchWx");
+  fetchWx.checked = wxOn();
+  fetchWx.addEventListener("change", () => {
+    try{ localStorage.setItem(WX_KEY, fetchWx.checked ? "1" : "0"); }catch(e){}
+  });
+
+  const keepAwake = $("keepAwake");
+  // Irrelevant in the Android build — the service records regardless of the screen.
+  if(NATIVE) keepAwake.closest(".foot-row").hidden = true;
+  keepAwake.checked = keepAliveOn();
+  keepAwake.addEventListener("change", () => {
+    try{ localStorage.setItem(KEEPALIVE_KEY, keepAwake.checked ? "1" : "0"); }catch(e){}
+    if(state === "tracking"){ keepAwake.checked ? startKeepAlive() : stopKeepAlive(); }
+  });
+
+  /**
+   * A run the service journalled to disk but never got to save — the app was killed,
+   * crashed, or the battery died mid-run. The native side rebuilt it from the journal;
+   * all that's left is to file it in history like any other run.
+   */
+  function checkRecovered(){
+    if(!NATIVE || !window.Android || !window.Android.recoveredRun) return;
+    let run = null;
+    try{ run = JSON.parse(window.Android.recoveredRun() || "null"); }catch(e){}
+    if(!run || !run.segments || !run.segments.length) return;
+
+    const runs = loadRuns();
+    runs.unshift({
+      id: Date.now(),
+      startedAt: run.startedAt,
+      durationMs: run.durationMs,
+      distanceM: run.distanceM,
+      gaps: run.gaps || 0,
+      gapMs: run.gapMs || 0,
+      segments: run.segments
+    });
+    if(!saveRuns(runs)) return;          // storage full — leave the journal alone to retry
+
+    try{ window.Android.clearRecovered(); }catch(e){}
+    showNotice("<b>Recovered an interrupted run.</b> " + fmtDate(run.startedAt) + " · " +
+               fmtDist(run.distanceM) + " " + unit + " — saved to Runs. Its duration is " +
+               "measured from the recorded points, so it may run slightly short.", "recovered");
+  }
+
   applySource();
-  TileCache.open().then(() => { TileCache.renderBadge(); renderRuns(); });
+  TileCache.open().then(() => { TileCache.renderBadge(); checkRecovered(); renderRuns(); });
   setTimeout(() => map.invalidateSize(), 60);
   window.addEventListener("resize", () => map.invalidateSize());
   window.addEventListener("orientationchange", () => setTimeout(() => map.invalidateSize(), 300));
 
   // expose a little surface for testing with simulated positions
-  window.__rt = { onPosition, state: () => state, total: () => totalM, segments: () => segments };
+  // Entry points for the Android shell (and for driving simulated runs in tests).
+  window.__rt = {
+    onPosition, nativeSync, nativePermission,
+    state: () => state, total: () => totalM, segments: () => segments, native: () => NATIVE
+  };
 })();
 </script>
 </body>
