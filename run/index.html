@@ -796,9 +796,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   #panelList{flex:1 1 auto;overflow-y:auto;display:flex;flex-direction:column;gap:9px;}
   .run-card{
     background:var(--panel);border:1px solid var(--line);border-radius:12px;
-    padding:11px 13px;display:flex;align-items:center;gap:11px;
+    padding:11px 13px;display:flex;flex-direction:column;gap:9px;
   }
-  .run-card .info{flex:1;min-width:0;}
+  .run-card .info{min-width:0;}
   .run-card .rdate{font-size:13px;font-weight:600;margin-bottom:3px;}
   .run-card .rmeta{font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums;}
   .run-card .rgap{font-size:11px;color:var(--warn);margin-top:3px;font-variant-numeric:tabular-nums;}
@@ -807,12 +807,31 @@ svg.leaflet-image-layer.leaflet-interactive path {
     white-space:pre-wrap;overflow-wrap:anywhere;
     border-left:2px solid var(--line);padding-left:8px;
   }
-  .run-card .acts{display:flex;gap:4px;flex:0 0 auto;}
+  /* Full-width row under the info, so the note above gets the whole card. */
+  .run-card .acts{display:flex;gap:5px;flex:0 0 auto;}
   .run-card .acts button{
+    flex:1 1 auto;
     background:var(--panel-2);border:1px solid var(--line);color:var(--dim);
-    border-radius:8px;padding:7px 9px;font-size:11px;
+    border-radius:8px;padding:8px 6px;font-size:11px;font-family:inherit;
   }
-  .run-card .acts .del{color:var(--stop);border-color:#5c2b2b;}
+  .run-card .acts button.on{color:var(--text);border-color:var(--accent);}
+  .run-card .acts .del{color:var(--stop);border-color:#5c2b2b;flex:0 0 auto;padding:8px 11px;}
+
+  /* ---- splits ---- */
+  .splits{
+    border-top:1px solid var(--line);padding-top:9px;
+    display:flex;flex-direction:column;gap:3px;
+    font-variant-numeric:tabular-nums;font-size:11.5px;color:var(--dim);
+  }
+  .split-head{font-size:10.5px;color:var(--dim);opacity:.8;margin-bottom:3px;}
+  .split-row{display:flex;align-items:center;gap:8px;}
+  .split-n{flex:0 0 2.4em;text-align:right;color:var(--dim);}
+  .split-bar{
+    flex:1 1 auto;height:7px;background:var(--panel-2);
+    border-radius:4px;overflow:hidden;
+  }
+  .split-bar span{display:block;height:100%;background:var(--accent);border-radius:4px;}
+  .split-t{flex:0 0 3.6em;text-align:right;color:var(--text);}
   #panelEmpty{color:var(--dim);font-size:13px;text-align:center;padding:26px 0;}
 
   /* ---- run note editor ---- */
@@ -1814,6 +1833,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
         info.appendChild(g);
       }
 
+      if(hadBreaks(run)){
+        const b = document.createElement("div");
+        b.className = "rmeta";
+        b.style.marginTop = "3px";
+        b.textContent = fmtTime(totalMsFor(run)) + " total  ·  " +
+                        fmtTime(pausedMsFor(run)) + " paused";
+        info.appendChild(b);
+      }
+
       const wxText = weatherLine(run.weather);
       if(wxText){
         const w = document.createElement("div");
@@ -1824,10 +1852,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
       }
 
       if(run.note){
-        const n = document.createElement("div");
-        n.className = "rnote";
-        n.textContent = run.note;          // textContent, so a note can't inject markup
-        info.appendChild(n);
+        // A note normally opens with the stats block the editor prefilled — which the
+        // card has just printed immediately above. Strip that header so the card shows
+        // only what was actually written. The stored note keeps it, for Copy and GPX.
+        let body = run.note;
+        const head = statsBlock(run);
+        if(body.startsWith(head)) body = body.slice(head.length).trim();
+        if(body){
+          const n = document.createElement("div");
+          n.className = "rnote";
+          n.textContent = body;          // textContent, so a note can't inject markup
+          info.appendChild(n);
+        }
       }
 
       const acts = document.createElement("div");
@@ -1853,12 +1889,237 @@ svg.leaflet-image-layer.leaflet-interactive path {
         renderRuns();
       });
 
-      acts.appendChild(viewB); acts.appendChild(noteB);
+      const splitsB = document.createElement("button");
+      splitsB.textContent = "Splits";
+      splitsB.addEventListener("click", () => toggleSplits(card, run, splitsB));
+
+      acts.appendChild(viewB); acts.appendChild(splitsB); acts.appendChild(noteB);
       acts.appendChild(gpxB); acts.appendChild(delB);
+      // Actions sit *below* the info now, full width, so a long note gets the whole
+      // card instead of being squeezed into a column beside the buttons.
       card.appendChild(info); card.appendChild(acts);
       panelList.appendChild(card);
     });
     TileCache.renderBadge();
+  }
+
+  /* ============================================================
+     Splits — computed from the saved track, not recorded separately, so they work
+     on every run already in history. Walks the points accumulating distance and
+     interpolates the exact instant each whole mile (or km) was crossed, rather than
+     snapping to the nearest recorded point — at a 9-minute pace a 2-second gap is
+     12 metres, and rounding that off would visibly skew a split.
+
+     Distance never bridges a pause, matching how the run's total is measured.
+     ============================================================ */
+  function splitsFor(run){
+    const segs = run.segments || [];
+    const unitM = unit === "km" ? 1000 : 1609.344;
+    const out = [];
+    let dist = 0, nextMark = unitM, prevMarkT = null;
+
+    // Point timestamps are wall clock, so the gaps between segments are the time spent
+    // paused at water stops. Subtracting them keeps the splits in the same moving-time
+    // world as the run's own duration and average pace — otherwise a two-minute stop
+    // shows up as a two-minute-slower mile, which reads as fading when it isn't.
+    let paused = 0;
+    const clock = t => t - paused;
+
+    for(let s = 0; s < segs.length; s++){
+      const seg = segs[s];
+      if(!seg || seg.length < 2) continue;
+      if(s > 0){
+        const prev = segs[s-1];
+        if(prev && prev.length) paused += seg[0].t - prev[prev.length-1].t;
+      }
+      for(let i = 1; i < seg.length; i++){
+        const a = seg[i-1], b = seg[i];
+        const step = haversine(a, b);
+        if(!(step > 0)) continue;
+
+        // One leg can span a whole mile marker, or more than one.
+        while(dist + step >= nextMark){
+          const frac = (nextMark - dist) / step;
+          const t = clock(a.t + (b.t - a.t) * frac);
+          const from = prevMarkT == null ? clock(runStartT(run)) : prevMarkT;
+          out.push({ n: out.length + 1, ms: t - from, at: t });
+          prevMarkT = t;
+          nextMark += unitM;
+        }
+        dist += step;
+      }
+    }
+
+    // The leftover tail — the part-unit at the end. Worth showing; it's where the
+    // effort usually tells.
+    const tail = dist - (nextMark - unitM);
+    if(tail > unitM * 0.08 && prevMarkT != null){
+      const lastT = lastPointT(run);
+      if(lastT != null && clock(lastT) > prevMarkT){
+        out.push({ n: null, partial: tail / unitM, ms: clock(lastT) - prevMarkT, at: clock(lastT) });
+      }
+    }
+    return out;
+  }
+
+  /** Show or hide a run's split table, built on first open and then kept. */
+  function toggleSplits(card, run, btn){
+    const existing = card.querySelector(".splits");
+    if(existing){ existing.remove(); btn.classList.remove("on"); return; }
+
+    const rows = splitsFor(run);
+    const box = document.createElement("div");
+    box.className = "splits";
+
+    if(!rows.length){
+      box.textContent = "Too short to split.";
+    } else {
+      // Say which clock these are on, since a stopped-for-water mile would otherwise
+      // look like a mile you fell apart on.
+      const head = document.createElement("div");
+      head.className = "split-head";
+      head.textContent = hadBreaks(run)
+        ? "Running time — " + fmtTime(pausedMsFor(run)) + " of breaks excluded"
+        : "Running time";
+      box.appendChild(head);
+
+      // Bars are scaled against the slowest split so the shape of the run reads at
+      // a glance — the back half of a long run tells its own story.
+      const slowest = Math.max(...rows.map(r => r.ms / (r.partial || 1)));
+      rows.forEach(r => {
+        const per = r.ms / (r.partial || 1);     // pace normalised to a full unit
+        const row = document.createElement("div");
+        row.className = "split-row";
+
+        const lbl = document.createElement("span");
+        lbl.className = "split-n";
+        lbl.textContent = r.n != null ? r.n : r.partial.toFixed(2);
+
+        const bar = document.createElement("span");
+        bar.className = "split-bar";
+        const fill = document.createElement("span");
+        fill.style.width = Math.max(4, (per / slowest) * 100) + "%";
+        bar.appendChild(fill);
+
+        const val = document.createElement("span");
+        val.className = "split-t";
+        val.textContent = fmtSplit(r.ms) + (r.partial ? "" : "");
+
+        row.appendChild(lbl); row.appendChild(bar); row.appendChild(val);
+        box.appendChild(row);
+      });
+    }
+    card.appendChild(box);
+    btn.classList.add("on");
+  }
+
+  /* ============================================================
+     One-time elevation repair.
+
+     Runs saved before the altimeter was fixed carry a gain figure computed by summing
+     a random walk once per sensor reading — the marathon came out at 3,920 ft across
+     central Ohio. The per-point elevations in those runs are fine; only the arithmetic
+     over them was wrong, so the honest number can be recovered without re-running.
+
+     This is the same rule the service now applies live: smooth over 30 s of wall clock,
+     test once a second, bank a climb only once it reverses by 2 m. Pauses reset it, so
+     a walk to the car and back is never a hill.
+     ============================================================ */
+  const ELEV_FIX_KEY = "runtracker_elev_fix_v1";
+  const ELEV_TAU_S = 30.0, ELEV_THRESHOLD = 2.0, ELEV_CADENCE_MS = 1000;
+
+  /** Recompute gain/loss from a run's stored point elevations, or null if it has none. */
+  function recomputeElevation(run){
+    let gain = 0, loss = 0, any = false;
+    for(const seg of (run.segments || [])){
+      if(!seg || seg.length < 2) continue;
+      let smooth = NaN, lastT = null, nextEval = null;
+      let peak = NaN, trough = NaN, up = true;
+      for(const p of seg){
+        if(p.ele == null) continue;
+        any = true;
+        if(isNaN(smooth) || lastT == null){ smooth = p.ele; }
+        else {
+          const dt = Math.max(0, p.t - lastT) / 1000;
+          smooth += (1 - Math.exp(-dt / ELEV_TAU_S)) * (p.ele - smooth);
+        }
+        lastT = p.t;
+        if(nextEval != null && p.t < nextEval) continue;
+        nextEval = p.t + ELEV_CADENCE_MS;
+
+        if(isNaN(peak)){ peak = smooth; trough = smooth; continue; }
+        if(up){
+          if(smooth > peak) peak = smooth;
+          else if(peak - smooth > ELEV_THRESHOLD){ gain += peak - trough; trough = smooth; up = false; }
+        } else {
+          if(smooth < trough) trough = smooth;
+          else if(smooth - trough > ELEV_THRESHOLD){ loss += peak - trough; peak = smooth; up = true; }
+        }
+      }
+    }
+    return any ? {gainM: gain, lossM: loss} : null;
+  }
+
+  function repairElevations(){
+    try{ if(localStorage.getItem(ELEV_FIX_KEY) === "1") return; }catch(e){ return; }
+    const runs = loadRuns();
+    let fixed = 0, biggest = null;
+    for(const r of runs){
+      const v = recomputeElevation(r);
+      if(!v) continue;
+      const before = r.elevGainM || 0;
+      if(Math.abs(before - v.gainM) < 1) continue;     // already sane
+      if(biggest == null || before - v.gainM > biggest.drop){
+        biggest = {drop: before - v.gainM, before, after: v.gainM};
+      }
+      r.elevGainM = v.gainM; r.elevLossM = v.lossM;
+      fixed++;
+    }
+    if(!fixed){ try{ localStorage.setItem(ELEV_FIX_KEY,"1"); }catch(e){} return; }
+    if(!saveRuns(runs)) return;                        // storage full — retry next launch
+    try{ localStorage.setItem(ELEV_FIX_KEY,"1"); }catch(e){}
+
+    let msg = "<b>Elevation recalculated.</b> " + fixed +
+              (fixed === 1 ? " run was" : " runs were") +
+              " measured with the old altimeter, which counted sensor noise as climbing.";
+    if(biggest) msg += " The largest correction went from " + fmtEle(biggest.before) + " to " +
+                       fmtEle(biggest.after) + " " + eleUnit() + ".";
+    showNotice(msg, "elevfix");
+  }
+
+  /**
+   * Wall-clock span from the first recorded point to the last — door to door, breaks
+   * included. durationMs is the moving time; the difference between them is how long
+   * you stood still. Both are derived from data every saved run already has, so this
+   * works on runs recorded before the distinction existed.
+   */
+  function totalMsFor(run){
+    const a = runStartT(run), b = lastPointT(run);
+    return (a != null && b != null && b > a) ? (b - a) : (run.durationMs || 0);
+  }
+  function pausedMsFor(run){
+    return Math.max(0, totalMsFor(run) - (run.durationMs || 0));
+  }
+  /** Breaks worth mentioning — below half a minute it's just rounding. */
+  const hadBreaks = run => pausedMsFor(run) >= 30000;
+
+  function runStartT(run){
+    const s = (run.segments || [])[0];
+    return (s && s.length) ? s[0].t : run.startedAt;
+  }
+  function lastPointT(run){
+    const segs = run.segments || [];
+    for(let i = segs.length - 1; i >= 0; i--){
+      if(segs[i] && segs[i].length) return segs[i][segs[i].length - 1].t;
+    }
+    return null;
+  }
+
+  /** mm:ss for a split — hours only when a split somehow needs them. */
+  function fmtSplit(ms){
+    const s = Math.max(0, Math.round(ms/1000));
+    if(s >= 3600) return fmtTime(ms);
+    return Math.floor(s/60) + ":" + (s%60 < 10 ? "0" : "") + (s%60);
   }
 
   /* ============================================================
@@ -2018,6 +2279,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     let s = d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"}) +
             "\n" + d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}) +
             "  ·  " + fmtTime(run.durationMs) +
+            // Jeffrey logs both figures by hand, so spell them out rather than making
+            // him subtract one from the other at the kitchen table.
+            (hadBreaks(run) ? " running  ·  " + fmtTime(totalMsFor(run)) + " total ("
+                              + fmtTime(pausedMsFor(run)) + " paused)" : "") +
             "\n" + fmtDist(run.distanceM) + " " + unit +
             "  ·  " + fmtPace(run.durationMs, run.distanceM) + "/" + unit;
     if(run.elevGainM) s += "  ·  " + fmtEle(run.elevGainM) + " " + eleUnit() + " gain";
@@ -2255,7 +2520,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   applySource();
-  TileCache.open().then(() => { TileCache.renderBadge(); checkRecovered(); renderRuns(); });
+  TileCache.open().then(() => {
+    TileCache.renderBadge();
+    checkRecovered();
+    repairElevations();     // one-time; no-ops on every launch after the first
+    renderRuns();
+  });
   setTimeout(() => map.invalidateSize(), 60);
   window.addEventListener("resize", () => map.invalidateSize());
   window.addEventListener("orientationchange", () => setTimeout(() => map.invalidateSize(), 300));
