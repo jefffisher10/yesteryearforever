@@ -1,3 +1,9 @@
 # folders
 audio/
 *.bak
+# MOUND live files: overwritten every 10 min, regenerated anyway
+mound/graphs/today.png
+mound/graphs/7day.png
+mound/images/latest.jpg
+mound/data/latest.json
+mound/data_live.html
