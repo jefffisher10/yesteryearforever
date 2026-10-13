@@ -834,6 +834,39 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .split-t{flex:0 0 3.6em;text-align:right;color:var(--text);}
   #panelEmpty{color:var(--dim);font-size:14.5px;text-align:center;padding:26px 0;}
 
+  /* ---- manual run entry ---- */
+  #manualEditor{
+    position:fixed;inset:0;z-index:1100;background:var(--bg);
+    display:flex;flex-direction:column;overflow-y:auto;
+    padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(14px + env(safe-area-inset-bottom,0px));
+    gap:8px;
+  }
+  #manualEditor header h1{font-size:16px;color:var(--text);}
+  .mf-hint{font-size:13px;color:var(--dim);margin-bottom:6px;}
+  .mf-label{font-size:12px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;margin-top:8px;}
+  .mf-input{
+    background:var(--panel);border:1px solid var(--line);color:var(--text);
+    border-radius:11px;padding:14px;font-size:18px;font-family:inherit;
+    font-variant-numeric:tabular-nums;width:100%;min-width:0;color-scheme:dark;
+  }
+  .mf-input:focus{outline:none;border-color:var(--accent);}
+  .mf-time{display:flex;align-items:center;gap:7px;}
+  .mf-time .mf-input{flex:1;text-align:center;}
+  .mf-time span{color:var(--dim);font-size:15px;}
+  .mf-pace{font-size:15px;color:var(--accent);min-height:1.4em;margin-top:6px;font-variant-numeric:tabular-nums;}
+  .mf-error{font-size:13.5px;color:var(--stop);}
+  .mf-actions{display:flex;gap:9px;margin-top:auto;padding-top:14px;}
+  .mf-actions button{
+    flex:1;border-radius:11px;padding:16px;font-size:15px;font-family:inherit;font-weight:600;
+  }
+  #mfSave{background:var(--accent-solid);color:#fff;border:none;flex:1.4;}
+  #mfCancel{background:var(--panel-2);color:var(--dim);border:1px solid var(--line);}
+  .rtag{
+    display:inline-block;margin-left:7px;padding:2px 8px;border-radius:999px;
+    font-size:11px;font-weight:600;letter-spacing:.04em;vertical-align:2px;
+    color:var(--accent);border:1px solid var(--accent-solid);
+  }
+
   /* ---- run note editor ---- */
   #noteEditor{
     position:fixed;inset:0;z-index:1100;background:var(--bg);
@@ -941,10 +974,42 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </div>
 </div>
 
+<div id="manualEditor" hidden>
+  <header>
+    <h1>Add a run</h1>
+    <button class="chip" id="manualClose" type="button">Close</button>
+  </header>
+  <div class="mf-hint">For treadmill and gym runs — anything without GPS.</div>
+
+  <label class="mf-label" for="mfWhen">When</label>
+  <input id="mfWhen" class="mf-input" type="datetime-local">
+
+  <label class="mf-label" for="mfDist">Distance (<span id="mfUnit">mi</span>)</label>
+  <input id="mfDist" class="mf-input" type="number" inputmode="decimal" step="0.01" min="0" placeholder="6.20">
+
+  <span class="mf-label">Time</span>
+  <div class="mf-time">
+    <input id="mfH" class="mf-input" type="number" inputmode="numeric" min="0" placeholder="0"><span>h</span>
+    <input id="mfM" class="mf-input" type="number" inputmode="numeric" min="0" max="59" placeholder="52"><span>m</span>
+    <input id="mfS" class="mf-input" type="number" inputmode="numeric" min="0" max="59" placeholder="30"><span>s</span>
+  </div>
+
+  <div id="mfPace" class="mf-pace">&nbsp;</div>
+  <div id="mfError" class="mf-error" hidden></div>
+
+  <div class="mf-actions">
+    <button id="mfCancel" type="button">Cancel</button>
+    <button id="mfSave" type="button">Save run</button>
+  </div>
+</div>
+
 <div id="panel" hidden>
   <header>
     <h1>Past Runs</h1>
-    <button class="chip" id="panelClose" type="button">Close</button>
+    <div class="hgroup">
+      <button class="chip" id="addRunBtn" type="button">+ Add</button>
+      <button class="chip" id="panelClose" type="button">Close</button>
+    </div>
   </header>
   <div id="panelList"></div>
   <div id="panelEmpty" hidden>No runs saved yet.</div>
@@ -1809,10 +1874,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
      Past runs
      ============================================================ */
   function renderRuns(){
-    const runs = loadRuns();
+    // Newest first by when the run happened, not when it was saved — a treadmill run
+    // logged today for last Tuesday belongs under last Tuesday.
+    const runs = loadRuns().slice().sort((a, b) => (b.startedAt || 0) - (a.startedAt || 0));
     panelList.innerHTML = "";
     panelEmpty.hidden = runs.length > 0;
     runs.forEach(run => {
+      const hasTrack = !run.manual &&
+        (run.segments || []).some(s => s && s.length > 1);
       const card = document.createElement("div");
       card.className = "run-card";
 
@@ -1820,6 +1889,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       info.className = "info";
       const d = document.createElement("div");
       d.className = "rdate"; d.textContent = fmtDate(run.startedAt);
+      if(run.manual){
+        const tag = document.createElement("span");
+        tag.className = "rtag"; tag.textContent = "Manual";
+        d.appendChild(tag);
+      }
       const m = document.createElement("div");
       m.className = "rmeta";
       m.textContent = fmtDist(run.distanceM) + " " + unit + "  ·  " + fmtTime(run.durationMs) +
@@ -1899,8 +1973,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       splitsB.addEventListener("click", () => toggleSplits(card, run, splitsB));
 
       // Delete goes first, far from the right thumb that reaches for Map/Splits/Note.
-      acts.appendChild(delB); acts.appendChild(viewB); acts.appendChild(splitsB);
-      acts.appendChild(noteB); acts.appendChild(gpxB);
+      // A manual run has no track, so Map/Splits/GPX would only produce empty screens.
+      acts.appendChild(delB);
+      if(hasTrack){ acts.appendChild(viewB); acts.appendChild(splitsB); }
+      acts.appendChild(noteB);
+      if(hasTrack) acts.appendChild(gpxB);
       // Actions sit *below* the info now, full width, so a long note gets the whole
       // card instead of being squeezed into a column beside the buttons.
       card.appendChild(info); card.appendChild(acts);
@@ -2354,6 +2431,93 @@ svg.leaflet-image-layer.leaflet-interactive path {
       flash(document.execCommand("copy"));
       noteText.setSelectionRange(noteText.value.length, noteText.value.length);
     }catch(e){ flash(false); }
+  });
+
+  /* ============================================================
+     Manual runs — treadmill and gym sessions with no GPS track.
+
+     Stored exactly like a recorded run but with `manual: true` and no segments, so
+     history, pace, notes and the journal Copy all treat them the same. Anything that
+     needs a track (map, splits, GPX, elevation) simply doesn't offer itself.
+     ============================================================ */
+  const manualEditor = $("manualEditor"), mfWhen = $("mfWhen"), mfDist = $("mfDist");
+  const mfH = $("mfH"), mfM = $("mfM"), mfS = $("mfS");
+  const mfPace = $("mfPace"), mfError = $("mfError"), mfUnit = $("mfUnit");
+
+  /** datetime-local wants "YYYY-MM-DDTHH:MM" in local time, not an ISO/UTC string. */
+  function localInputValue(d){
+    const p = n => (n < 10 ? "0" : "") + n;
+    return d.getFullYear() + "-" + p(d.getMonth()+1) + "-" + p(d.getDate()) +
+           "T" + p(d.getHours()) + ":" + p(d.getMinutes());
+  }
+
+  function readManual(){
+    const n = el => { const v = parseFloat(el.value); return isFinite(v) && v >= 0 ? v : 0; };
+    const durMs = ((n(mfH) * 3600) + (n(mfM) * 60) + n(mfS)) * 1000;
+    const distU = n(mfDist);
+    const distM = distU * (unit === "km" ? 1000 : 1609.344);
+    const when = mfWhen.value ? new Date(mfWhen.value).getTime() : NaN;
+    return {durMs, distM, distU, when};
+  }
+
+  function updateManualPace(){
+    const {durMs, distM} = readManual();
+    mfError.hidden = true;
+    mfPace.textContent = (durMs > 0 && distM > 0)
+      ? fmtPace(durMs, distM) + " /" + unit + " pace"
+      : " ";
+  }
+  [mfDist, mfH, mfM, mfS].forEach(el => el.addEventListener("input", updateManualPace));
+
+  function openManual(){
+    mfUnit.textContent = unit;
+    mfWhen.value = localInputValue(new Date());
+    mfDist.value = ""; mfH.value = ""; mfM.value = ""; mfS.value = "";
+    mfError.hidden = true;
+    mfPace.textContent = " ";
+    manualEditor.hidden = false;
+  }
+  const closeManual = () => { manualEditor.hidden = true; };
+
+  function manualError(msg){ mfError.textContent = msg; mfError.hidden = false; }
+
+  $("addRunBtn").addEventListener("click", openManual);
+  $("manualClose").addEventListener("click", closeManual);
+  $("mfCancel").addEventListener("click", closeManual);
+
+  $("mfSave").addEventListener("click", () => {
+    const {durMs, distM, distU, when} = readManual();
+    if(!isFinite(when))   return manualError("Pick a date and time.");
+    if(when > Date.now() + 5*60*1000) return manualError("That's in the future.");
+    if(!(distM > 0))      return manualError("Enter a distance.");
+    if(!(durMs > 0))      return manualError("Enter a time.");
+
+    // Typo guard, not a rule: 62 instead of 6.2, or minutes typed into the hours box,
+    // both produce a pace no human runs. Ask rather than silently save nonsense.
+    const secPerUnit = (durMs / 1000) / distU;
+    const perMile = unit === "km" ? secPerUnit * 1.609344 : secPerUnit;
+    if(perMile < 210 || perMile > 1800){
+      if(!confirm("That works out to " + fmtPace(durMs, distM) + "/" + unit +
+                  " — is that right?")) return;
+    }
+
+    const rec = {
+      id: Date.now(),
+      startedAt: when,
+      durationMs: durMs,
+      distanceM: distM,
+      gaps: 0, gapMs: 0,
+      manual: true,
+      segments: []
+    };
+    const runs = loadRuns();
+    runs.unshift(rec);
+    if(!saveRuns(runs)){
+      return manualError("Couldn't save — storage is full. Export and delete a few old runs.");
+    }
+    closeManual();
+    renderRuns();
+    openNote(rec);          // same journal flow as a recorded run; Cancel skips it
   });
 
   function showRun(run){
