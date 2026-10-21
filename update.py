@@ -77,6 +77,11 @@ def get_title(path):
 def get_post_date(path):
     try:
         content = Path(path).read_text(encoding="utf-8")
+        # Prefer the footer date (<p ... color: #999;">YYYY-MM-DD</p>), so dates
+        # in image filenames or comments earlier in the page don't win.
+        match = re.search(r'#999;?">\s*(\d{4}-\d{2}-\d{2})\s*</p>', content)
+        if match:
+            return match.group(1)
         match = re.search(r"\d{4}-\d{2}-\d{2}", content)
         if match:
             return match.group(0)
@@ -479,9 +484,19 @@ def generate_sitemap():
 
 def fix_permissions():
 
+    skipped = set()
+
     for dirpath, dirnames, filenames in os.walk(SITE_ROOT):
 
-        os.chmod(dirpath, DIR_PERMS)
+        # never touch git's internals
+        if ".git" in dirnames:
+            dirnames.remove(".git")
+
+        # folders owned by another user (e.g. run/) can't be chmod'ed by us; skip, don't crash
+        try:
+            os.chmod(dirpath, DIR_PERMS)
+        except PermissionError:
+            skipped.add(dirpath)
 
         for file in filenames:
             path = Path(dirpath) / file
@@ -490,6 +505,9 @@ def fix_permissions():
                     os.chmod(path, FILE_PERMS)
                 except:
                     pass
+
+    if skipped:
+        print(f"🔒 permissions skipped (owned by another user): {', '.join(sorted(skipped))}")
 
 
 # -----------------------

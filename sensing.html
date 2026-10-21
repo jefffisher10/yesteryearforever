@@ -87,8 +87,9 @@
           <p style="margin:0;">
             MOUND is a small solar-powered sensor array watching the backyard from a post in the garden.
             It logs temperature, humidity, pressure, light, soil conditions, and its own battery health
-            every ten minutes &mdash; not because the data is particularly useful, but because paying
-            attention is its own reward. Simplicity is deliberate; ambiguity is a feature.
+            every ten minutes, and after dark, a little microphone under the garage eave listens for bats &mdash;
+            not because the data is particularly useful, but because paying attention is its own reward.
+            Simplicity is deliberate; ambiguity is a feature.
           </p>
         </div>
       </div>
@@ -110,7 +111,8 @@
           <span id="mound-condition">--</span>
         </p>
         <p style="margin:0.5rem 0 0 0;">
-          <a href="mound/data_live.html">&rarr; full sensor data, graphs, and archive</a>
+          <a href="mound/data_live.html">&rarr; full sensor data, graphs, and archive</a><br>
+          <a href="bats/index.html">&rarr; every bat it's heard</a>
         </p>
       </div>
 
@@ -284,6 +286,159 @@
 
       <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
 
+      <!-- ── WHAT IT HEARS ── -->
+      <p><strong>what it hears</strong></p>
+
+      <p>
+        On October 6th, 2026, at 7:40 in the evening, something flew past the garage and said hello
+        about ten times a second. Nobody in the house heard a thing. MOUND did.<br><br>
+        The next night, at 7:40 &mdash; same bat, same commute, right on schedule.
+      </p>
+
+      <!-- First bat: spectrogram + the same pass slowed 10x (both live in bats/, which git backs up) -->
+      <figure>
+        <img src="bats/spectrograms/2026-10-06_19-40-22.png"
+             data-full="bats/spectrograms/2026-10-06_19-40-22.png"
+             alt="Spectrogram of the first bat MOUND heard, October 6, 2026"
+             class="thumbnail"
+             style="width:100%; max-width:860px; height:auto; display:block; margin: 0.5rem auto; cursor:zoom-in;"
+             loading="lazy">
+        <figcaption>The first bat. Time runs left to right, pitch bottom to top. Each stripe is one call.</figcaption>
+      </figure>
+
+      <figure>
+        <audio controls preload="none" style="width:100%; max-width:500px; display:block; margin: 0.5rem auto;">
+          <source src="bats/first_bat_slowed.wav" type="audio/wav">
+        </audio>
+        <figcaption>The same bat, slowed down ten times. Those chirps are its sonar.</figcaption>
+      </figure>
+
+      <p>
+        <strong>A Sound Too High to Hear</strong><br>
+        Bats see with sound. They shout and listen for the echo, the way a ship pings sonar
+        off the sea floor, and they do it fast enough to snatch a moth out of the dark. The catch is pitch:
+        human hearing tops out around 20,000 vibrations a second (20 kHz) on a good day, and that gets
+        lower every birthday. Ohio's bats shout somewhere between about 20 and 50 kHz. The whole backyard could be
+        full of screaming hunters on a summer night and it'd sound like crickets and a car somewhere far off.<br><br>
+        To catch a sound, you have to sample it at least twice as fast as its highest note. That's a rule with
+        a name (Nyquist) and no wiggle room. MOUND's microphone samples about 146,700 times a second, so in
+        theory it hears up to about 73 kHz, well into bat territory. In practice, the cheap mic gets hissy above
+        30 kHz or so and drowns out completely past 50. Ambiguity, as ever, is part of the deal.
+      </p>
+
+      <p>
+        <strong>Reading a Spectrogram</strong><br>
+        Since nobody can actually <em>hear</em> these recordings, MOUND draws them instead. A spectrogram is a
+        picture of sound: time runs left to right, pitch runs bottom to top, and brightness is loudness. A bat
+        call shows up as a short, steep swoosh sliding down from high to low, a chirp, really, repeated over and
+        over as the bat closes in. A katydid looks like a fuzzy smear. Hiss looks like snow. Once you've seen
+        a few, you can spot a bat from across the room.
+      </p>
+
+      <!-- MEDIA PLACEHOLDER: photo of the mic under the eave.
+           Drop it in images/ (e.g. images/mound_bats_01.jpg), set the filename below,
+           delete these comment markers, and run update.py; it makes the thumbnail. -->
+      <!--
+      <figure class="mound-float-right">
+        <img src="images/mound_bats_01_thumb.jpg" data-full="images/mound_bats_01.jpg"
+             alt="The bat microphone under the garage eave"
+             class="thumbnail"
+             loading="lazy">
+        <figcaption>The ear, tucked under the eave.</figcaption>
+      </figure>
+      -->
+
+      <p>
+        <strong>The Ear</strong><br>
+        The microphone is a ridiculous little thing: an SPH0641 MEMS mic, smaller than a pencil eraser and
+        cheaper than lunch, the same kind of part that lives inside phones. Unlike phone software, though, it
+        doesn't throw away everything above human hearing. It's wired to the same Raspberry Pi that serves
+        this website, which was already sitting there in the garage with nothing better to do at night.<br><br>
+        The first recordings were mostly static. The fix came from an unlikely place: a scrap of Cat6 network cable.
+        Pairing each signal wire with its own ground on a twisted pair and the noise just... went away. Old
+        tricks are the best tricks.
+      </p>
+
+      <div style="clear:both;"></div>
+
+      <!-- MEDIA PLACEHOLDER: wiring / Cat6 / build photo (same steps as above). -->
+      <!--
+      <figure class="mound-float-left">
+        <img src="images/mound_bats_02_thumb.jpg" data-full="images/mound_bats_02.jpg"
+             alt="Bat microphone wiring"
+             class="thumbnail"
+             loading="lazy">
+        <figcaption>Twisted pairs: CLK and DATA, each with a ground.</figcaption>
+      </figure>
+      -->
+
+      <p>
+        <strong>Bats Come in Bursts</strong><br>
+        Every ten minutes through the night, MOUND records two minutes of ultrasound and hands it to
+        BatDetect2, a neural network trained to pick bat calls out of noise. It's clever, and it's also
+        easily fooled. The first nights, it confidently reported bats that were actually katydids, crickets,
+        dew dripping off the gutter, and plain microphone hiss.<br><br>
+        The fix wasn't a smarter computer; it was paying attention to the bats. A hunting bat doesn't call once.
+        It calls five to ten times a second, so a real bat always shows up as a <em>burst</em> of confident
+        detections, while noise shows up as lonely one-offs. New rule: no burst, no bat. Checked against every
+        clip from the first three nights by eye, the rule caught 10 of 12 real bats and was fooled by exactly
+        zero of 175 bugs, clicks, and hisses. The two it missed were faint and far away. I'll take it.
+      </p>
+
+      <div style="clear:both;"></div>
+
+      <p>
+        <strong>Who's Out There?</strong><br>
+        Here's the fun part: the software was trained on British bats. Every bat it hears gets a confident
+        British name, which is a bit like asking a Londoner to identify Ohio birds. So MOUND sorts them by
+        the one thing it can actually measure: how low the call goes.<br><br>
+        The 7:40 regular calls down around 25 to 30 kHz with shallow sweeps; almost certainly a
+        <strong>big brown bat</strong>, the most common bat in Ohio and the one most likely to be living in
+        somebody's attic. On October 9th, a second voice showed up, higher at 38 to 50 kHz with steep, hooked
+        sweeps. Best guess: an <strong>eastern red bat</strong>, migrating south for the winter and passing
+        through for a snack. And once in a while something calls lower than even the big browns, which just might
+        be a <strong>hoary bat</strong>, Ohio's biggest, also passing through in fall.<br><br>
+        Could be wrong on all counts. That's fine. I'd rather have a good mystery than a confident wrong answer.
+      </p>
+
+      <div id="bat-teaser" style="border-left: 3px solid #2C3E50; padding: 0.8rem 1rem; margin: 1rem 0; font-size:0.9rem;">
+        <p style="margin:0 0 0.4rem 0;">
+          <strong>last bat heard</strong>
+          &nbsp;&middot;&nbsp;
+          <span id="bat-when">listening...</span>
+        </p>
+        <p style="margin:0;">
+          <span id="bat-what">--</span>
+        </p>
+        <p style="margin:0.5rem 0 0 0;">
+          <a href="bats/index.html">&rarr; every bat it's heard, with spectrograms</a>
+        </p>
+      </div>
+
+      <script>
+        fetch('/bats/latest.json?t=' + Date.now())
+          .then(r => r.json())
+          .then(b => {
+            if (!b.heard) { document.getElementById('bat-when').textContent = 'none yet'; return; }
+            document.getElementById('bat-when').textContent = b.time.slice(0, 16);
+            document.getElementById('bat-what').innerHTML = b.guess + ' &nbsp;&middot;&nbsp; '
+              + b.calls + ' calls &nbsp;&middot;&nbsp; '
+              + Math.round(b.low_khz) + '&ndash;' + Math.round(b.high_khz) + ' kHz &nbsp;&middot;&nbsp; '
+              + b.total_passes + ' passes on ' + b.total_nights + ' nights so far';
+          })
+          .catch(() => {
+            document.getElementById('bat-when').textContent = 'data unavailable';
+          });
+      </script>
+
+      <p>
+        Ohio's bats go quiet from about late October until April, either hibernating in caves and attics or
+        long gone south. MOUND will keep listening through the winter anyway, to a whole lot of nothing,
+        waiting for the 7:40 commuter to wake up.
+      </p>
+
+      <hr style="border:none; border-top: 1px solid #ccc; margin: 1.5rem 0;">
+
       <!-- ── THE LONG DARK ── -->
       <p><strong>the long dark</strong></p>
 
@@ -335,6 +490,15 @@
         FC-37 rain sensor. INA219 for battery voltage and charge/discharge current. Raspberry Pi Camera
         Rev 1.3 for periodic photography &mdash; a live shot every half hour, with one kept permanently
         each day around noon.
+      </p>
+
+      <p>
+        <strong>Bats:</strong> An SPH0641LU4H-1 PDM MEMS microphone under the garage eave, wired over Cat6
+        to the I2S pins of the Raspberry Pi 4 that runs this website. From 6pm to 7am, every ten minutes,
+        a shell script records six 20-second clips at 146,739 samples a second, runs them through
+        BatDetect2, keeps any clip with a burst of at least two confident calls, and draws its spectrogram
+        with sox. Everything lands in a plain text log, one line per bat.
+        <a href="https://github.com/jefffisher10/mound-bats">The whole listener is on GitHub.</a>
       </p>
 
       <p>
@@ -412,7 +576,7 @@
 
     </blockquote>
 
-    <p style="font-size: 0.85rem; color: #999;">2026-09-02</p>
+    <p style="font-size: 0.85rem; color: #999;">2026-10-20</p>
 
   </div>
 

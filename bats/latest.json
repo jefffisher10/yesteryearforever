@@ -1,0 +1,15 @@
+{
+ "heard": true,
+ "time": "2026-10-20 00:31:08",
+ "calls": 4,
+ "best": 0.63,
+ "low_khz": 31.5,
+ "high_khz": 41.7,
+ "guess": "big brown bat",
+ "detector": "Nyctalus leisleri",
+ "detector_ohio": "big brown or silver-haired bat",
+ "image": "/bats/spectrograms/2026-10-20_00-31-02.png",
+ "sound": "/bats/sounds/2026-10-20_00-31-02.mp3",
+ "total_passes": 58,
+ "total_nights": 13
+}
