@@ -1048,6 +1048,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <input type="checkbox" id="keepAwake" style="flex:0 0 auto;width:20px;height:20px;">
     </div>
     <div class="foot-row">
+      <span id="historyInfo">Run history: --</span>
+    </div>
+    <div class="foot-row">
       <span id="cacheInfo">Map cache: --</span>
       <div style="display:flex;gap:7px;">
         <button id="clearCacheBtn" type="button">Clear cache</button>
@@ -1274,9 +1277,60 @@ svg.leaflet-image-layer.leaflet-interactive path {
   // position anywhere. Off switches it off completely — nothing is queued or retried.
   const wxOn = () => { try{ return localStorage.getItem(WX_KEY) !== "0"; }catch(e){ return true; } };
 
-  const loadRuns = () => { try{ return JSON.parse(localStorage.getItem(RUNS_KEY)) || []; }catch(e){ return []; } };
+  /* ---- run history storage ----
+     In the app, history lives in a file in the app's private storage (RunStore), bounded
+     only by the phone's free space. It used to live here in localStorage, which caps out
+     around 5 million characters — about 36 hours of GPS-tracked running in total — and
+     when it filled, the save at the end of a run was refused. The website build still
+     uses localStorage; it's a preview, not where the history lives. */
+  // Checked directly rather than via NATIVE, which is declared further down.
+  const HAS_NATIVE_STORE = (function(){
+    try{ return !!(window.Android && window.Android.isNative && window.Android.isNative() &&
+                   typeof window.Android.saveRuns === "function"); }
+    catch(e){ return false; }
+  })();
+  let runsRaw = null;          // native history as last read or written: one bridge read per launch
+
+  function nativeRunsRaw(){
+    if(runsRaw !== null) return runsRaw;
+    let raw = "";
+    try{ raw = window.Android.loadRuns() || ""; }catch(e){}
+    let legacy = null;
+    try{ legacy = localStorage.getItem(RUNS_KEY); }catch(e){}
+
+    if(!raw && legacy){
+      // One-time move out of localStorage. The old copy is only removed once the new
+      // file reads back byte-for-byte, so a failure here can't lose anything.
+      let ok = false;
+      try{ ok = window.Android.saveRuns(legacy); }catch(e){}
+      let back = "";
+      if(ok){ try{ back = window.Android.loadRuns() || ""; }catch(e){} }
+      if(ok && back === legacy){ try{ localStorage.removeItem(RUNS_KEY); }catch(e){} }
+      raw = legacy;
+    } else if(raw && legacy){
+      // Migrated before but the old copy wasn't cleared. Drop it only if the file holds
+      // at least as many runs, so nothing that only exists in localStorage is discarded.
+      try{
+        if(JSON.parse(raw).length >= JSON.parse(legacy).length) localStorage.removeItem(RUNS_KEY);
+      }catch(e){}
+    }
+    runsRaw = raw || "[]";
+    return runsRaw;
+  }
+
+  const loadRuns = () => {
+    try{
+      const raw = HAS_NATIVE_STORE ? nativeRunsRaw() : localStorage.getItem(RUNS_KEY);
+      return JSON.parse(raw) || [];
+    }catch(e){ return []; }
+  };
   const saveRuns = r => {
-    try{ localStorage.setItem(RUNS_KEY, JSON.stringify(r)); return true; }
+    const raw = JSON.stringify(r);
+    if(HAS_NATIVE_STORE){
+      try{ if(window.Android.saveRuns(raw)){ runsRaw = raw; return true; } }catch(e){}
+      return false;
+    }
+    try{ localStorage.setItem(RUNS_KEY, raw); return true; }
     catch(e){ return false; }   // quota exceeded — caller tells the user rather than losing it silently
   };
   const loadUnit = () => { try{ return localStorage.getItem(UNIT_KEY) === "km" ? "km" : "mi"; }catch(e){ return "mi"; } };
@@ -1669,9 +1723,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   /** A run handed back by the service when tracking stops. */
+  /**
+   * Save a just-finished native run into history.
+   * Returns { rec } on success, { rec:null } when there was nothing worth keeping (a
+   * few metres, no track), and { rec:null, failed:true } when the save itself failed.
+   * The caller must only tell the native side the run is safe (runSaved) in the first
+   * two cases — on failure the journal is the run's only remaining copy.
+   */
   function saveNativeRun(run){
-    if(!run || !run.segments || !run.segments.length) return null;
-    if(!(run.distanceM > 10)) return null;
+    if(!run || !run.segments || !run.segments.length) return {rec: null};
+    if(!(run.distanceM > 10)) return {rec: null};
     const runs = loadRuns();
     const rec = {
       id: Date.now(),
@@ -1688,12 +1749,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
         }))
     };
     runs.unshift(rec);
-    if(!saveRuns(runs)){
-      alert("Couldn't save this run — the app's storage is full.\n\n" +
-            "Open Runs, export a few old ones as GPX, then delete them to make room.");
-      return null;
-    }
-    return rec;
+    if(!saveRuns(runs)) return {rec: null, failed: true};
+    return {rec};
   }
 
   /* ============================================================
@@ -1818,7 +1875,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
       let run = null;
       try{ run = JSON.parse(window.Android.stop()); }catch(e){}
       clearInterval(timer);
-      const saved = saveNativeRun(run);
+      const result = saveNativeRun(run);
+      const saved = result.rec;
+      if(!result.failed){
+        // In history (or genuinely not worth keeping) — only now may the journal go.
+        try{ window.Android.runSaved && window.Android.runSaved(); }catch(e){}
+      } else {
+        // The journal stays on disk and is offered back on the next launch. Say so, so
+        // nobody walks away thinking the run is gone — which is what the old alert did.
+        showNotice("<b>This run couldn't be added to history right now — but it isn't lost.</b> " +
+                   "Its backup copy is safe on the phone and will be restored automatically " +
+                   "the next time the app opens.", "savefail");
+      }
       state = "idle"; nativeElapsed = 0; totalM = 0;
       nativeGaps = 0; nativeGapMs = 0; nativeStale = false;
       setStatus("idle",""); showControls("idle");
@@ -1873,12 +1941,26 @@ svg.leaflet-image-layer.leaflet-interactive path {
   /* ============================================================
      Past runs
      ============================================================ */
+  /** "Run history: 47 runs · 4.6 MB · on this phone" — where it lives and how big it is. */
+  function renderHistoryInfo(n){
+    const el = document.getElementById("historyInfo");
+    if(!el) return;
+    let bytes = 0;
+    if(HAS_NATIVE_STORE){ try{ bytes = Number(window.Android.runsBytes()) || 0; }catch(e){} }
+    else { try{ bytes = (localStorage.getItem(RUNS_KEY) || "").length * 2; }catch(e){} }
+    const size = bytes >= 1048576 ? (bytes/1048576).toFixed(1) + " MB"
+               : Math.max(1, Math.round(bytes/1024)) + " KB";
+    el.textContent = "Run history: " + n + (n === 1 ? " run" : " runs") + " · " + size +
+                     (HAS_NATIVE_STORE ? " · stored on this phone" : " · in this browser");
+  }
+
   function renderRuns(){
     // Newest first by when the run happened, not when it was saved — a treadmill run
     // logged today for last Tuesday belongs under last Tuesday.
     const runs = loadRuns().slice().sort((a, b) => (b.startedAt || 0) - (a.startedAt || 0));
     panelList.innerHTML = "";
     panelEmpty.hidden = runs.length > 0;
+    renderHistoryInfo(runs.length);
     runs.forEach(run => {
       const hasTrack = !run.manual &&
         (run.segments || []).some(s => s && s.length > 1);
@@ -2666,27 +2748,49 @@ svg.leaflet-image-layer.leaflet-interactive path {
    * all that's left is to file it in history like any other run.
    */
   function checkRecovered(){
-    if(!NATIVE || !window.Android || !window.Android.recoveredRun) return;
-    let run = null;
-    try{ run = JSON.parse(window.Android.recoveredRun() || "null"); }catch(e){}
-    if(!run || !run.segments || !run.segments.length) return;
+    if(!NATIVE || !window.Android || !window.Android.recoveredRuns) return;
+    let found = [];
+    try{ found = JSON.parse(window.Android.recoveredRuns() || "[]"); }catch(e){}
+    if(!Array.isArray(found) || !found.length) return;
 
     const runs = loadRuns();
-    runs.unshift({
-      id: Date.now(),
-      startedAt: run.startedAt,
-      durationMs: run.durationMs,
-      distanceM: run.distanceM,
-      gaps: run.gaps || 0,
-      gapMs: run.gapMs || 0,
-      segments: run.segments
+    // Within a minute counts as the same run: older journals stamped the Start tap
+    // rather than the first GPS fix.
+    const already = t => runs.some(r => !r.manual && Math.abs((r.startedAt || 0) - t) < 60000);
+    const restored = [], dupes = [];
+    found.forEach((run, i) => {
+      if(!run || !run.segments || !run.segments.length) return;
+      // A journal whose run already made it into history (saved, but the app died
+      // before it could say so) just needs deleting, not a second copy.
+      if(already(run.startedAt)){ dupes.push(run.journal); return; }
+      runs.unshift({
+        id: Date.now() + i,
+        startedAt: run.startedAt,
+        durationMs: run.durationMs,
+        distanceM: run.distanceM,
+        gaps: run.gaps || 0,
+        gapMs: run.gapMs || 0,
+        elevGainM: run.elevGainM || 0,
+        elevLossM: run.elevLossM || 0,
+        recovered: true,
+        segments: run.segments
+      });
+      restored.push(run);
     });
-    if(!saveRuns(runs)) return;          // storage full — leave the journal alone to retry
 
-    try{ window.Android.clearRecovered(); }catch(e){}
-    showNotice("<b>Recovered an interrupted run.</b> " + fmtDate(run.startedAt) + " · " +
-               fmtDist(run.distanceM) + " " + unit + " — saved to Runs. Its duration is " +
-               "measured from the recorded points, so it may run slightly short.", "recovered");
+    // Release journals only after history is confirmed on disk.
+    if(restored.length && !saveRuns(runs)) return;   // keep every journal for next launch
+    restored.concat(dupes.map(j => ({journal: j}))).forEach(r => {
+      try{ if(r.journal) window.Android.discardRecovered(r.journal); }catch(e){}
+    });
+    if(!restored.length) return;
+
+    const list = restored.map(r => fmtDate(r.startedAt) + " · " + fmtDist(r.distanceM) + " " + unit)
+                         .join("; ");
+    showNotice("<b>Restored " + (restored.length === 1 ? "a run" : restored.length + " runs") +
+               " that hadn't been saved.</b> " + list + " — now in Runs. Duration is measured " +
+               "from the recorded points, so it may run slightly long if you'd paused.",
+               "recovered");
   }
 
   applySource();
