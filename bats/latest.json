@@ -1,15 +1,15 @@
 {
  "heard": true,
- "time": "2026-11-20 19:31:47",
- "calls": 54,
- "best": 0.71,
- "low_khz": 16.9,
- "high_khz": 47.6,
- "guess": "hoary bat?",
- "detector": "Eptesicus serotinus",
- "detector_ohio": "big brown bat",
- "image": "/bats/spectrograms/2026-11-20_19-31-43.png",
- "sound": "/bats/sounds/2026-11-20_19-31-43.mp3",
- "total_passes": 98,
- "total_nights": 24
+ "time": "2026-11-21 19:01:05",
+ "calls": 32,
+ "best": 0.68,
+ "low_khz": 23.8,
+ "high_khz": 35.5,
+ "guess": "big brown bat",
+ "detector": "Nyctalus leisleri",
+ "detector_ohio": "big brown or silver-haired bat",
+ "image": "/bats/spectrograms/2026-11-21_19-01-02.png",
+ "sound": "/bats/sounds/2026-11-21_19-01-02.mp3",
+ "total_passes": 100,
+ "total_nights": 25
 }
