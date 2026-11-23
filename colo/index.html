@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>COLO Market &amp; Oyster Bar | Fresh Seafood in Downtown Columbus</title>
+  <meta name="description" content="COLO Market &amp; Oyster Bar (Coastal Local Seafood) at 59 Spruce Street, downtown Columbus. Fresh fish and shellfish to take home, raw oysters at the bar, lobster rolls and fish &amp; chips.">
+  <meta property="og:title" content="COLO Market &amp; Oyster Bar">
+  <meta property="og:description" content="Fresh seafood, raw oysters and lobster rolls in downtown Columbus, Ohio.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://coloseafood.com/img/share.jpg">
+  <meta name="theme-color" content="#1b365d">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Helps Google show the right address/hours/phone in search results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SeafoodRestaurant",
+    "name": "COLO Market & Oyster Bar",
+    "alternateName": "Coastal Local Seafood",
+    "url": "https://coloseafood.com/",
+    "logo": "https://coloseafood.com/img/colo-logo.svg",
+    "image": "https://coloseafood.com/img/hero-oysters.jpg",
+    "telephone": "+1-614-929-5701",
+    "email": "coastallocalseafood@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "59 Spruce Street",
+      "addressLocality": "Columbus",
+      "addressRegion": "OH",
+      "postalCode": "43215",
+      "addressCountry": "US"
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "19:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday"], "opens": "10:00", "closes": "17:00" }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/403795886152032",
+      "https://www.instagram.com/coastallocalseafood"
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --navy: #1b365d;      /* logo navy */
+      --navy-deep: #12243f;
+      --red: #d22630;       /* logo red */
+      --sand: #f5f1ea;
+      --shell: #e7dfd2;
+      --ink: #1a2433;
+      --muted: #5d6878;
+      --radius: 10px;
+      --max: 1140px;
+      --head: "Barlow Condensed", "Arial Narrow", sans-serif;
+      --body: "Barlow", system-ui, -apple-system, sans-serif;
+      /* Fish-scale tile, like the bar front */
+      --scales: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cg fill='%232a5678' stroke='%23dfe8ef' stroke-width='1.4'%3E%3Ccircle cx='0' cy='0' r='19.3'/%3E%3Ccircle cx='40' cy='0' r='19.3'/%3E%3Ccircle cx='20' cy='20' r='19.3'/%3E%3Ccircle cx='0' cy='40' r='19.3'/%3E%3Ccircle cx='40' cy='40' r='19.3'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--body); color: var(--ink);
+      background: var(--sand); line-height: 1.65; font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    .eyebrow {
+      font-family: var(--head); text-transform: uppercase; letter-spacing: .2em;
+      font-size: .95rem; font-weight: 600; color: var(--red); margin: 0 0 10px;
+    }
+    h2 {
+      font-family: var(--head); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(2.3rem, 5vw, 3.4rem); line-height: 1; letter-spacing: .01em;
+      margin: 0 0 22px; color: var(--navy);
+    }
+    section { padding: 100px 0; }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: absolute; inset: 0 0 auto 0; z-index: 10;
+      display: flex; justify-content: flex-end; align-items: center;
+      padding: 22px 30px; color: #fff;
+    }
+    .topbar nav a {
+      margin-left: 26px; font-family: var(--head); text-transform: uppercase;
+      letter-spacing: .14em; font-weight: 600; font-size: 1rem; text-decoration: none; opacity: .9;
+    }
+    .topbar nav a:hover { opacity: 1; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; min-height: 92vh; padding: 120px 24px 150px;
+      display: grid; place-items: center; text-align: center; color: #fff;
+      background: var(--navy-deep); overflow: hidden;
+    }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(18,36,63,.82) 0%, rgba(18,36,63,.62) 100%),
+        linear-gradient(180deg, rgba(18,36,63,.35) 0%, rgba(18,36,63,.0) 40%, rgba(18,36,63,.6) 100%);
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 820px; }
+    .hero .logo { width: min(620px, 86vw); margin: 0 auto; filter: drop-shadow(0 4px 24px rgba(0,0,0,.35)); }
+    .hero .lede {
+      font-size: clamp(1.1rem, 2.4vw, 1.35rem); max-width: 600px; margin: 34px auto 36px;
+      text-shadow: 0 1px 12px rgba(0,0,0,.4);
+    }
+    .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 14px 30px; border-radius: 4px;
+      font-family: var(--head); text-transform: uppercase; letter-spacing: .14em;
+      font-weight: 600; font-size: 1.05rem; text-decoration: none;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--red); color: #fff; }
+    .btn-primary:hover { background: #b81f28; }
+    .btn-ghost { border: 2px solid rgba(255,255,255,.8); color: #fff; }
+    .btn-ghost:hover { background: rgba(255,255,255,.12); }
+    .scale-band { height: 34px; background: var(--scales) 0 0 / 40px 40px; background-color: #2a5678; }
+    .hero .scale-band { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
+
+    /* ---------- About ---------- */
+    .about-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 70px; align-items: center; }
+    .about p { color: #2d3747; margin: 0 0 18px; }
+    .about .big { font-size: 1.22rem; color: var(--navy); font-weight: 500; }
+    .photo-stack { position: relative; padding: 0 0 28px 28px; }
+    .photo-stack::before {
+      content: ""; position: absolute; left: 0; bottom: 0; width: 82%; height: 82%;
+      background: var(--scales) 0 0 / 40px 40px; border-radius: var(--radius); opacity: .95;
+    }
+    .photo-stack img {
+      position: relative; border-radius: var(--radius); width: 100%;
+      aspect-ratio: 3/2; object-fit: cover; object-position: 50% 30%;
+      box-shadow: 0 30px 60px -28px rgba(18,36,63,.55);
+    }
+
+    /* ---------- Market / Oyster Bar ---------- */
+    .duo { background: #fff; }
+    .duo-head { text-align: center; max-width: 640px; margin: 0 auto 50px; }
+    .duo-head p:last-child { color: var(--muted); margin: 0; }
+    .duo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .card {
+      position: relative; border-radius: var(--radius); overflow: hidden;
+      min-height: 560px; display: flex; align-items: flex-end; color: #fff;
+      background: var(--navy);
+    }
+    .card img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .card:hover img { transform: scale(1.04); }
+    .card::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(18,36,63,0) 35%, rgba(18,36,63,.92) 100%);
+    }
+    .card-body { position: relative; z-index: 2; padding: 34px; }
+    .card h3 {
+      font-family: var(--head); font-weight: 700; text-transform: uppercase;
+      font-size: 2.3rem; line-height: 1; margin: 0 0 10px; letter-spacing: .02em;
+    }
+    .card h3 span { display: block; width: 46px; height: 4px; background: var(--red); margin-bottom: 14px; }
+    .card p { margin: 0; max-width: 420px; opacity: .95; }
+
+    /* ---------- Kitchen ---------- */
+    .kitchen-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 40px; }
+    .kitchen-head p { max-width: 440px; color: var(--muted); margin: 0; }
+    .kitchen-head h2 { margin: 0; }
+    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .gallery figure { margin: 0; border-radius: var(--radius); overflow: hidden; position: relative; aspect-ratio: 4/5; background: var(--navy); }
+    .gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .gallery figure:hover img { transform: scale(1.05); }
+    .gallery figcaption {
+      position: absolute; left: 14px; bottom: 14px;
+      background: var(--sand); color: var(--navy);
+      font-family: var(--head); text-transform: uppercase; letter-spacing: .14em;
+      font-weight: 600; font-size: .95rem; padding: 6px 12px; border-radius: 3px;
+    }
+
+    /* ---------- Meet Ian ---------- */
+    .owner { background: #fff; }
+    .owner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+    .owner-photo { position: relative; }
+    .owner-photo img {
+      border-radius: var(--radius); width: 100%; aspect-ratio: 4/3; object-fit: cover;
+      box-shadow: 0 30px 60px -28px rgba(18,36,63,.55);
+    }
+    .owner-photo::after {
+      content: ""; position: absolute; right: -16px; top: -16px; width: 120px; height: 120px;
+      border-top: 5px solid var(--red); border-right: 5px solid var(--red); border-radius: 0 var(--radius) 0 0;
+    }
+    .owner p { color: #2d3747; margin: 0 0 18px; }
+    .owner .sig { font-family: var(--head); text-transform: uppercase; letter-spacing: .16em; font-weight: 600; color: var(--navy); margin-top: 26px; }
+
+    /* ---------- Find us band ---------- */
+    .findus {
+      position: relative; min-height: 460px; display: grid; place-items: center;
+      text-align: center; color: #fff; padding: 80px 24px; overflow: hidden;
+    }
+    .findus img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: blur(3px); transform: scale(1.06); }
+    .findus::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(18,36,63,.74); }
+    .findus-inner { position: relative; z-index: 2; max-width: 640px; }
+    .findus h2 { color: #fff; }
+    .findus p { font-size: 1.15rem; margin: 0 0 28px; text-shadow: 0 1px 10px rgba(0,0,0,.4); }
+
+    /* ---------- Visit ---------- */
+    .visit { background: var(--navy); color: #dbe3ec; }
+    .visit h2 { color: #fff; }
+    .visit-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: stretch; }
+    .info-block { margin-bottom: 30px; }
+    .info-block h3 {
+      font-family: var(--head); text-transform: uppercase; letter-spacing: .16em;
+      font-weight: 600; font-size: 1.05rem; color: #fff; margin: 0 0 8px;
+    }
+    .info-block p { margin: 0; color: #dbe3ec; }
+    .info-block a { color: #fff; text-decoration: none; border-bottom: 2px solid var(--red); }
+    .info-block a:hover { color: #ffd6d8; }
+    .note { font-size: .92rem; color: #a9b8c9 !important; margin-top: 4px !important; }
+    .hours { width: 100%; max-width: 360px; border-collapse: collapse; }
+    .hours td { padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,.18); }
+    .hours td:last-child { text-align: right; color: #fff; }
+    .hours tr.today td { color: #ff8a90; font-weight: 600; }
+    .map { border-radius: var(--radius); overflow: hidden; min-height: 400px; box-shadow: 0 24px 50px -20px rgba(0,0,0,.5); }
+    .map iframe { width: 100%; height: 100%; min-height: 400px; border: 0; display: block; }
+
+    /* ---------- Footer ---------- */
+    footer { background: var(--navy-deep); color: #9fb0c3; padding: 46px 0; font-size: .95rem; }
+    .foot { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .foot img { width: 190px; }
+    .social { display: flex; gap: 12px; }
+    .social a {
+      width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+      background: rgba(255,255,255,.08); color: #fff; transition: background .15s;
+    }
+    .social a:hover { background: var(--red); }
+    .social svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* ---------- Mobile ---------- */
+    @media (max-width: 860px) {
+      body { font-size: 16px; }
+      .topbar nav a { margin-left: 16px; font-size: .9rem; }
+      .topbar nav .hide-sm { display: none; }
+      section { padding: 72px 0; }
+      .about-grid, .duo-grid, .visit-grid, .owner-grid { grid-template-columns: 1fr; gap: 40px; }
+      .photo-stack { order: -1; }
+      .owner-photo::after { right: -8px; top: -8px; width: 70px; height: 70px; }
+      .card { min-height: 440px; }
+      .kitchen-head { flex-direction: column; align-items: start; gap: 14px; }
+      .gallery { grid-template-columns: 1fr 1fr; }
+      .gallery figure:first-child { grid-column: 1 / -1; aspect-ratio: 4/3; }
+      .foot { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <nav>
+      <a href="#about" class="hide-sm">About</a>
+      <a href="#kitchen" class="hide-sm">Food</a>
+      <a href="#visit">Visit</a>
+      <a href="tel:+16149295701">Call</a>
+    </nav>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <img class="hero-bg" src="img/hero-oysters.jpg" alt="" fetchpriority="high">
+    <div class="hero-inner">
+      <img class="logo" src="img/colo-logo-white.svg" alt="COLO Market &amp; Oyster Bar">
+      <p class="lede">Fresh fish, raw oysters, and lobster rolls, right in the heart of downtown Columbus.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#visit">Come See Us</a>
+        <a class="btn btn-ghost" href="tel:+16149295701">(614) 929-5701</a>
+      </div>
+    </div>
+    <div class="scale-band" aria-hidden="true"></div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="about">
+    <div class="wrap about-grid">
+      <div>
+        <p class="eyebrow">Coastal Local Seafood</p>
+        <h2>The coast, brought to Columbus.</h2>
+        <p class="big">
+          Ohio may be a long way from the ocean, but you'd never know it at our counter.
+        </p>
+        <p>
+          COLO started with a simple idea: folks in Columbus deserve seafood as fresh as
+          what you'd find on the docks. We source carefully from people we trust, favor
+          sustainable and responsible practices, and keep the case full of the good stuff.
+        </p>
+        <p>
+          Pick something up for dinner, or pull up a stool and slurp a few on the half shell.
+          Not sure what to cook? Just ask. That's half the fun.
+        </p>
+      </div>
+      <div class="photo-stack">
+        <img src="img/bar-crew.jpg" alt="Guests chatting with a smiling shucker at the COLO oyster bar" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MARKET + OYSTER BAR ================= -->
+  <section class="duo">
+    <div class="wrap">
+      <div class="duo-head">
+        <p class="eyebrow">Two ways to COLO</p>
+        <h2>Take it home, or stay a while.</h2>
+        <p>Shop the market case for tonight's dinner, or grab a seat at the bar and let us do the shucking.</p>
+      </div>
+      <div class="duo-grid">
+        <div class="card">
+          <img src="img/market-case.jpg" alt="Market case with scallops, PEI mussels and clams on ice" loading="lazy">
+          <div class="card-body">
+            <h3><span></span>The Market</h3>
+            <p>Fresh fish, sea scallops, mussels, clams, shrimp and more, ready to take home. We're happy to help you pick and tell you how to cook it.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="img/oysters-lemon.jpg" alt="Freshly shucked oysters with lemon wedges" loading="lazy" style="object-position:40% 50%">
+          <div class="card-body">
+            <h3><span></span>The Oyster Bar</h3>
+            <p>A rotating lineup of East and West Coast oysters, shucked to order. Pull up a stool and ask what's tasting good today.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KITCHEN ================= -->
+  <section id="kitchen" class="kitchen">
+    <div class="wrap">
+      <div class="kitchen-head">
+        <div>
+          <p class="eyebrow">From the kitchen</p>
+          <h2>Lobster rolls. Po' boys.</h2>
+        </div>
+        <p>Hungry now? The kitchen turns out coastal classics made with the same seafood we sell in the case.</p>
+      </div>
+      <div class="gallery">
+        <figure>
+          <img src="img/lobster-rolls.jpg" alt="Two lobster rolls on COLO branded paper with a lemon wedge" loading="lazy">
+          <figcaption>Lobster Rolls</figcaption>
+        </figure>
+        <figure>
+          <img src="img/shrimp-po-boy.jpg" alt="Shrimp po' boy held up in front of the Seafood neon sign" loading="lazy">
+          <figcaption>Shrimp Po' Boy</figcaption>
+        </figure>
+        <figure>
+          <img src="img/blackened-sandwich.jpg" alt="Blackened fish sandwich with fries and lemon" loading="lazy" style="object-position:60% 50%">
+          <figcaption>Blackened Fish</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MEET IAN ================= -->
+  <section class="owner">
+    <div class="wrap owner-grid">
+      <div class="owner-photo">
+        <img src="img/ian.jpg" alt="Ian, owner of COLO, holding a whole fresh salmon" loading="lazy">
+      </div>
+      <div>
+        <p class="eyebrow">Meet the owner</p>
+        <h2>Hi, I'm Ian.</h2>
+        <p>
+          I started COLO because I love great seafood, and I wanted Columbus to have a place
+          where you could get it as fresh as you would on the coast, from people who actually
+          know where it came from.
+        </p>
+        <p>
+          Most days you'll find me behind the counter, unloading the latest delivery or talking
+          someone into trying a new oyster. Come say hi. I'll tell you what's good today.
+        </p>
+        <p class="sig">— Ian, Owner</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FIND US ================= -->
+  <section class="findus">
+    <img src="img/hero-stall.jpg" alt="The COLO stall inside the North Market, with Lobster Rolls and Fish &amp; Chips signage and red bar stools" loading="lazy">
+    <div class="findus-inner">
+      <p class="eyebrow" style="color:#ff8a90">Look for the neon</p>
+      <h2>Find us inside the North Market.</h2>
+      <p>Look for the Raw Oysters neon, the red stools and the fish-scale tile. Grab a seat; we'll take it from there.</p>
+      <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=59+Spruce+St+Columbus+OH+43215" target="_blank" rel="noopener">Get Directions</a>
+    </div>
+  </section>
+
+  <div class="scale-band" aria-hidden="true"></div>
+
+  <!-- ================= VISIT ================= -->
+  <section id="visit" class="visit">
+    <div class="wrap">
+      <p class="eyebrow" style="color:#ff8a90">Visit Us</p>
+      <h2>Come hungry. Leave happy.</h2>
+      <div class="visit-grid">
+        <div>
+          <div class="info-block">
+            <h3>Location</h3>
+            <p>59 Spruce Street<br>Columbus, OH 43215</p>
+            <p class="note">Inside the North Market, downtown</p>
+            <p style="margin-top:12px"><a href="https://www.google.com/maps/dir/?api=1&destination=59+Spruce+St+Columbus+OH+43215" target="_blank" rel="noopener">Get directions →</a></p>
+          </div>
+
+          <div class="info-block">
+            <h3>Hours</h3>
+            <table class="hours" id="hours">
+              <tr data-day="2"><td>Tuesday</td><td>10am – 7pm</td></tr>
+              <tr data-day="3"><td>Wednesday</td><td>10am – 7pm</td></tr>
+              <tr data-day="4"><td>Thursday</td><td>10am – 7pm</td></tr>
+              <tr data-day="5"><td>Friday</td><td>10am – 7pm</td></tr>
+              <tr data-day="6"><td>Saturday</td><td>10am – 7pm</td></tr>
+              <tr data-day="0"><td>Sunday</td><td>10am – 5pm</td></tr>
+              <tr data-day="1"><td>Monday</td><td>10am – 5pm</td></tr>
+            </table>
+          </div>
+
+          <div class="info-block">
+            <h3>Get in Touch</h3>
+            <p><a href="tel:+16149295701">(614) 929-5701</a></p>
+            <p style="margin-top:8px"><a href="mailto:coastallocalseafood@gmail.com">coastallocalseafood@gmail.com</a></p>
+          </div>
+        </div>
+
+        <div class="map">
+          <iframe
+            title="Map to COLO at 59 Spruce Street, Columbus OH"
+            src="https://www.google.com/maps?q=59+Spruce+St,+Columbus,+OH+43215&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="wrap foot">
+      <img src="img/colo-logo-white.svg" alt="COLO Market &amp; Oyster Bar">
+      <div class="social">
+        <a href="https://www.instagram.com/coastallocalseafood" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4C15.5 4 15.1 4 12 4zm0 3.1a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 8a3.1 3.1 0 100-6.2 3.1 3.1 0 000 6.2zm6.2-8.2a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/403795886152032" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21h3z"/></svg>
+        </a>
+      </div>
+      <div>© <span id="yr">2026</span> COLO Market &amp; Oyster Bar</div>
+    </div>
+  </footer>
+
+  <script>
+    // Highlight today's hours + keep the copyright year current
+    (function () {
+      var d = new Date().getDay();
+      var row = document.querySelector('#hours tr[data-day="' + d + '"]');
+      if (row) row.classList.add('today');
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>

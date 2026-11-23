@@ -1,15 +1,15 @@
 {
  "heard": true,
- "time": "2026-11-21 19:01:05",
- "calls": 32,
- "best": 0.68,
+ "time": "2026-11-22 19:41:30",
+ "calls": 10,
+ "best": 0.65,
  "low_khz": 23.8,
- "high_khz": 35.5,
+ "high_khz": 30.1,
  "guess": "big brown bat",
  "detector": "Nyctalus leisleri",
  "detector_ohio": "big brown or silver-haired bat",
- "image": "/bats/spectrograms/2026-11-21_19-01-02.png",
- "sound": "/bats/sounds/2026-11-21_19-01-02.mp3",
- "total_passes": 100,
- "total_nights": 25
+ "image": "/bats/spectrograms/2026-11-22_19-41-22.png",
+ "sound": "/bats/sounds/2026-11-22_19-41-22.mp3",
+ "total_passes": 101,
+ "total_nights": 26
 }
