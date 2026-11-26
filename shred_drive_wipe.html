@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shred Drive Wipe</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- category: making -->
+  <!-- desc: bash, netbooting, and curiosity -->
+
+  <nav id="topnav">
+    <div id="topnav-inner">
+      <a href="ABOUT.html">| about |</a>
+      <span class="nav-sep">·</span>
+      <a href="making.html">| making |</a>
+      <span class="nav-sep">·</span>
+      <a href="writing.html">| writing |</a>
+      <span class="nav-sep">·</span>
+      <a href="sensing.html">| sensing |</a>
+      <span class="nav-sep">·</span>
+      <button id="toggle-dark-mode">| dark mode |</button>
+      <span class="nav-sep">·</span>
+      <button onclick="goRandom()">| random |</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1><a href="index.html">| yesteryear forever |</a></h1>
+
+    <blockquote>
+
+      <p><strong>Shred Drive Wipe</strong></p>
+
+      <!-- ============================================================
+           PLACEHOLDER NOTES
+           Every image/code placeholder below is commented out, so the
+           page renders cleanly before you fill anything in. To use one:
+           delete the opening and closing comment markers around it,
+           swap in your filename or code, and you're set.
+           Images: update.py builds the _thumb versions automatically.
+           ============================================================ -->
+
+      <p>One of the projects I'm most proud of, ironically, wasn't developed intentionally. What started out as a simple serial number logging "database" (let's be honest: a writable text file) evolved into a complete, enterprise-scale hard drive sanitization solution using custom-built hardware and software. Entire (successful) companies have been built around creating and selling similar solutions, and I created one from scratch, almost accidentally. This isn't to boast, but rather to show that small, incremental steps, even without an intentional direction, can lead to some pretty substantial outcomes.</p>
+
+      <p>At the time, I worked for a growing electronics company that serviced a vast array of products requiring many different technologies. I was an Electronics Service Engineer, and after the salespeople made their deals, I was tasked with figuring out how to implement said deals — everything from establishing test criteria, determining software environments, building necessary hardware, writing procedures, creating workstations, and training the technicians. If we didn't have it, I had to make it. And as the old saying goes, "necessity is the mother of invention."</p>
+
+      <p>The whole thing actually started as an amalgamation of a couple of other projects I was working on that eventually evolved and merged into the final product. It all began with a simple data logging system and a drive cloning utility.</p>
+
+      <h3>The Data Logger</h3>
+
+      <p>The data logging system involved capturing serial numbers and timestamps of devices that had recently been configured. Instead of using a writable (read: OVER-writable and/or erasable) spreadsheet, I decided to make a dummy-proof HTML page that displayed only the exact fields necessary, in the order they needed to be completed. You just can't trust users who may be tired, angry, or just uninterested or distracted.</p>
+
+      <p>This was back in the Windows XP days, so setting up a web server was actually pretty easy: get any old laptop, navigate to IIS (Internet Information Services), enable a few things, set some parameters, throw a basic HTML page in there, and voilà! Armed with a barcode scanner and a web browser, any technician could log the data they needed, which was automatically timestamped and saved to a basic text file on the laptop server. The technical details needed to build this were easily found with a quick Google search, even then.</p>
+
+      <!-- PLACEHOLDER — IMAGE: screenshot (or recreation) of the data logging HTML page
+      <figure>
+        <img src="images/shred_logger_page_thumb.jpg"
+             data-full="images/shred_logger_page.jpg"
+             alt="The dummy-proof serial number logging page"
+             class="thumbnail align-right"
+             loading="lazy">
+        <figcaption>The dummy-proof logger. Scan, enter, done.</figcaption>
+      </figure>
+      -->
+
+      <p>Text files are small and easily searched and managed, and I eventually set up a cron job (or more accurately, a Task Scheduler definition on Windows) to automatically back up files and directories at the end of the day for redundancy.</p>
+
+      <h3>The Cloning Machine</h3>
+
+      <p>Around the same time as this simple data logger project, I inherited another project that was set up to clone hard drives. I remember the project used pricey, convoluted, third-party software that no one liked for a multitude of reasons. I was new to Linux then and was slowly uncovering its power, including very basic but useful stuff like the <code>dd</code> command. I figured this was as good a time as any to implement the new things I'd learned and make my own cloning solution.</p>
+
+      <p>I set up a computer running Linux with a couple of exposed hard drive cables for easy access (in an ESD-safe environment!). The computer booted to a very simple command line interface (CLI) with no distracting and unnecessary graphical user interface (GUI). It was a relatively simple procedure to hook up some hard drives and type in a few Linux commands to clone the drives. But I quickly found out the commands were not exactly efficient or user-friendly; one mistype could instantly erase the cloning computer's own hard drive! Plus, giving users access to the unguarded CLI and the entire operating system is never a good idea. There had to be a safer way.</p>
+
+      <!-- PLACEHOLDER — IMAGE: the cloning computer with the exposed drive cables
+      <figure>
+        <img src="images/shred_cloning_rig_thumb.jpg"
+             data-full="images/shred_cloning_rig.jpg"
+             alt="The Linux cloning computer with exposed hard drive cables"
+             class="thumbnail align-left"
+             loading="lazy">
+        <figcaption>The original cloning rig.</figcaption>
+      </figure>
+      -->
+
+      <p>Permanent Bash aliases were a simple solution to the "esoteric commands of the uninitiated." (Or the fat-fingered.) Heck, anyone would prefer a one-word command over a clunky string of seemingly arbitrary characters. That worked for about a minute, but I soon realized that command prompts themselves are intimidating to practically all users these days.</p>
+
+      <!-- PLACEHOLDER — CODE: an example alias, e.g. the clunky dd command vs. the one-word alias
+      <pre><code>
+paste alias example here
+      </code></pre>
+      -->
+
+      <p>So, instead of booting directly to the "scary" CLI (with access to the filesystem), I wrote a very simple Bash script that would run automatically on boot-up. The script would systematically prompt the user with a few very simple choices instead of making them type a bunch of commands themselves. This further limited their ability to do something wrong, deliberately or by mistake. It was also much easier and more efficient.</p>
+
+      <!-- PLACEHOLDER — CODE: a few lines of that first simple boot-up prompt script
+      <pre><code>
+paste early prompt script here
+      </code></pre>
+      -->
+
+      <p>Since this was a 1:1 cloning operation, I was trusting Linux to faithfully assign the same names to the drives once they were connected. It worked well enough since the boot drive didn't change, and the source and target drives were always connected to the same ports. Of course there were hiccups, but we managed.</p>
+
+      <p>The project now had a computer that would boot, automatically prompt the user to verify the connected drives, then start the cloning operation. The user would simply have to wait for a message confirming it had finished; no status or estimated time of completion — not even a pinwheel! Still very rudimentary, but it got the job done.</p>
+
+      <h3>From Cloning to Wiping</h3>
+
+      <p>By this time, a third project fell into my lap that erased hard drives instead of cloning them, but the software license was about to expire, so naturally we were looking for possible (cheaper) alternatives. I knew the <code>dd</code> command could also be used to overwrite data in addition to copying it. The solution could be as simple as changing a couple of lines of my current cloning script to write zeros over the whole darn drive instead of copying actual data. (Technically, certain drive sanitization standards require additional criteria, but we'll get to that.)</p>
+
+      <p>Since erasing drives is fundamentally riskier than copying them, I decided we needed a more robust and safer system. I played around with bootable USB thumb drives since Linux treats them differently than disk drives. Plus, they're easy to replace if needed. But it still wasn't as elegant as I wanted. Ideally, the system wouldn't even have a bootable drive...</p>
+
+      <h3>Enter: Netbooting!</h3>
+
+      <p>This is when a whole new world opened up to me. Enter: netbooting! I could netboot — load the OS over a network from another computer — and have the OS live temporarily in RAM, and if something bad happened, no problem! Just reboot. There's no risk of accidentally erasing the OS hard drive since there isn't one! PXE (Preboot Execution Environment) is a glorious protocol that standardized netbooting. Yes, there were things to configure and parameters to set, but nothing crazy.</p>
+
+      <p>I only had to enable PXE in the BIOS boot options of the computer erasing the drives. But the PXE server itself required a DHCP server to communicate over a network, a TFTP server to send files, and an operating system configured specifically for netbooting.</p>
+
+      <p>(Fun aside: I later realized that in addition to sending the operating system, PXE would send a boot splash screen that would be displayed while the OS was loading. I took advantage and created my own custom splash screen, which made everything feel even more bespoke and legitimate.)</p>
+
+      <!-- PLACEHOLDER — IMAGE: your custom PXE splash screen (from your draft: splash.png)
+           Centered (no align class) so it gets the spotlight.
+      <figure>
+        <img src="images/splash_thumb.png"
+             data-full="images/splash.png"
+             alt="Custom PXE boot splash screen"
+             class="thumbnail"
+             loading="lazy">
+        <figcaption>The custom splash screen. Bespoke and legitimate.</figcaption>
+      </figure>
+      -->
+
+      <p>Again, I used a regular laptop for both the DHCP and TFTP server. But the special operating system itself, well...</p>
+
+      <h3>Finnix</h3>
+
+      <p>Here's where I confess my undying love for Finnix. I stumbled upon this flavor of Linux while making bootable USB drives; Finnix's shtick is that it can run off a USB flash drive, a bootable CD, or a hard drive, or it can be network booted. It was a perfect match for all the hurdles I faced. To this day, Finnix remains my favorite Linux distro.</p>
+
+      <p>(Side note: I started with Tiny Core and the like, but quickly found it was just too minimal and stripped down; it took way too much work just to get it going.)</p>
+
+      <p>Unfortunately, netbooting and having the OS live temporarily in RAM was a double-edged sword. On one hand, it's great: once booted, there's no risk of something getting messed up, and I could load my OS with all the programs and scripts I needed. But on the other hand, it would all be deleted once the machine was turned off! I needed to make those configurations and scripts permanent.</p>
+
+      <p>Turns out, not only was Finnix versatile and highly customizable, it could also be "mastered," meaning it could be configured with programs, aliases, customized settings, etc., and saved as a complete package in that exact state. Basically, I could make my own bespoke operating system! This, to me, was where the true magic of Finnix shone. Finnix made it incredibly easy to implement, and the Finnix website had tons of step-by-step guides.</p>
+
+      <!-- PLACEHOLDER — CODE: contents of PXE_Finnix_INFO.txt (from your draft)
+           If it's long, you could link to it instead:
+           <p><a href="PXE_Finnix_INFO.txt">| PXE + Finnix setup notes |</a></p>
+      <pre><code>
+paste PXE_Finnix_INFO.txt here
+      </code></pre>
+      -->
+
+      <p>Now, armed with a PXE server, data logging experience, automatic backup capabilities, and a customized OS, I was ready to take over the world! Or, erase some hard drives, anyway...</p>
+
+      <p>I had a single laptop acting as a PXE server that would send the operating system to six different computers, but none of these computers had keyboards or monitors. Instead, I hooked them all up to a KVM (keyboard, video, mouse) switch so the users could easily switch between computers from the same station. Each computer could have up to six drives connected, so, theoretically, a single person could easily erase 36 drives from a single interface. Pretty cool!</p>
+
+      <!-- PLACEHOLDER — IMAGES: the full wiping station (six computers + KVM)
+           Side-by-side pair; add a third/fourth and switch to class="gallery" if you have more.
+      <div class="side-by-side">
+        <img src="images/shred_station_thumb.jpg" data-full="images/shred_station.jpg" alt="The six-computer wiping station" class="thumbnail" loading="lazy">
+        <img src="images/shred_kvm_thumb.jpg" data-full="images/shred_kvm.jpg" alt="KVM switch and single operator station" class="thumbnail" loading="lazy">
+      </div>
+      -->
+
+      <h3>The Script</h3>
+
+      <p>I've been burying the lede a bit, because here's where things really get interesting, for a non-programmer like me anyway...</p>
+
+      <p>The critical part that connects all of the hardware, operating system, and utilities together is the custom Bash script I wrote — from scratch. This "software" could have (maybe should have?) been written in something like C++ and compiled into an executable. But like I said, this entire thing started out as a quick way to easily execute a few commands. I just kept adding, and adding, and adding, until it grew to more than 650 lines!</p>
+
+      <p>(Although, I personally love scripts over compiled programs since they're very easy to troubleshoot and edit on the fly. If a bug was found, the code could be quickly changed on demand using any text editor.)</p>
+
+      <p>Originally, the script would simply list all connected drives and prompt the user to execute the wiping command. But the project's scope grew, adding power-on-hour criteria that would treat some drives differently; some drives would be too old to wipe and reuse. I color-coded them so the users would know which were which at a glance, and added the option of wiping all drives or letting the user choose some and skip others.</p>
+
+      <!-- PLACEHOLDER — IMAGE: screenshot of the color-coded drive list / selection menu
+      <figure>
+        <img src="images/shred_drive_menu_thumb.png"
+             data-full="images/shred_drive_menu.png"
+             alt="Color-coded drive list showing power-on hours"
+             class="thumbnail"
+             loading="lazy">
+        <figcaption>Color-coded at a glance.</figcaption>
+      </figure>
+      -->
+
+      <p>This was not a trivial thing for a non-programmer like me, by the way. In the code, each drive was assigned to a variable — labeled, essentially — and all the different actions the code performed would use that label, including gathering and displaying drive data, color-coding attributes, erasing the drive itself, and saving log files appropriately, among many other things. While Linux and Bash are crazy-powerful, they also come with a decent learning curve. The possibilities were there as long as you were willing to put in the work.</p>
+
+      <!-- PLACEHOLDER — CODE: the drive-variable assignment / per-drive loop
+      <pre><code>
+paste drive variable / loop snippet here
+      </code></pre>
+      -->
+
+      <p>Another great thing about Linux is that it's open source. It's free. You can do whatever you like with it, and people have made a kajillion free programs and utilities for it. The wiping command itself used the built-in Linux <code>shred</code> utility, which could be configured to write zeros, ones, and/or random characters across as many passes as you'd like — much better than the <code>dd</code> command I originally used. The DoD standard was three passes: zeros, ones, then a random bit pattern (plus a verification pass). All those passes took a lot of time and were more than we needed, so I kept it at a single complete-drive pass, writing all zeros.</p>
+
+      <!-- PLACEHOLDER — CODE: your actual shred command line
+      <pre><code>
+paste shred command here
+      </code></pre>
+      -->
+
+      <p>(You can get deep in the weeds regarding sanitization standards, which sanitization process is better or worse, areas of drives the software can or can't access, and even X-ray data recovery techniques, but again, that was far beyond the scope of this project.)</p>
+
+      <p>I realized pretty early on that a verification step was needed to confirm the data was actually wiped from the drive. Checking the entire drive would literally double the time the whole process took, so I implemented a "quick verification" step, which essentially compared the first and last data chunks of the drive to an all-zero text file. Simple, but effective.</p>
+
+      <!-- PLACEHOLDER — CODE: the quick verification check
+      <pre><code>
+paste quick verification snippet here
+      </code></pre>
+      -->
+
+      <p>Another crucial utility was <code>smartctl</code> within the <code>smartmontools</code> package. This would display the S.M.A.R.T. data associated with any drive, like the serial number, model, manufacturer, power-on hours, self-test results, and other critical attributes. Instead of being momentarily displayed onscreen, this important information became the main component of each log file.</p>
+
+      <h3>The Logs</h3>
+
+      <p>The log file for each drive evolved as the project grew as well. Starting as just a text file with a serial number and timestamp, it grew to include the entire S.M.A.R.T. data output, appended with start/stop times, elapsed time, completion status, and the verification result. The filename was automatically created from the serial number and timestamp, which made organizing and searching them easy and efficient.</p>
+
+      <!-- PLACEHOLDER — CODE: a sample (sanitized!) log file — trimmed S.M.A.R.T. output + the appended results
+      <pre><code>
+paste sample log file here
+      </code></pre>
+      -->
+
+      <p>Quick aside: during testing, I discovered a quirk. Different drive manufacturers have slightly different S.M.A.R.T. data formats, so correctly parsing the data I needed became an entire project practically on its own! Plus, we eventually added solid-state drives to the mix, which added a whole other layer to this conundrum! Again, not easy; it took some fiddling, but I eventually got them all to work.</p>
+
+      <p>I also needed to safely save these important log files, since everything is deleted once the computer is turned off. The script used <code>atftp</code> (Advanced Trivial File Transfer Protocol) to automatically transfer the logs back to the Windows laptop. (Remember the PXE server?) If the transfer failed, the script would alert the user and prompt them to retry manually, allowing crucial troubleshooting time to salvage the log. Files could be manually sent at any time as long as the computer wasn't power cycled. All these logs were automatically organized at the end of the day into directories and subdirectories based on date (year/month/day) with another Windows Scheduled Task rule.</p>
+
+      <!-- PLACEHOLDER — CODE: the atftp transfer + retry prompt
+      <pre><code>
+paste atftp transfer snippet here
+      </code></pre>
+      -->
+
+      <p>Once the shred operation was started and running, the script would display the elapsed time and status of each drive. When finished, it would show whether the wipe completed successfully or failed, whether it passed or failed the quick verification, and whether the log file was saved and automatically transferred (all color-coded, BTW ;P). All of this was a far cry from the original ultra-simple script that lacked any automation, verification, redundancies, or quality-of-life additions.</p>
+
+      <!-- PLACEHOLDER — IMAGE: the finished-status screen (pass/fail, verification, log transfer)
+      <figure>
+        <img src="images/shred_status_screen_thumb.png"
+             data-full="images/shred_status_screen.png"
+             alt="Status screen showing wipe, verification, and log transfer results"
+             class="thumbnail"
+             loading="lazy">
+        <figcaption>All color-coded, BTW.</figcaption>
+      </figure>
+      -->
+
+      <h3>Looking Back</h3>
+
+      <p>Ultimately, the company saved an obscene amount of money by using the drive wiping solution I built mostly for the challenge and fun... and, obviously, because I worked there. In fact, to my knowledge, it's still in use today. I've never been good with money or self-marketing...</p>
+
+      <p>I eventually named it "Shred Drive Wipe" — boring practicality won out over creativity in that case. If I'm completely honest, though, this Bash script I was so proud of was really just a fancy wrapper for a bunch of built-in utilities. It essentially ran commands, saved log files, packaged and curated information, and displayed it in a user-friendly manner. Absolutely nothing special.</p>
+
+      <p>But it was "mine."</p>
+
+      <p>Again, all of this was built and developed well before AI, and I physically touched every single piece of hardware and line of code. I had to teach myself (with the help of man pages, manuals, and forums, of course) about different hardware components and capabilities, Linux fundamentals, network standards... so many different aspects of computing.</p>
+
+      <p>That said, I'm humbly aware of just how high I'm standing on the shoulders of so many giants before me; I simply took what others had already built and put it together in a vaguely unique way. And I realize even beginner programmers would scoff at the unbelievably convoluted and ugly code. But I'm not ashamed. I'm a tinkerer, not a true engineer. I like to build and play and see where my imagination takes me. And on rare occasions, it blooms into something very useful... even if it was for a giant, soulless corporation ;P</p>
+
+      <p>In my final act of playfulness, among all the utilities and configurations and sterile functionality, I included an easter egg. Buried within the custom Finnix operating system I compiled, I included the classic text adventure game, Zork! With a simple keystroke, any employee who was tasked with mindlessly erasing drives all day could instantly spin up an interactive fantasy world as a reprieve from the monotony. Needless to say, I partook on many occasions while developing this project.</p>
+
+      <!-- PLACEHOLDER — IMAGE: Zork running on the wipe station (the perfect last image)
+      <figure>
+        <img src="images/shred_zork_thumb.png"
+             data-full="images/shred_zork.png"
+             alt="Zork running on the drive wiping station"
+             class="thumbnail align-right"
+             loading="lazy">
+        <figcaption>West of House. Again.</figcaption>
+      </figure>
+      -->
+
+      <p>Looking back, I had a blast. And it was well worth it.</p>
+
+    </blockquote>
+
+    <!-- DATE — format YYYY-MM-DD (set to the day you publish) -->
+    <p style="font-size: 0.85rem; color: #999;">2026-11-25</p>
+
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+</body>
+</html>
